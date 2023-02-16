@@ -1,12 +1,8 @@
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import supabase from "@/server/client";
+import { Categoria } from "@/types/types";
 import Link from "next/link";
-
-type Categoria = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-};
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Categoria").select("*");
@@ -17,10 +13,15 @@ export async function getServerSideProps() {
   };
 }
 
-export default function categoria({ categorias }: { categorias: Categoria[] }) {
-  function reload() {
-    getServerSideProps();
-  }
+export default function CategoriaHomePage({
+  categorias,
+}: {
+  categorias: Categoria[];
+}) {
+  const router = useRouter();
+  const reload = () => {
+    router.replace(router.asPath);
+  };
   return (
     <div className="px-2">
       <h1 className="text-lg text-center font-medium">Mis categorias</h1>

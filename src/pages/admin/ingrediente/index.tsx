@@ -1,12 +1,6 @@
 import Link from "next/link";
 import supabase from "../../../server/client";
-
-type Ingrediente = {
-  id: number;
-  nombre: string;
-  descripcion: string;
-  precioSuplemento: number;
-};
+import { Ingrediente } from "@/types/types";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Ingrediente").select("*");

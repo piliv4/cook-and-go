@@ -1,20 +1,7 @@
 import supabase from "@/server/client";
 import Link from "next/link";
+import { Categoria } from "@/types/types";
 
-type Categoria = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-};
-
-export async function borrarCategoria(id: string) {
-  console.log(id);
-  const { data, error } = await supabase
-    .from("Categoria")
-    .delete()
-    .eq("id", id);
-  console.log(error);
-}
 export default function CategoriaCard({
   categoria,
   recargar,
@@ -22,8 +9,15 @@ export default function CategoriaCard({
   categoria: Categoria;
   recargar: Function;
 }) {
-  function borrarRecargarCategoria() {
-    borrarCategoria(categoria.id);
+  async function borrarCategoria() {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .delete()
+      .eq("id", categoria.id);
+    console.log(error);
+    if (!error) {
+      recargar();
+    }
   }
   return (
     <div className="border-[1px] rounded-md flex flex-col " key={categoria.id}>
@@ -32,7 +26,7 @@ export default function CategoriaCard({
           <h1 className="font-medium">{categoria.nombre}</h1>
           <p
             className="text-right hover:cursor-pointer"
-            onClick={(e) => borrarRecargarCategoria()}
+            onClick={borrarCategoria}
           >
             x
           </p>

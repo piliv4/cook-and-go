@@ -1,31 +1,29 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import supabase from "../../../server/client";
-
-type Categoria = {
-  nombre: string;
-  descripcion: string;
-};
-
-async function crearCategoria({ categoria }: { categoria: Categoria }) {
-  const { data, error } = await supabase.from("Categoria").insert([
-    {
-      nombre: categoria.nombre,
-      descripcion: categoria.descripcion,
-    },
-  ]);
-}
+import { Categoria } from "@/types/types";
 
 export default function Crearcategoria() {
   const [categoria, setcategoria] = useState<Categoria>({
+    id: "",
     nombre: "",
     descripcion: "",
   });
   const router = useRouter();
 
+  async function crearCategoria({ categoria }: { categoria: Categoria }) {
+    const { data, error } = await supabase.from("Categoria").insert([
+      {
+        nombre: categoria.nombre,
+        descripcion: categoria.descripcion,
+      },
+    ]);
+    if (!error) {
+      router.push("/admin/categoria");
+    }
+  }
   function crearEnrutar() {
     crearCategoria({ categoria });
-    router.push("/admin/categoria");
   }
   return (
     <div>

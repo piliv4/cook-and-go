@@ -1,12 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { Ingrediente } from "@/types/types";
 import supabase from "../../../server/client";
-
-type Ingrediente = {
-  nombre: string;
-  descripcion: string;
-  precioSuplemento: number;
-};
 
 async function crearIngrediente({ ingrediente }: { ingrediente: Ingrediente }) {
   const { data, error } = await supabase.from("Ingrediente").insert([
@@ -20,6 +15,7 @@ async function crearIngrediente({ ingrediente }: { ingrediente: Ingrediente }) {
 
 export default function CrearIngrediente() {
   const [ingrediente, setIngrediente] = useState<Ingrediente>({
+    id: "",
     nombre: "",
     descripcion: "",
     precioSuplemento: 0,
