@@ -1,4 +1,4 @@
-import { Categoria } from "@/types/types";
+import { Categoria, Ingrediente } from "@/types/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import supabase from "../../../server/client";
@@ -11,11 +11,14 @@ type Plato = {
   ingredientes: string[];
 };
 
-export async function getStaticProps() {
-  let { data } = await supabase.from("Categoria").select("*");
+export async function getServerSideProps() {
+  let { data: categorias } = await supabase.from("Categoria").select("*");
+  let { data: ingredientes } = await supabase.from("Ingrediente").select("*");
+  console.log("mis ingredientes: " + ingredientes);
   return {
     props: {
-      categorias: data,
+      categorias: categorias,
+      ingredientes: ingredientes,
     },
   };
 }
@@ -32,8 +35,6 @@ async function crearIngrediente({ plato }: { plato: Plato }) {
       },
     ])
     .select();
-  console.log(plato);
-  console.log(error);
 
   // plato.ingredientes.map(async (ingrediente) => {
   //   await supabase.from("ArticuloIngrediente").insert([
@@ -47,8 +48,10 @@ async function crearIngrediente({ plato }: { plato: Plato }) {
 
 export default function CrearIngrediente({
   categorias,
+  ingredientes,
 }: {
   categorias: Categoria[];
+  ingredientes: Ingrediente[];
 }) {
   const [plato, setPlato] = useState<Plato>({
     nombre: "",
@@ -57,7 +60,6 @@ export default function CrearIngrediente({
     categoria: "",
     ingredientes: [],
   });
-  const router = useRouter();
 
   function crearEnrutar() {
     crearIngrediente({ plato });
@@ -112,6 +114,13 @@ export default function CrearIngrediente({
           </option>
         ))}
       </select>
+
+      <div>
+        {ingredientes.map((ingrediente) => (
+          <p key={ingrediente.id}>{ingrediente.nombre}</p>
+        ))}
+      </div>
+
       <button onClick={() => crearEnrutar()}>Crear</button>
     </div>
   );
