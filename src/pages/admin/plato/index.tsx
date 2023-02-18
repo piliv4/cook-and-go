@@ -1,12 +1,6 @@
 import supabase from "@/server/client";
 import Link from "next/link";
-
-type Plato = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-};
+import { Plato } from "@/types/types";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Articulo").select("*");
@@ -17,7 +11,7 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Plato({ platos }: { platos: Plato[] }) {
+export default function PlatoPage({ platos }: { platos: Plato[] }) {
   return (
     <div>
       <h1>Mis platos</h1>
@@ -29,7 +23,7 @@ export default function Plato({ platos }: { platos: Plato[] }) {
             <h1>{plato.nombre}</h1>
             <p>{plato.descripcion}</p>
             <p>{plato.precio}</p>
-            <Link href={"/#"}>Ver en detalle</Link>
+            <Link href={"/admin/plato/" + plato.id}>Ver en detalle</Link>
           </div>
         ))}
       </div>

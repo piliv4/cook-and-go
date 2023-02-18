@@ -4,6 +4,7 @@ import { useState } from "react";
 import supabase from "../../../server/client";
 
 type Plato = {
+  id: string;
   nombre: string;
   descripcion: string;
   precio: number;
@@ -35,15 +36,16 @@ async function crearIngrediente({ plato }: { plato: Plato }) {
       },
     ])
     .select();
-
-  // plato.ingredientes.map(async (ingrediente) => {
-  //   await supabase.from("ArticuloIngrediente").insert([
-  //     {
-  //       articulo_id: ,
-  //       ingrediente_id: ingrediente,
-  //     },
-  //   ]);
-  // });
+  console.log(plato.ingredientes);
+  data &&
+    plato.ingredientes.map(async (ingrediente) => {
+      await supabase.from("ArticuloIngrediente").insert([
+        {
+          articulo_id: (data[0] as Plato).id,
+          ingrediente_id: ingrediente,
+        },
+      ]);
+    });
 }
 
 export default function CrearIngrediente({
@@ -54,6 +56,7 @@ export default function CrearIngrediente({
   ingredientes: Ingrediente[];
 }) {
   const [plato, setPlato] = useState<Plato>({
+    id: "",
     nombre: "",
     descripcion: "",
     precio: 0,
@@ -117,7 +120,25 @@ export default function CrearIngrediente({
 
       <div>
         {ingredientes.map((ingrediente) => (
-          <p key={ingrediente.id}>{ingrediente.nombre}</p>
+          <div key={ingrediente.id}>
+            <input
+              type="checkbox"
+              id={ingrediente.id}
+              name={ingrediente.id}
+              value={ingrediente.id}
+              onClick={(e) => {
+                (e.target as HTMLInputElement).checked
+                  ? setPlato({
+                      ...plato,
+                      ingredientes: plato.ingredientes.concat([
+                        (e.target as HTMLInputElement).value,
+                      ]),
+                    } as Plato)
+                  : console.log("Eliminar plato");
+              }}
+            />
+            <label>{ingrediente.nombre}</label>
+          </div>
         ))}
       </div>
 

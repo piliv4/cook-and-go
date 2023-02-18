@@ -10,3 +10,10 @@ export interface Categoria {
   nombre: string;
   descripcion: string;
 }
+
+export interface Plato {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+}
