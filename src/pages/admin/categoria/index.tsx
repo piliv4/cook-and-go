@@ -1,4 +1,5 @@
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
+import Header from "@/components/layout/AdminHeader";
 import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
 import Link from "next/link";
