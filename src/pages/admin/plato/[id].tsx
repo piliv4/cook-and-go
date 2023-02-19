@@ -1,19 +1,24 @@
 import supabase from "@/server/client";
 import { Ingrediente, Plato } from "@/types/types";
+import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+
+  console.log(id);
+
   let ingredientes: any[] = [];
 
   let { data: plato } = await supabase
     .from("Articulo")
     .select("*")
-    .eq("id", "c51b9330-e72d-454c-9df9-266b94e2499a");
+    .eq("id", id);
 
   let { data: ingredientesId } = await supabase
     .from("ArticuloIngrediente")
     .select("ingrediente_id")
-    .eq("articulo_id", "c51b9330-e72d-454c-9df9-266b94e2499a");
+    .eq("articulo_id", id);
 
   if (ingredientesId != null) {
     for (const id of ingredientesId) {
@@ -31,7 +36,7 @@ export async function getServerSideProps() {
       ingredientes: ingredientes as Ingrediente[],
     },
   };
-}
+};
 
 const DetallesPlato = ({
   plato,
