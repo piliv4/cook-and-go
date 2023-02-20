@@ -1,6 +1,8 @@
 import Link from "next/link";
 import supabase from "../../../server/client";
 import { Ingrediente } from "@/types/types";
+import IngredienteCard from "@/components/admins/ingrediente/IngredienteCard";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Ingrediente").select("*");
@@ -11,11 +13,12 @@ export async function getServerSideProps() {
   };
 }
 
-export default function administrador({
+export default function IngredientesPagina({
   ingredientes,
 }: {
   ingredientes: Ingrediente[];
 }) {
+  const [ingredientesState, setIngredientesState] = useState(ingredientes);
   return (
     <div>
       <Link href={"/admin/ingrediente/crearIngrediente"}>
@@ -23,14 +26,12 @@ export default function administrador({
       </Link>
       <br />
       <h1>Listado de ingredientes</h1>
-      <ul>
-        {ingredientes.map((ingrediente) => (
-          <li key={ingrediente.id}>
-            {ingrediente.nombre}, {ingrediente.descripcion},{" "}
-            {ingrediente.precioSuplemento}
-          </li>
+      <div>buscador</div>
+      <div className="mx-2">
+        {ingredientesState.map((ingrediente) => (
+          <IngredienteCard key={ingrediente.id} ingrediente={ingrediente} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
