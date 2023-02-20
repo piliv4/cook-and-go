@@ -13,7 +13,7 @@ async function crearIngrediente({ ingrediente }: { ingrediente: Ingrediente }) {
   ]);
 }
 
-export default function CrearIngrediente() {
+export default function CrearIngredientePage() {
   const [ingrediente, setIngrediente] = useState<Ingrediente>({
     id: "",
     nombre: "",
@@ -27,7 +27,7 @@ export default function CrearIngrediente() {
     router.push("/admin/ingrediente");
   }
   return (
-    <div>
+    <div className="flex flex-row">
       <p>Nombre</p>
       <input
         type={"text"}
