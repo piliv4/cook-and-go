@@ -32,7 +32,7 @@ export default function CategoriaHomePage({
           <h1 className="text-2xl font-black ">Mis categorias</h1>
           <Buscador />
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-1 sm:gap-3 ">
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
           {categorias.map((categoria) => (
             <CategoriaCard
               categoria={categoria}

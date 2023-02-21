@@ -37,13 +37,15 @@ export default function CategoriaCard({
       </div>
       <div className="relative flex pt-2 items-center">
         <div className="flex-grow border-t border-primaryGreen"></div>
-        <span className="flex-shrink mx-4 font-extrabold  uppercase">
+        <span className="flex-shrink mx-1 font-bold text-sm uppercase">
           {categoria.nombre}
         </span>
         <div className="flex-grow border-t border-primaryGreen"></div>
       </div>
 
-      <p className=" px-2 pb-1">{categoria.descripcion}</p>
+      <p className=" px-2 pb-1 font-extralight text-sm">
+        {categoria.descripcion}
+      </p>
 
       <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
         <Link className="bg-transparent" href={"#"}>
