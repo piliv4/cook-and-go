@@ -1,3 +1,4 @@
+import Buscador from "@/components/admins/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import Header from "@/components/layout/AdminHeader";
 import supabase from "@/server/client";
@@ -24,25 +25,21 @@ export default function CategoriaHomePage({
     router.replace(router.asPath);
   };
   return (
-    <div className="px-2">
-      <h1 className="text-lg text-center font-medium">Mis categorias</h1>
-      <Link
-        href="/admin/categoria/crearCategoria"
-        className="py-1 px-3 rounded-md bg-blue-400"
-      >
-        Crear nueva categoria
-      </Link>
-      <div className="grid grid-cols-4 gap-3 ">
-        <div className="col-span-full text-center pb-2">
-          Todas mis categorias
+    <div className="bg-background">
+      <div className="mx-[36px]  min-h-[calc(100vh-60px)] flex flex-col gap-4">
+        <div className="grid grid-cols-[80%_20%] w-full">
+          <h1 className="text-2xl font-black ">Mis categorias</h1>
+          <Buscador />
         </div>
-        {categorias.map((categoria) => (
-          <CategoriaCard
-            categoria={categoria}
-            recargar={reload}
-            key={categoria.id}
-          />
-        ))}
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-1 sm:gap-3 ">
+          {categorias.map((categoria) => (
+            <CategoriaCard
+              categoria={categoria}
+              recargar={reload}
+              key={categoria.id}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

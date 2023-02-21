@@ -21,7 +21,7 @@ export default function IngredientesPagina({
   ingredientes: Ingrediente[];
 }) {
   return (
-    <div>
+    <div className="bg-background min-h-[calc(100vh-60px)]">
       <Link href={"/admin/ingrediente/crearIngrediente"}>
         <p>Crear nuevo ingrediente</p>
       </Link>
