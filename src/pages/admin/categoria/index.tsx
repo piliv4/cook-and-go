@@ -1,5 +1,6 @@
 import Buscador from "@/components/admins/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
+import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
 import Header from "@/components/layout/AdminHeader";
 import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
@@ -39,6 +40,7 @@ export default function CategoriaHomePage({
               key={categoria.id}
             />
           ))}
+          <CrearCategoriaCard />
         </div>
       </div>
     </div>

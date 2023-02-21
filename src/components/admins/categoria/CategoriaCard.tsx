@@ -23,7 +23,7 @@ export default function CategoriaCard({
   }
   return (
     <div
-      className="bg-white border border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
+      className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
       key={categoria.id}
     >
       <div className="relative py-16 bg-transparent ">
@@ -36,16 +36,16 @@ export default function CategoriaCard({
         <div className="absolute top-0 z-10 bg-gradient-to-t h-full from-white w-full" />
       </div>
       <div className="relative flex pt-2 items-center">
-        <div className="flex-grow border-t border-gray-200"></div>
+        <div className="flex-grow border-t border-primaryGreen"></div>
         <span className="flex-shrink mx-4 font-extrabold  uppercase">
           {categoria.nombre}
         </span>
-        <div className="flex-grow border-t border-gray-200"></div>
+        <div className="flex-grow border-t border-primaryGreen"></div>
       </div>
 
       <p className=" px-2 pb-1">{categoria.descripcion}</p>
 
-      <div className="border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
+      <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
         <Link className="bg-transparent" href={"#"}>
           Ver detalles
         </Link>
