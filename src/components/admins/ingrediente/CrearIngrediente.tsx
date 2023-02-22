@@ -27,7 +27,6 @@ const CrearIngrediente = ({
 
   //MODIFICAR INGREDIENTE
   async function modificarIngrediente() {
-    console.log("modificando ingrediente");
     const { error } = await supabase
       .from("Ingrediente")
       .update([

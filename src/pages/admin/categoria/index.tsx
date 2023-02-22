@@ -6,6 +6,7 @@ import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Categoria").select("*");
@@ -21,6 +22,8 @@ export default function CategoriaHomePage({
 }: {
   categorias: Categoria[];
 }) {
+  const [categoriaList, setCategoriaList] = useState(categorias);
+  console.log(categoriaList);
   const router = useRouter();
   const reload = () => {
     router.replace(router.asPath);
@@ -33,7 +36,7 @@ export default function CategoriaHomePage({
           <Buscador />
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
-          {categorias.map((categoria) => (
+          {categoriaList.map((categoria) => (
             <CategoriaCard
               categoria={categoria}
               recargar={reload}
