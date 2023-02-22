@@ -6,12 +6,11 @@ import CrearCategoriaPopup from "./CrearCategoriaPopup";
 const CrearCategoriaCard = () => {
   const [open, setOpen] = useState(false);
 
-  function cancelHandler() {
-    console.log("cancelando");
+  function cerrarPopUp() {
     setOpen(false);
   }
 
-  function acceptHandler() {
+  function abrirPopUp() {
     setOpen(false);
   }
 
@@ -28,10 +27,10 @@ const CrearCategoriaCard = () => {
       </div>
       <div className="py-2 font-light flex justify-center group-hover:text-primaryOrange transition duration-150 group-hover:scale-105 ">
         Nueva categoria
-        <Popup open={open} modal closeOnDocumentClick onClose={cancelHandler}>
+        <Popup open={open} modal closeOnDocumentClick onClose={cerrarPopUp}>
           <CrearCategoriaPopup
-            acceptHandler={acceptHandler}
-            cancelHandler={cancelHandler}
+            cerrarPopUp={cerrarPopUp}
+            abrirPopUp={abrirPopUp}
           />
         </Popup>
       </div>

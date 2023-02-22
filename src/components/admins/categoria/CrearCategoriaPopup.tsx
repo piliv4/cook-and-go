@@ -6,11 +6,11 @@ import { BsPlusCircleFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
 
 const CrearCategoriaPopup = ({
-  cancelHandler,
-  acceptHandler,
+  cerrarPopUp,
+  abrirPopUp,
 }: {
-  cancelHandler: Function;
-  acceptHandler: Function;
+  cerrarPopUp: Function;
+  abrirPopUp: Function;
 }) => {
   const [categoria, setcategoria] = useState<Categoria>({
     id: "",
@@ -32,7 +32,7 @@ const CrearCategoriaPopup = ({
 
   function aceptar() {
     crearCategoria();
-    acceptHandler();
+    abrirPopUp();
   }
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-600 bg-opacity-10 backdrop-blur-sm  ">
@@ -71,7 +71,7 @@ const CrearCategoriaPopup = ({
         <div className="mb-3 mr-3 flex justify-end gap-2 font-">
           <button
             className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-            onClick={() => cancelHandler()}
+            onClick={() => cerrarPopUp()}
           >
             Cancelar
           </button>
