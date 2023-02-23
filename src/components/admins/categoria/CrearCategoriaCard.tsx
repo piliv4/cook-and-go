@@ -5,15 +5,6 @@ import CrearCategoriaPopup from "./CrearCategoriaPopup";
 
 const CrearCategoriaCard = () => {
   const [open, setOpen] = useState(false);
-
-  function cerrarPopUp() {
-    setOpen(false);
-  }
-
-  function abrirPopUp() {
-    setOpen(false);
-  }
-
   return (
     <div
       className="bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
@@ -27,12 +18,11 @@ const CrearCategoriaCard = () => {
       </div>
       <div className="py-2 font-light flex justify-center group-hover:text-primaryOrange transition duration-150 group-hover:scale-105 ">
         Nueva categoria
-        <Popup open={open} modal closeOnDocumentClick onClose={cerrarPopUp}>
-          <CrearCategoriaPopup
-            cerrarPopUp={cerrarPopUp}
-            abrirPopUp={abrirPopUp}
-          />
-        </Popup>
+        <CrearCategoriaPopup
+          open={open}
+          categoriaEditar={null}
+          cerrarPopUp={() => setOpen(false)}
+        />
       </div>
     </div>
   );

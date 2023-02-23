@@ -2,15 +2,13 @@ import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
-import EditarBorrar from "../EditarBorrar";
+import router from "next/router";
+import { useState } from "react";
+import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import CrearCategoriaPopup from "./CrearCategoriaPopup";
 
-export default function CategoriaCard({
-  categoria,
-  recargar,
-}: {
-  categoria: Categoria;
-  recargar: Function;
-}) {
+export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
+  const [open, setOpen] = useState(false);
   async function borrarCategoria() {
     const { data, error } = await supabase
       .from("Categoria")
@@ -18,7 +16,7 @@ export default function CategoriaCard({
       .eq("id", categoria.id);
     console.log(error);
     if (!error) {
-      recargar();
+      router.replace(router.asPath);
     }
   }
   return (
@@ -52,7 +50,21 @@ export default function CategoriaCard({
           Ver detalles
         </Link>
       </div>
-      <EditarBorrar />
+      <div className="grid grid-cols-2 absolute right-2 top-2 gap-1 z-10">
+        <BsFillPencilFill
+          className="group fill-white hover:fill-secondaryOrange transition duration-150"
+          onClick={() => setOpen(true)}
+        />
+        <BsTrashFill
+          className="fill-white hover:fill-secondaryOrange transition duration-150"
+          onClick={() => borrarCategoria()}
+        />
+      </div>
+      <CrearCategoriaPopup
+        cerrarPopUp={() => setOpen(false)}
+        open={open}
+        categoriaEditar={categoria}
+      />
     </div>
   );
 }
