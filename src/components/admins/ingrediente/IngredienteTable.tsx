@@ -6,7 +6,7 @@ const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
     <div className="w-full">
       <table className="w-full mt-2 border-collapse ">
         <thead>
-          <tr className=" bg-primaryGreen text-white  rounded-t-full ">
+          <tr className=" bg-secondaryGreen text-white  rounded-t-full ">
             <th className=" py-1 rounded-tl-full font-normal">Nombre</th>
             <th className="border border-background">Descripción</th>
             <th className="border border-background">Precio suplemento</th>
@@ -22,29 +22,29 @@ const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
           {ingrediente.map((ingrediente) => (
             <tr
               key={ingrediente.id}
-              className="font-light hover:bg-secondaryOrange"
+              className="font-light hover:bg-secondaryOrange "
             >
-              <td className="border border-primaryGreen">
+              <td className="border border-secondaryGreen pl-2">
                 {ingrediente.nombre}
               </td>
-              <td className="border border-primaryGreen">
+              <td className="border border-secondaryGreen pl-2">
                 {ingrediente.descripcion}
               </td>
 
-              <td className="border border-primaryGreen">
+              <td className="border border-secondaryGreen pl-2">
                 {ingrediente.precioSuplemento}
               </td>
 
-              <td className="border border-primaryGreen">200</td>
+              <td className="border border-secondaryGreen pl-2">200</td>
 
-              <td className="border border-primaryGreen">kg</td>
+              <td className="border border-secondaryGreen pl-2">kg</td>
 
-              <td className="border border-primaryGreen ">
+              <td className="border border-secondaryGreen ">
                 <div className="flex justify-center items-center">
                   <BsFillPencilFill className=" fill-primaryOrange hover:fill-white transition duration-150" />
                 </div>
               </td>
-              <td className="border border-primaryGreen">
+              <td className="border border-secondaryGreen">
                 <div className="flex justify-center items-center h-full">
                   <BsTrashFill className="fill-primaryOrange hover:fill-white transition duration-150" />
                 </div>

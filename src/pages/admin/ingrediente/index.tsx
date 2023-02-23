@@ -23,13 +23,8 @@ export default function IngredientesPagina({
 }) {
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-[60%_20%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
+      <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
         <h1 className="text-2xl font-black ">Mis ingredientes</h1>
-        <div>
-          {/* <button className="px-2 flex justify-center  items-center border-[1px] w-2/4 border-primaryOrange ">
-          <BsPlus size={20} className="stroke-[1px] stroke-primaryOrange " />
-        </button> */}
-        </div>
         <Buscador />
       </div>
       <IngredienteTable ingrediente={ingredientes} />
