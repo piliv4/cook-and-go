@@ -5,7 +5,7 @@ const Buscador = () => {
       <input
         className="bg-transparent text-white placeholder-white outline-none"
         type="text"
-        placeholder="Buscar categoría..."
+        placeholder="Buscar..."
       ></input>
       <BiSearch className="stroke-white stroke-[2px]" />
     </div>

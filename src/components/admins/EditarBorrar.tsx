@@ -16,7 +16,7 @@ const EditarborrarCategoria = ({
   return (
     <div className="grid grid-cols-2 absolute right-2 top-2 gap-1 z-10">
       <BsFillPencilFill
-        className="group fill-white hover:fill-secondaryOrange transition duration-150"
+        className=" fill-white hover:fill-secondaryOrange transition duration-150"
         onClick={() => setOpen(true)}
       />
       <BsTrashFill
