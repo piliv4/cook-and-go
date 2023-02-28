@@ -1,46 +1,63 @@
 import supabase from "@/server/client";
-import Link from "next/link";
 import { Plato } from "@/types/types";
+import Image from "next/image";
+import Link from "next/link";
+import router from "next/router";
+import { useState } from "react";
+import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 
-export default function PLatoCard({
-  plato,
-  recargar,
-}: {
-  plato: Plato;
-  recargar: Function;
-}) {
-  async function borrarCategoria() {
-    console.log("CULO");
-    //TENGO QUE APRENDER A HACER EL BORRADO EN CASCADA
-    // const { error } = await supabase
-    //   .from("Articulo")
-    //   .delete()
-    //   .eq("id", plato.id);
-    // console.log(error);
-    // if (!error) {
-    //   recargar();
-    // }
+export default function CategoriaCard({ plato }: { plato: Plato }) {
+  const [open, setOpen] = useState(false);
+  async function borrarPlato() {
+    const { error } = await supabase.from("Plato").delete().eq("id", plato.id);
+    if (!error) {
+      router.replace(router.asPath);
+    }
   }
   return (
-    <div className="border-[1px] rounded-md flex flex-col " key={plato.id}>
-      <div className="px-2">
-        <div className="grid grid-cols-[95%_5%]">
-          <h1 className="font-medium">{plato.nombre}</h1>
-          <p
-            className="text-right hover:cursor-pointer"
-            onClick={borrarCategoria}
-          >
-            x
-          </p>
-        </div>
-        <p className="text-sm">{plato.descripcion}</p>
+    <div
+      className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
+      key={plato.id}
+    >
+      <div className="relative py-16 bg-transparent ">
+        <Image
+          src="https://www.clara.es/medio/2021/11/28/postres-navidenos_3f462fd7_1280x1115.jpg"
+          alt="imagen_categoria.jpg"
+          className="absolute rounded-t-lg"
+          fill
+        />
+        <div className="absolute top-0 z-10 bg-gradient-to-t h-full from-white w-full" />
       </div>
-      <Link
-        href={"/admin/plato/" + plato.id}
-        className="font-light text-center border-t-[1px]"
-      >
-        Ver en detalle
-      </Link>
+      <div className="relative flex pt-2 items-center">
+        <div className="flex-grow border-t border-primaryGreen"></div>
+        <span className="flex-shrink mx-1 font-bold text-sm uppercase">
+          {plato.nombre}
+        </span>
+        <div className="flex-grow border-t border-primaryGreen"></div>
+      </div>
+
+      <p className=" px-2 pb-1 font-extralight text-sm">{plato.descripcion}</p>
+
+      <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
+        <Link className="bg-transparent" href={"#"}>
+          Ver detalles
+        </Link>
+      </div>
+      <div className="grid grid-cols-2 absolute right-2 top-2 gap-1 z-10">
+        <BsFillPencilFill
+          className="group fill-white hover:fill-secondaryOrange transition duration-150"
+          onClick={() => setOpen(true)}
+        />
+        <BsTrashFill
+          className="fill-white hover:fill-secondaryOrange transition duration-150"
+          onClick={() => borrarPlato()}
+        />
+      </div>
+      {/* <CrearCategoriaPopup
+        cerrarPopUp={() => setOpen(false)}
+        open={open}
+        categoriaEditar={categoria}
+      /> */}
     </div>
   );
 }

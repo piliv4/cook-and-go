@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { BsPlusCircleFill } from "react-icons/bs";
-import CrearCategoriaPopup from "./CrearCategoriaPopup";
 
-const CrearCategoriaCard = () => {
+const CrearPlatoCard = () => {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className="bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
+      className="min-h-[200px] bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
       onClick={() => setOpen(true)}
     >
       <div className="h-full flex justify-center items-center ">
@@ -16,14 +15,9 @@ const CrearCategoriaCard = () => {
         />
       </div>
       <div className="py-2 font-light flex justify-center group-hover:text-primaryOrange transition duration-150 group-hover:scale-105 ">
-        Nueva categoria
-        <CrearCategoriaPopup
-          open={open}
-          categoriaEditar={null}
-          cerrarPopUp={() => setOpen(false)}
-        />
+        Nuevo plato
       </div>
     </div>
   );
 };
-export default CrearCategoriaCard;
+export default CrearPlatoCard;

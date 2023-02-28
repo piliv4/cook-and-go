@@ -46,7 +46,10 @@ export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
       </p>
 
       <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
-        <Link className="bg-transparent" href={"#"}>
+        <Link
+          className="bg-transparent"
+          href={"/admin/categoria/" + categoria.id}
+        >
           Ver detalles
         </Link>
       </div>
