@@ -5,6 +5,7 @@ import Link from "next/link";
 import router from "next/router";
 import { useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import CrearPlatoPopUp from "./CrearPlatoPopUp";
 
 export default function CategoriaCard({ plato }: { plato: Plato }) {
   const [open, setOpen] = useState(false);
@@ -53,11 +54,12 @@ export default function CategoriaCard({ plato }: { plato: Plato }) {
           onClick={() => borrarPlato()}
         />
       </div>
-      {/* <CrearCategoriaPopup
+      <CrearPlatoPopUp
+        platoEditar={plato}
         cerrarPopUp={() => setOpen(false)}
         open={open}
-        categoriaEditar={categoria}
-      /> */}
+        categorias={[]}
+      />
     </div>
   );
 }

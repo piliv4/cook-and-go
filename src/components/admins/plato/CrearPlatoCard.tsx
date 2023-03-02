@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsPlusCircleFill } from "react-icons/bs";
+import CrearPlatoPopUp from "./CrearPlatoPopUp";
 
 const CrearPlatoCard = () => {
   const [open, setOpen] = useState(false);
@@ -16,6 +17,12 @@ const CrearPlatoCard = () => {
       </div>
       <div className="py-2 font-light flex justify-center group-hover:text-primaryOrange transition duration-150 group-hover:scale-105 ">
         Nuevo plato
+        <CrearPlatoPopUp
+          open={open}
+          platoEditar={null}
+          categorias={[]}
+          cerrarPopUp={() => setOpen(false)}
+        />
       </div>
     </div>
   );
