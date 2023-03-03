@@ -1,30 +1,31 @@
 import supabase from "@/server/client";
 import { Categoria, Plato } from "@/types/types";
-import router from "next/router";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Popup from "reactjs-popup";
-
-export async function getServerSideProps() {
-  let { data: categorias } = await supabase.from("Categoria").select("*");
-  return {
-    props: {
-      categorias: categorias as Categoria[],
-    },
-  };
-}
+import SeleccionarIngredientes from "./SeleccionarIngredientes";
 
 const CrearPlatoPopUp = ({
   platoEditar,
   cerrarPopUp,
   open,
-  categorias,
 }: {
   platoEditar: Plato | null;
   cerrarPopUp: Function;
   open: boolean;
   categorias: Categoria[];
 }) => {
-  const categoriaURI = router.pathname.split("/")[3];
+  const router = useRouter();
+  const categoriaURI = router.query;
+  const [categorias, setCategorias] = useState<Categoria[] | null>(null);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const { data } = await supabase.from("Categoria").select();
+      setCategorias(data as Categoria[]);
+    };
+    fetchPosts();
+  }, []);
+
   const [plato, setPlato] = useState<Plato>(
     platoEditar
       ? platoEditar
@@ -50,9 +51,9 @@ const CrearPlatoPopUp = ({
     }
   }
 
-  async function editarCategoria() {
+  async function editarPlato() {
     const { error } = await supabase
-      .from("Categoria")
+      .from("Articulo")
       .update([
         {
           nombre: plato.nombre,
@@ -68,14 +69,14 @@ const CrearPlatoPopUp = ({
   }
 
   function aceptar() {
-    platoEditar ? editarCategoria() : crearPlato();
+    platoEditar ? editarPlato() : crearPlato();
     cerrarPopUp();
   }
 
   return (
     <Popup open={open} modal closeOnDocumentClick onClose={() => cerrarPopUp()}>
       <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-600 bg-opacity-10 backdrop-blur-sm  ">
-        <div className="  w-3/5 sm:w-2/5 rounded-md bg-background xl:w-1/5 overflow-hidden">
+        <div className="  w-3/5 sm:w-2/5 rounded-md bg-background xl:w-1/5 overflow-hidden flex flex-col ">
           <div className="bg-primaryGreen py-2 text-center font-semibold text-lg text-white">
             Crear nueva categoría
           </div>
@@ -97,35 +98,43 @@ const CrearPlatoPopUp = ({
 
             <div className="flex flex-col gap-y-[2px]">
               <p className="font-thin">Descripción</p>
-              <input
-                type={"text"}
+              <textarea
                 defaultValue={plato.descripcion}
-                className="px-6 border-[1px] rounded-md"
+                rows={2}
+                className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
                 onChange={(e) =>
                   setPlato({
                     ...plato,
                     descripcion: e.target.value.toString(),
                   } as Plato)
                 }
-              ></input>
+              ></textarea>
             </div>
 
             <div className="flex flex-col gap-y-[2px]">
               <p className="font-thin">Categoría</p>
-              <select>
-                {categorias.map((categoria) => (
+              <select
+                onChange={(e) => {
+                  setPlato({
+                    ...plato,
+                    categoria: e.target.value,
+                  } as Plato);
+                }}
+              >
+                {categorias?.map((categoria) => (
                   <option
                     key={categoria.id}
                     value={categoria.id}
                     selected={
                       platoEditar?.categoria == categoria.id ||
-                      categoriaURI == categoria.id
+                      categoriaURI.id == categoria.id
                     }
                   >
                     {categoria.nombre}
                   </option>
                 ))}
               </select>
+              <SeleccionarIngredientes />
             </div>
           </div>
 

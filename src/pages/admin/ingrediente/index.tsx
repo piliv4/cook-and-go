@@ -27,6 +27,7 @@ export default function IngredientesPagina({
         <h1 className="text-2xl font-black ">Mis ingredientes</h1>
         <Buscador />
       </div>
+      <CrearIngrediente />
       <IngredienteTable ingrediente={ingredientes} />
     </div>
   );
