@@ -8,7 +8,7 @@ import { BsPlus } from "react-icons/bs";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("Ingrediente").select("*");
+  let { data } = await supabase.from("Ingrediente").select("*").order("nombre");
   return {
     props: {
       ingredientes: data,

@@ -1,5 +1,5 @@
 import { Ingrediente } from "@/types/types";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import IngredienteRow from "./IngredienteRow";
 
 const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
   return (
@@ -20,36 +20,7 @@ const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
         </thead>
         <tbody>
           {ingrediente.map((ingrediente) => (
-            <tr
-              key={ingrediente.id}
-              className="font-light hover:bg-secondaryOrange "
-            >
-              <td className="border border-secondaryGreen pl-2">
-                {ingrediente.nombre}
-              </td>
-              <td className="border border-secondaryGreen pl-2">
-                {ingrediente.descripcion}
-              </td>
-
-              <td className="border border-secondaryGreen pl-2">
-                {ingrediente.precioSuplemento}
-              </td>
-
-              <td className="border border-secondaryGreen pl-2">200</td>
-
-              <td className="border border-secondaryGreen pl-2">kg</td>
-
-              <td className="border border-secondaryGreen ">
-                <div className="flex justify-center items-center">
-                  <BsFillPencilFill className=" fill-primaryOrange hover:fill-white transition duration-150" />
-                </div>
-              </td>
-              <td className="border border-secondaryGreen">
-                <div className="flex justify-center items-center h-full">
-                  <BsTrashFill className="fill-primaryOrange hover:fill-white transition duration-150" />
-                </div>
-              </td>
-            </tr>
+            <IngredienteRow key={ingrediente.id} ingrediente={ingrediente} />
           ))}
         </tbody>
       </table>
