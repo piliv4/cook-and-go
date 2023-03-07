@@ -1,7 +1,7 @@
 import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
 import router from "next/router";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Popup from "reactjs-popup";
 
 const CrearCategoriaPopup = ({
@@ -13,20 +13,12 @@ const CrearCategoriaPopup = ({
   open: boolean;
   categoriaEditar: Categoria | null;
 }) => {
-  const [categoria, setcategoria] = useState<Categoria>(
-    categoriaEditar
-      ? categoriaEditar
-      : {
-          id: "",
-          nombre: "",
-          descripcion: "",
-        }
-  );
-  async function crearCategoria() {
+  async function crearCategoria(nombre: string, descripcion: string) {
     const { error } = await supabase.from("Categoria").insert([
       {
-        nombre: categoria.nombre,
-        descripcion: categoria.descripcion,
+        nombre: nombre,
+        descripcion: descripcion,
+        imagenURL: "",
       },
     ]);
     if (!error) {
@@ -34,13 +26,14 @@ const CrearCategoriaPopup = ({
     }
   }
 
-  async function editarCategoria() {
+  async function editarCategoria(nombre: string, descripcion: string) {
     const { error } = await supabase
       .from("Categoria")
       .update([
         {
-          nombre: categoria.nombre,
-          descripcion: categoria.descripcion,
+          nombre: nombre,
+          descripcion: descripcion,
+          imagenURL: categoriaEditar?.imagenURL,
         },
       ])
       .eq("id", categoriaEditar?.id);
@@ -49,10 +42,19 @@ const CrearCategoriaPopup = ({
     }
   }
 
-  function aceptar() {
-    categoriaEditar ? editarCategoria() : crearCategoria();
-    cerrarPopUp();
-  }
+  const aceptar = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (open) {
+      const { nombre, descripcion } = e.target as typeof e.target & {
+        nombre: { value: string };
+        descripcion: { value: string };
+      };
+      categoriaEditar
+        ? editarCategoria(nombre.value, descripcion.value)
+        : crearCategoria(nombre.value, descripcion.value);
+      cerrarPopUp();
+    }
+  };
 
   return (
     <Popup open={open} modal closeOnDocumentClick onClose={() => cerrarPopUp()}>
@@ -61,50 +63,42 @@ const CrearCategoriaPopup = ({
           <div className="bg-primaryGreen py-2 text-center font-semibold text-lg text-white">
             Crear nueva categoría
           </div>
-          <div className="flex flex-col px-2 gap-y-6 items-center py-4">
-            <div className="flex flex-col gap-y-[2px]">
-              <p className="font-thin">Nombre</p>
-              <input
-                type={"text"}
-                defaultValue={categoria.nombre}
-                className="px-6 border-[1px] rounded-md"
-                onChange={(e) =>
-                  setcategoria({
-                    ...categoria,
-                    nombre: e.target.value.toString(),
-                  } as Categoria)
-                }
-              />
+          <form onSubmit={(e) => aceptar(e)}>
+            <div className="flex flex-col px-2 gap-y-6 items-center py-4">
+              <div className="flex flex-col gap-y-[2px]">
+                <p className="font-thin">Nombre</p>
+                <input
+                  type={"text"}
+                  defaultValue={categoriaEditar?.nombre}
+                  className="px-6 border-[1px] rounded-md"
+                  id="nombre"
+                />
+              </div>
+              <div className="flex flex-col gap-y-[2px]">
+                <p className="font-thin">Descripción</p>
+                <input
+                  type={"text"}
+                  defaultValue={categoriaEditar?.descripcion}
+                  className="px-6 border-[1px] rounded-md"
+                  id="descripcion"
+                ></input>
+              </div>
             </div>
-            <div className="flex flex-col gap-y-[2px]">
-              <p className="font-thin">Descripción</p>
-              <input
-                type={"text"}
-                defaultValue={categoria.descripcion}
-                className="px-6 border-[1px] rounded-md"
-                onChange={(e) =>
-                  setcategoria({
-                    ...categoria,
-                    descripcion: e.target.value.toString(),
-                  } as Categoria)
-                }
-              ></input>
+            <div className="mb-3 mr-3 flex justify-end gap-2 font-">
+              <button
+                className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+                onClick={() => cerrarPopUp()}
+              >
+                Cancelar
+              </button>
+              <button
+                type={"submit"}
+                className="btn-sm mt-3 rounded-full bg-primaryOrange text-white  hover:scale-105 transition duration-100 sm:mt-5 sm:py-1 sm:px-4"
+              >
+                Confirmar
+              </button>
             </div>
-          </div>
-          <div className="mb-3 mr-3 flex justify-end gap-2 font-">
-            <button
-              className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-              onClick={() => cerrarPopUp()}
-            >
-              Cancelar
-            </button>
-            <button
-              className="btn-sm mt-3 rounded-full bg-primaryOrange text-white  hover:scale-105 transition duration-100 sm:mt-5 sm:py-1 sm:px-4"
-              onClick={() => aceptar()}
-            >
-              Confirmar
-            </button>
-          </div>
+          </form>
         </div>
       </div>
     </Popup>

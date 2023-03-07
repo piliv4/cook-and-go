@@ -26,7 +26,11 @@ export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
     >
       <div className="relative py-16 bg-transparent ">
         <Image
-          src="https://www.clara.es/medio/2021/11/28/postres-navidenos_3f462fd7_1280x1115.jpg"
+          src={
+            categoria.imagenURL
+              ? categoria.imagenURL
+              : "https://www.clara.es/medio/2021/11/28/postres-navidenos_3f462fd7_1280x1115.jpg"
+          }
           alt="imagen_categoria.jpg"
           className="absolute rounded-t-lg"
           fill

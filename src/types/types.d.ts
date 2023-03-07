@@ -9,6 +9,7 @@ export interface Categoria {
   id: string;
   nombre: string;
   descripcion: string;
+  imagenURL: string | null;
 }
 
 export interface Plato {
