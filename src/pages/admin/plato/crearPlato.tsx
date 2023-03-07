@@ -1,5 +1,4 @@
 import { Categoria, Ingrediente } from "@/types/types";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import supabase from "../../../server/client";
 
@@ -25,7 +24,7 @@ export async function getServerSideProps() {
 }
 
 async function crearIngrediente({ plato }: { plato: Plato }) {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("Articulo")
     .insert([
       {
@@ -66,7 +65,6 @@ export default function CrearIngrediente({
 
   function crearEnrutar() {
     crearIngrediente({ plato });
-    // router.push("/admin/ingrediente");
   }
   return (
     <div>
