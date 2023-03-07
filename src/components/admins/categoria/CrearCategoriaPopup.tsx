@@ -3,6 +3,7 @@ import { Categoria } from "@/types/types";
 import router from "next/router";
 import { FormEvent, useState } from "react";
 import Popup from "reactjs-popup";
+import SubirImagen from "../SubirImagen";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,
@@ -13,12 +14,16 @@ const CrearCategoriaPopup = ({
   open: boolean;
   categoriaEditar: Categoria | null;
 }) => {
+  const [imagen, setImagen] = useState(
+    categoriaEditar ? categoriaEditar?.imagenURL : ""
+  );
+
   async function crearCategoria(nombre: string, descripcion: string) {
     const { error } = await supabase.from("Categoria").insert([
       {
         nombre: nombre,
         descripcion: descripcion,
-        imagenURL: "",
+        imagenURL: imagen,
       },
     ]);
     if (!error) {
@@ -33,7 +38,7 @@ const CrearCategoriaPopup = ({
         {
           nombre: nombre,
           descripcion: descripcion,
-          imagenURL: categoriaEditar?.imagenURL,
+          imagenURL: imagen,
         },
       ])
       .eq("id", categoriaEditar?.id);
@@ -63,6 +68,7 @@ const CrearCategoriaPopup = ({
           <div className="bg-primaryGreen py-2 text-center font-semibold text-lg text-white">
             Crear nueva categoría
           </div>
+          <SubirImagen imagen={imagen} setImagen={setImagen} />
           <form onSubmit={(e) => aceptar(e)}>
             <div className="flex flex-col px-2 gap-y-6 items-center py-4">
               <div className="flex flex-col gap-y-[2px]">

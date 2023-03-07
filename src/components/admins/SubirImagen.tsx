@@ -5,21 +5,25 @@ import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
 import { BiImageAdd } from "react-icons/bi";
 
-const SubirImagen = () => {
-  const [imagen, setImagen] = useState<string | undefined>("");
+const SubirImagen = ({
+  imagen,
+  setImagen,
+}: {
+  imagen: string;
+  setImagen: Function;
+}) => {
   const router = useRouter();
   const bucketRuta = router.pathname.split("/")[2];
   console.log(bucketRuta);
   async function subirImagen(e: HTMLInputElement) {
     let imagen = e.files && e.files[0];
     if (imagen) {
-      const { data, error } = await supabase.storage
+      const { data } = await supabase.storage
         .from("imagenes")
         .upload(bucketRuta + "/" + uuidv4(), imagen);
       if (data) {
-        setImagen(
-          `${supabaseUrl}/storage/v1/object/public/imagenes/${data.path}`
-        );
+        const imagenUrl = `${supabaseUrl}/storage/v1/object/public/imagenes/${data.path}`;
+        setImagen(imagenUrl);
       }
     }
   }

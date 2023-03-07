@@ -1,6 +1,7 @@
 import Buscador from "@/components/admins/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
+import SubirImagen from "@/components/admins/SubirImagen";
 import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
 
