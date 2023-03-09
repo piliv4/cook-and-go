@@ -14,13 +14,15 @@ const SubirImagen = ({
 }) => {
   const router = useRouter();
   const bucketRuta = router.pathname.split("/")[2];
-  console.log(bucketRuta);
+  //Si no tenemos una imagen (estamos en modo crear nueva imagen)
+  //Le asignamos una imagen por defecto
+  !imagen && setImagen("https://www.subang.go.id/backend/images/default.png");
   async function subirImagen(e: HTMLInputElement) {
-    let imagen = e.files && e.files[0];
-    if (imagen) {
+    let imagenSubida = e.files && e.files[0];
+    if (imagenSubida) {
       const { data } = await supabase.storage
         .from("imagenes")
-        .upload(bucketRuta + "/" + uuidv4(), imagen);
+        .upload(bucketRuta + "/" + uuidv4(), imagenSubida);
       if (data) {
         const imagenUrl = `${supabaseUrl}/storage/v1/object/public/imagenes/${data.path}`;
         setImagen(imagenUrl);
@@ -30,11 +32,7 @@ const SubirImagen = ({
   return (
     <div className="py-10 relative w-full group ">
       <Image
-        src={
-          imagen
-            ? imagen
-            : "https://www.subang.go.id/backend/images/default.png"
-        }
+        src={imagen}
         alt="imagen_categoria.jpg"
         className=""
         fill

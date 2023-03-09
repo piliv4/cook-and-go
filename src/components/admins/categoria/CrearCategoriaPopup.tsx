@@ -18,6 +18,9 @@ const CrearCategoriaPopup = ({
     categoriaEditar ? categoriaEditar?.imagenURL : ""
   );
 
+  const [errorNombre, setErrorNombre] = useState("");
+  const [errorDescripcion, setErrorDescripcion] = useState("");
+
   async function crearCategoria(nombre: string, descripcion: string) {
     const { error } = await supabase.from("Categoria").insert([
       {
@@ -46,6 +49,20 @@ const CrearCategoriaPopup = ({
       router.replace(router.asPath);
     }
   }
+  function validarForm(nombre: string, descripcion: string) {
+    setErrorNombre("");
+    setErrorDescripcion("");
+    if (nombre == null || nombre == "") {
+      console.log("problema nooo");
+      setErrorNombre("¡Por favor introduzca un nombre!");
+      return false;
+    }
+    if (descripcion == null || descripcion == "") {
+      setErrorDescripcion("¡Por favor introduzca una descripción!");
+      return false;
+    }
+    return true;
+  }
 
   const aceptar = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,10 +71,12 @@ const CrearCategoriaPopup = ({
         nombre: { value: string };
         descripcion: { value: string };
       };
-      categoriaEditar
-        ? editarCategoria(nombre.value, descripcion.value)
-        : crearCategoria(nombre.value, descripcion.value);
-      cerrarPopUp();
+      if (validarForm(nombre.value, descripcion.value)) {
+        categoriaEditar
+          ? editarCategoria(nombre.value, descripcion.value)
+          : crearCategoria(nombre.value, descripcion.value);
+        cerrarPopUp();
+      }
     }
   };
 
@@ -79,6 +98,7 @@ const CrearCategoriaPopup = ({
                   className="px-6 border-[1px] rounded-md"
                   id="nombre"
                 />
+                <p className="text-red-600">{errorNombre}</p>
               </div>
               <div className="flex flex-col gap-y-[2px]">
                 <p className="font-thin">Descripción</p>
@@ -88,6 +108,7 @@ const CrearCategoriaPopup = ({
                   className="px-6 border-[1px] rounded-md"
                   id="descripcion"
                 ></input>
+                <p className="text-red-600">{errorDescripcion}</p>
               </div>
             </div>
             <div className="mb-3 mr-3 flex justify-end gap-2 font-">

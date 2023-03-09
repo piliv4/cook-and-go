@@ -1,12 +1,11 @@
 import Buscador from "@/components/admins/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
-import SubirImagen from "@/components/admins/SubirImagen";
 import supabase from "@/server/client";
 import { Categoria } from "@/types/types";
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("Categoria").select("*");
+  let { data } = await supabase.from("Categoria").select("*").order("nombre");
   return {
     props: {
       categorias: data,
