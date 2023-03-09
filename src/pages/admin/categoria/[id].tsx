@@ -3,6 +3,7 @@ import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import supabase from "@/server/client";
 import { Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 
 //NO FUNCIONA >:[
 
@@ -37,7 +38,12 @@ const DetallesCategoria = ({
   return (
     <div className="flex flex-col gap-4 ">
       <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
-        <h1 className="text-2xl font-black ">Platos de {titulo} </h1>
+        <h1 className="text-2xl font-black ">
+          <Link className="hover:text-primaryOrange" href={"/admin/categoria"}>
+            Todas mis categorias
+          </Link>
+          / Platos de {titulo}
+        </h1>
         <Buscador />
       </div>
       <DisplayerPlato platos={platos} />

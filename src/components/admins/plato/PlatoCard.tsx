@@ -22,8 +22,8 @@ export default function CategoriaCard({ plato }: { plato: Plato }) {
     >
       <div className="relative py-16 bg-transparent ">
         <Image
-          src="https://www.clara.es/medio/2021/11/28/postres-navidenos_3f462fd7_1280x1115.jpg"
-          alt="imagen_categoria.jpg"
+          src={plato.imagenURL}
+          alt="imagen_plato.jpg"
           className="absolute rounded-t-lg"
           fill
         />
@@ -58,7 +58,6 @@ export default function CategoriaCard({ plato }: { plato: Plato }) {
         platoEditar={plato}
         cerrarPopUp={() => setOpen(false)}
         open={open}
-        categorias={[]}
       />
     </div>
   );

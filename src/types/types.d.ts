@@ -18,4 +18,5 @@ export interface Plato {
   descripcion: string;
   precio: number;
   categoria: string;
+  imagenURL: string;
 }
