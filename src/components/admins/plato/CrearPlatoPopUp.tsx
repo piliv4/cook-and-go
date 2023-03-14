@@ -1,5 +1,5 @@
 import supabase from "@/server/client";
-import { Categoria, Plato } from "@/types/types";
+import { Categoria, Ingrediente, Plato } from "@/types/types";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import Popup from "reactjs-popup";
@@ -17,6 +17,7 @@ const CrearPlatoPopUp = ({
 }) => {
   const router = useRouter();
   const categoriaURI = router.query;
+  const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
   const [categorias, setCategorias] = useState<Categoria[] | null>(null);
   const [imagen, setImagen] = useState(
     platoEditar ? platoEditar?.imagenURL : ""
@@ -84,55 +85,63 @@ const CrearPlatoPopUp = ({
         : crearPlato(nombre.value, descripcion.value, categoria.value);
       cerrarPopUp();
     }
+    console.log(ingredientes);
   };
 
   return (
     <Popup open={open} modal closeOnDocumentClick onClose={() => cerrarPopUp()}>
       <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-600 bg-opacity-10 backdrop-blur-sm  ">
-        <div className="  w-3/5 sm:w-2/5 rounded-md bg-background xl:w-1/5 overflow-hidden flex flex-col ">
+        <div className="   rounded-md bg-background w-10/12 overflow-hidden flex flex-col ">
           <form onSubmit={(e) => aceptar(e)}>
             <div className="bg-primaryGreen py-2 text-center font-semibold text-lg text-white">
               Crear nuevo plato
             </div>
             <SubirImagen imagen={imagen} setImagen={setImagen} />
-            <div className="flex flex-col px-2 gap-y-6 items-center py-4">
-              <div className="flex flex-col gap-y-[2px]">
-                <p className="font-thin">Nombre</p>
-                <input
-                  type={"text"}
-                  id="nombre"
-                  defaultValue={platoEditar?.nombre}
-                  className="px-6 border-[1px] rounded-md"
-                />
-              </div>
+            <div className="grid grid-cols-2">
+              <div className="flex flex-col px-2 gap-y-6 items-center py-4">
+                <h1>Datos genéricos del plato</h1>
+                <div className="flex flex-col gap-y-[2px]">
+                  <p className="font-thin">Nombre</p>
+                  <input
+                    type={"text"}
+                    id="nombre"
+                    defaultValue={platoEditar?.nombre}
+                    className="px-6 border-[1px] rounded-md"
+                  />
+                </div>
 
-              <div className="flex flex-col gap-y-[2px]">
-                <p className="font-thin">Descripción</p>
-                <textarea
-                  id="descripcion"
-                  defaultValue={platoEditar?.descripcion}
-                  rows={2}
-                  className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
-                ></textarea>
-              </div>
+                <div className="flex flex-col gap-y-[2px]">
+                  <p className="font-thin">Descripción</p>
+                  <textarea
+                    id="descripcion"
+                    defaultValue={platoEditar?.descripcion}
+                    rows={2}
+                    className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
+                  ></textarea>
+                </div>
 
-              <div className="flex flex-col gap-y-[2px]">
-                <p className="font-thin">Categoría</p>
-                <select id="categoria">
-                  {categorias?.map((categoria) => (
-                    <option
-                      key={categoria.id}
-                      value={categoria.id}
-                      selected={
-                        platoEditar?.categoria == categoria.id ||
-                        categoriaURI.id == categoria.id
-                      }
-                    >
-                      {categoria.nombre}
-                    </option>
-                  ))}
-                </select>
-                <SeleccionarIngredientes />
+                <div className="flex flex-col gap-y-[2px]">
+                  <p className="font-thin">Categoría</p>
+                  <select id="categoria">
+                    {categorias?.map((categoria) => (
+                      <option
+                        key={categoria.id}
+                        value={categoria.id}
+                        selected={
+                          platoEditar?.categoria == categoria.id ||
+                          categoriaURI.id == categoria.id
+                        }
+                      >
+                        {categoria.nombre}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              {/* SELECCIONAR INGREDIENES */}
+              <div className="flex flex-col px-2">
+                <h1>Ingredientes del plato</h1>
+                <SeleccionarIngredientes anyadirIngrediente={setIngredientes} />
               </div>
             </div>
 
