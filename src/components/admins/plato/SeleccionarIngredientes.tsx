@@ -11,6 +11,7 @@ const SeleccionarIngredientes = ({
 }) => {
   const [ingredientes, setIngredientes] = useState<Ingrediente[] | null>(null);
   const [value, setValue] = useState("");
+
   useEffect(() => {
     const fetchPosts = async () => {
       const { data } = await supabase.from("Ingrediente").select();
@@ -18,7 +19,7 @@ const SeleccionarIngredientes = ({
     };
     fetchPosts();
   }, []);
-  console.log("ingredientes:" + ingredientes);
+
   return (
     <div className=" flex flex-col group ">
       <div className="bg-white grid grid-cols-[90%_10%] rounded-[30px] border-neutral  border-[1px] overflow-hidden">
@@ -70,7 +71,16 @@ const SeleccionarIngredientes = ({
                 {ingrediente.nombre.charAt(0).toUpperCase() +
                   ingrediente.nombre.slice(1)}
               </p>
-              <p>Añadir</p>
+              <p
+                onClick={() => {
+                  anyadirIngrediente((ingredientes: Ingrediente[]) => [
+                    ...ingredientes,
+                    ingrediente,
+                  ]);
+                }}
+              >
+                Añadir
+              </p>
             </div>
           ))}
       </div>

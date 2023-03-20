@@ -3,6 +3,7 @@ import { Categoria, Ingrediente, Plato } from "@/types/types";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import Popup from "reactjs-popup";
+import IngredienteTable from "../ingrediente/IngredienteTable";
 import SubirImagen from "../SubirImagen";
 import SeleccionarIngredientes from "./SeleccionarIngredientes";
 
@@ -85,7 +86,6 @@ const CrearPlatoPopUp = ({
         : crearPlato(nombre.value, descripcion.value, categoria.value);
       cerrarPopUp();
     }
-    console.log(ingredientes);
   };
 
   return (
@@ -142,6 +142,28 @@ const CrearPlatoPopUp = ({
               <div className="flex flex-col px-2">
                 <h1>Ingredientes del plato</h1>
                 <SeleccionarIngredientes anyadirIngrediente={setIngredientes} />
+                <div className="flex flex-col">
+                  <h1>Mis ingredientes:</h1>{" "}
+                  {ingredientes?.map((ingrediente, index) => (
+                    <div
+                      key={ingrediente.id}
+                      className="flex flex-row border-[1px]"
+                    >
+                      <p>{ingrediente.nombre}</p>
+                      <button
+                        onClick={() =>
+                          setIngredientes((ingredientes) => {
+                            return ingredientes.filter(
+                              (value, i) => i !== index
+                            );
+                          })
+                        }
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
