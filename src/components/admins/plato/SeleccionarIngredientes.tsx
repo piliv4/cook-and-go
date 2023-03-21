@@ -21,7 +21,7 @@ const SeleccionarIngredientes = ({
   }, []);
 
   return (
-    <div className=" flex flex-col group ">
+    <div className=" flex flex-col group  ">
       <div className="bg-white grid grid-cols-[90%_10%] rounded-[30px] border-neutral  border-[1px] overflow-hidden">
         <div className="px-2 py-1">
           <input
@@ -30,7 +30,7 @@ const SeleccionarIngredientes = ({
             id="searchBar"
             type="text"
             value={value}
-            placeholder="Ingrediente"
+            placeholder="Buscador de ingredientes..."
             onChange={(e) => {
               setValue(e.target.value);
             }}
@@ -41,7 +41,7 @@ const SeleccionarIngredientes = ({
         </div>
       </div>
 
-      <div className="hidden group-hover:flex flex-col border-x-[1px] border-b-[1px]  mx-3 rounded-b-md bg-white">
+      <div className="hidden group-hover:flex hover:flex z-10 flex-col border-x-[1px] border-b-[1px]  mx-3 rounded-b-md bg-white ">
         {ingredientes
           ?.filter((ingrediente) => {
             return (

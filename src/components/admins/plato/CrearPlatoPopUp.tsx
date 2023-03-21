@@ -2,6 +2,7 @@ import supabase from "@/server/client";
 import { Categoria, Ingrediente, Plato } from "@/types/types";
 import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
+import { BsTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
 import IngredienteTable from "../ingrediente/IngredienteTable";
 import SubirImagen from "../SubirImagen";
@@ -91,16 +92,18 @@ const CrearPlatoPopUp = ({
   return (
     <Popup open={open} modal closeOnDocumentClick onClose={() => cerrarPopUp()}>
       <div className="fixed inset-0 z-10 flex items-center justify-center bg-gray-600 bg-opacity-10 backdrop-blur-sm  ">
-        <div className="   rounded-md bg-background w-10/12 overflow-hidden flex flex-col ">
+        <div className="   rounded-md bg-background w-[60%] overflow-hidden flex flex-col ">
           <form onSubmit={(e) => aceptar(e)}>
             <div className="bg-primaryGreen py-2 text-center font-semibold text-lg text-white">
               Crear nuevo plato
             </div>
             <SubirImagen imagen={imagen} setImagen={setImagen} />
             <div className="grid grid-cols-2">
-              <div className="flex flex-col px-2 gap-y-6 items-center py-4">
-                <h1>Datos genéricos del plato</h1>
-                <div className="flex flex-col gap-y-[2px]">
+              <div className="flex flex-col px-4 gap-y-2 items-center py-2 mt-4 border-r-[1px] ">
+                <h1 className="text-xl w-full text-center border-b-[1px] border-primaryGreen">
+                  Datos genéricos del plato
+                </h1>
+                <div className="flex flex-col gap-y-[1px] w-full">
                   <p className="font-thin">Nombre</p>
                   <input
                     type={"text"}
@@ -110,17 +113,7 @@ const CrearPlatoPopUp = ({
                   />
                 </div>
 
-                <div className="flex flex-col gap-y-[2px]">
-                  <p className="font-thin">Descripción</p>
-                  <textarea
-                    id="descripcion"
-                    defaultValue={platoEditar?.descripcion}
-                    rows={2}
-                    className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
-                  ></textarea>
-                </div>
-
-                <div className="flex flex-col gap-y-[2px]">
+                <div className="flex flex-col gap-y-[1px] w-full">
                   <p className="font-thin">Categoría</p>
                   <select id="categoria">
                     {categorias?.map((categoria) => (
@@ -137,20 +130,41 @@ const CrearPlatoPopUp = ({
                     ))}
                   </select>
                 </div>
+
+                <div className="flex flex-col gap-y-[1px] w-full">
+                  <p className="font-thin">Descripción</p>
+                  <textarea
+                    id="descripcion"
+                    defaultValue={platoEditar?.descripcion}
+                    rows={3}
+                    className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
+                  ></textarea>
+                </div>
               </div>
               {/* SELECCIONAR INGREDIENES */}
-              <div className="flex flex-col px-2">
-                <h1>Ingredientes del plato</h1>
-                <SeleccionarIngredientes anyadirIngrediente={setIngredientes} />
-                <div className="flex flex-col">
-                  <h1>Mis ingredientes:</h1>{" "}
+              <div className="flex flex-col px-4 gap-y-2 py-2 mt-4">
+                <h1 className="text-xl w-full text-center border-b-[1px] border-primaryGreen">
+                  Ingredientes del plato
+                </h1>
+                <div className="pt-[20px]">
+                  <SeleccionarIngredientes
+                    anyadirIngrediente={setIngredientes}
+                  />
+                </div>
+                <div className="flex flex-col pt-2 relative">
+                  <h1 className=" w-full text-center border-b-[1px] border-secondaryGreen">
+                    Mis ingredientes:
+                  </h1>
                   {ingredientes?.map((ingrediente, index) => (
                     <div
                       key={ingrediente.id}
-                      className="flex flex-row border-[1px]"
+                      className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"
                     >
-                      <p>{ingrediente.nombre}</p>
+                      <p className="w-full font-thin">
+                        {index + 1}. {ingrediente.nombre}
+                      </p>
                       <button
+                        className="px-1"
                         onClick={() =>
                           setIngredientes((ingredientes) => {
                             return ingredientes.filter(
@@ -159,7 +173,7 @@ const CrearPlatoPopUp = ({
                           })
                         }
                       >
-                        Eliminar
+                        <BsTrashFill className="fill-primaryOrange" />
                       </button>
                     </div>
                   ))}
