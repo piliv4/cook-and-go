@@ -1,13 +1,30 @@
 import supabase from "@/server/client";
-import { Plato } from "@/types/types";
+import { Ingrediente, Plato } from "@/types/types";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/Buscador";
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("Articulo").select("*");
+  let { data: platos } = await supabase.from("Articulo").select("*");
+  for (let plato of platos as Plato[]) {
+    plato.ingredientes = [];
+    let { data: ingredientesId } = await supabase
+      .from("ArticuloIngrediente")
+      .select("ingrediente_id")
+      .eq("articulo_id", plato.id);
+
+    if (ingredientesId != null) {
+      for (const id of ingredientesId) {
+        let { data: ingrediente } = await supabase
+          .from("Ingrediente")
+          .select("*")
+          .eq("id", id.ingrediente_id);
+        ingrediente && plato.ingredientes.push(ingrediente[0] as Ingrediente);
+      }
+    }
+  }
   return {
     props: {
-      platos: data,
+      platos: platos,
     },
   };
 }

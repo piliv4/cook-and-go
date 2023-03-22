@@ -19,7 +19,9 @@ const CrearPlatoPopUp = ({
 }) => {
   const router = useRouter();
   const categoriaURI = router.query;
-  const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
+  const [ingredientes, setIngredientes] = useState<Ingrediente[]>(
+    platoEditar ? platoEditar.ingredientes : []
+  );
   const [categorias, setCategorias] = useState<Categoria[] | null>(null);
   const [imagen, setImagen] = useState(
     platoEditar ? platoEditar?.imagenURL : ""

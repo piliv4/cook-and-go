@@ -19,4 +19,5 @@ export interface Plato {
   precio: number;
   categoria: string;
   imagenURL: string;
+  ingredientes: Ingrediente[];
 }
