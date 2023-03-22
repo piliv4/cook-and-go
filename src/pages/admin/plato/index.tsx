@@ -1,5 +1,4 @@
 import supabase from "@/server/client";
-import Link from "next/link";
 import { Plato } from "@/types/types";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/Buscador";

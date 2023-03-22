@@ -1,14 +1,15 @@
 import supabase from "@/server/client";
-import { Plato } from "@/types/types";
+import { Ingrediente, Plato } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import CrearPlatoPopUp from "./CrearPlatoPopUp";
 
 export default function CategoriaCard({ plato }: { plato: Plato }) {
   const [open, setOpen] = useState(false);
+
   async function borrarPlato() {
     const { error } = await supabase.from("Plato").delete().eq("id", plato.id);
     if (!error) {

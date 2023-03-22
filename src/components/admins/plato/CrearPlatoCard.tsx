@@ -20,7 +20,6 @@ const CrearPlatoCard = () => {
         <CrearPlatoPopUp
           open={open}
           platoEditar={null}
-          categorias={[]}
           cerrarPopUp={() => setOpen(false)}
         />
       </div>

@@ -25,12 +25,12 @@ const CrearPlatoPopUp = ({
     platoEditar ? platoEditar?.imagenURL : ""
   );
   useEffect(() => {
-    const fetchPosts = async () => {
+    const getCategorias = async () => {
       const { data } = await supabase.from("Categoria").select();
       setCategorias(data as Categoria[]);
     };
-    fetchPosts();
-  }, []);
+    getCategorias();
+  });
 
   async function crearPlato(
     nombre: string,
