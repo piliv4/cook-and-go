@@ -20,8 +20,9 @@ const CrearPlatoPopUp = ({
   const router = useRouter();
   const categoriaURI = router.query;
   const [ingredientes, setIngredientes] = useState<Ingrediente[]>(
-    platoEditar ? platoEditar.ingredientes : []
+    platoEditar && platoEditar.ingredientes ? platoEditar.ingredientes : []
   );
+
   const [categorias, setCategorias] = useState<Categoria[] | null>(null);
   const [imagen, setImagen] = useState(
     platoEditar ? platoEditar?.imagenURL : ""
@@ -39,16 +40,19 @@ const CrearPlatoPopUp = ({
     descripcion: string,
     categoria: string
   ) {
-    const { error } = await supabase.from("Articulo").insert([
-      {
-        nombre: nombre,
-        descripcion: descripcion,
-        precio: 10,
-        categoria_id: categoria,
-        imagenURL: imagen,
-      },
-    ]);
-    console.log(error);
+    const { data, error } = await supabase
+      .from("Articulo")
+      .insert([
+        {
+          nombre: nombre,
+          descripcion: descripcion,
+          precio: 10,
+          categoria_id: categoria,
+          imagenURL: imagen,
+        },
+      ])
+      .select();
+    data && agregarIngredientes((data as Plato[])[0].id);
     if (!error) {
       router.replace(router.asPath);
     }
@@ -71,9 +75,32 @@ const CrearPlatoPopUp = ({
         },
       ])
       .eq("id", platoEditar?.id);
+
+    //Borrar relaciones anteriores de la tabla ArticuloIngrediente
+    const { error: error2 } = await supabase
+      .from("ArticuloIngrediente")
+      .delete()
+      .eq("articulo_id", platoEditar?.id);
+    //Agregar los ingredientes
+    platoEditar && agregarIngredientes(platoEditar.id);
     if (!error) {
       router.replace(router.asPath);
     }
+  }
+
+  function agregarIngredientes(platoId: string) {
+    ingredientes.map(async (ingrediente) => {
+      const { error } = await supabase.from("ArticuloIngrediente").insert([
+        {
+          ingrediente_id: ingrediente.id,
+          articulo_id: platoId,
+        },
+      ]);
+      console.log(error);
+      if (!error) {
+        router.replace(router.asPath);
+      }
+    });
   }
 
   const aceptar = (e: FormEvent<HTMLFormElement>) => {
@@ -87,6 +114,8 @@ const CrearPlatoPopUp = ({
       platoEditar
         ? editarPlato(nombre.value, descripcion.value, categoria.value)
         : crearPlato(nombre.value, descripcion.value, categoria.value);
+      setIngredientes([]);
+      setImagen("");
       cerrarPopUp();
     }
   };
@@ -186,7 +215,11 @@ const CrearPlatoPopUp = ({
             <div className="mb-3 mr-3 flex justify-end gap-2 font-">
               <button
                 className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-                onClick={() => cerrarPopUp()}
+                onClick={() => {
+                  setIngredientes([]);
+                  setImagen("");
+                  cerrarPopUp();
+                }}
               >
                 Cancelar
               </button>
