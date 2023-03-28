@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { BsTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
-import IngredienteTable from "../ingrediente/IngredienteTable";
 import SubirImagen from "../SubirImagen";
 import SeleccionarIngredientes from "./SeleccionarIngredientes";
 
@@ -20,21 +19,28 @@ const CrearPlatoPopUp = ({
   const router = useRouter();
   const categoriaURI = router.query;
   const [ingredientes, setIngredientes] = useState<Ingrediente[]>(
-    platoEditar && platoEditar.ingredientes ? platoEditar.ingredientes : []
+    platoEditar ? platoEditar.ingredientes : []
   );
-
-  const [categorias, setCategorias] = useState<Categoria[] | null>(null);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [imagen, setImagen] = useState(
     platoEditar ? platoEditar?.imagenURL : ""
   );
+  useEffect(() => {
+    console.log("culo");
+    if (platoEditar) {
+      setImagen(platoEditar.imagenURL);
+      setIngredientes(platoEditar.ingredientes);
+    }
+  }, [platoEditar]);
+
   useEffect(() => {
     const getCategorias = async () => {
       const { data } = await supabase.from("Categoria").select();
       setCategorias(data as Categoria[]);
     };
     getCategorias();
-  });
-
+  }, []);
+  console.log(platoEditar?.ingredientes);
   async function crearPlato(
     nombre: string,
     descripcion: string,
@@ -52,10 +58,7 @@ const CrearPlatoPopUp = ({
         },
       ])
       .select();
-    data && agregarIngredientes((data as Plato[])[0].id);
-    if (!error) {
-      router.replace(router.asPath);
-    }
+    !error && agregarIngredientes((data as Plato[])[0].id);
   }
 
   async function editarPlato(
@@ -82,10 +85,7 @@ const CrearPlatoPopUp = ({
       .delete()
       .eq("articulo_id", platoEditar?.id);
     //Agregar los ingredientes
-    platoEditar && agregarIngredientes(platoEditar.id);
-    if (!error) {
-      router.replace(router.asPath);
-    }
+    platoEditar && !error && agregarIngredientes(platoEditar.id);
   }
 
   function agregarIngredientes(platoId: string) {
@@ -96,7 +96,6 @@ const CrearPlatoPopUp = ({
           articulo_id: platoId,
         },
       ]);
-      console.log(error);
       if (!error) {
         router.replace(router.asPath);
       }
