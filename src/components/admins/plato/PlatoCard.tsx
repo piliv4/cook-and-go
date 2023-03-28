@@ -1,15 +1,19 @@
 import supabase from "@/server/client";
-import { Ingrediente, Plato } from "@/types/types";
+import { Plato } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
-import { useEffect, useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
-import CrearPlatoPopUp from "./CrearPlatoPopUp";
 
-export default function CategoriaCard({ plato }: { plato: Plato }) {
-  const [open, setOpen] = useState(false);
-
+export default function CategoriaCard({
+  plato,
+  abrirPopUp,
+  setPlatoEditar,
+}: {
+  plato: Plato;
+  abrirPopUp: Function;
+  setPlatoEditar: Function;
+}) {
   async function borrarPlato() {
     //Primero borramos la relacion con ingredientes
     const { error: error1 } = await supabase
@@ -64,18 +68,16 @@ export default function CategoriaCard({ plato }: { plato: Plato }) {
       <div className="grid grid-cols-2 absolute right-2 top-2 gap-1 z-10">
         <BsFillPencilFill
           className="group fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setPlatoEditar(plato);
+            abrirPopUp();
+          }}
         />
         <BsTrashFill
           className="fill-white hover:fill-secondaryOrange transition duration-150"
           onClick={() => borrarPlato()}
         />
       </div>
-      <CrearPlatoPopUp
-        platoEditar={plato}
-        cerrarPopUp={() => setOpen(false)}
-        open={open}
-      />
     </div>
   );
 }

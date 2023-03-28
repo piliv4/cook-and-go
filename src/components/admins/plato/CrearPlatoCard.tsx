@@ -1,13 +1,10 @@
-import { useState } from "react";
 import { BsPlusCircleFill } from "react-icons/bs";
-import CrearPlatoPopUp from "./CrearPlatoPopUp";
 
-const CrearPlatoCard = () => {
-  const [open, setOpen] = useState(false);
+const CrearPlatoCard = ({ abrirPopUp }: { abrirPopUp: Function }) => {
   return (
     <div
       className="min-h-[200px] bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
-      onClick={() => setOpen(true)}
+      onClick={() => abrirPopUp()}
     >
       <div className="h-full flex justify-center items-center ">
         <BsPlusCircleFill
@@ -17,11 +14,6 @@ const CrearPlatoCard = () => {
       </div>
       <div className="py-2 font-light flex justify-center group-hover:text-primaryOrange transition duration-150 group-hover:scale-105 ">
         Nuevo plato
-        <CrearPlatoPopUp
-          open={open}
-          platoEditar={null}
-          cerrarPopUp={() => setOpen(false)}
-        />
       </div>
     </div>
   );
