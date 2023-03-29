@@ -50,7 +50,6 @@ const CrearPlatoPopUp = ({
   }
 
   async function editarPlato() {
-    console.log(plato.categoria);
     const { error } = await supabase
       .from("Articulo")
       .update([
