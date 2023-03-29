@@ -2,8 +2,6 @@ import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
 import { Ingrediente, Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
-import Link from "next/link";
-import { useRouter } from "next/router";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -46,12 +44,25 @@ const DetallesPlato = ({
         <h1 className="text-2xl font-black ">{plato.nombre}</h1>
       </CabeceraPagina>
       {/* Información general */}
-      <div className="grid grid-cols-2">
-        <div></div>
+      <div className="grid grid-cols-2 pt-2">
+        <div>{/* IMAGEN */}</div>
         <div>
-          <h1>{plato.nombre}</h1>
-          <p>{plato.descripcion}</p>
-          <p>{plato.precio}</p>
+          <div className="grid grid-cols-2">
+            <p>Nombre:</p>
+            <h1>{plato.nombre}</h1>
+          </div>
+          <div className="grid grid-cols-2">
+            <p>Descripción:</p>
+            <p>{plato.descripcion}</p>
+          </div>
+          <div className="grid grid-cols-2">
+            <p>Categoria:</p>
+            <p>{plato.categoria}</p>
+          </div>
+          <div className="grid grid-cols-2">
+            <p>Precio:</p>
+            <p>{plato.precio}</p>
+          </div>
         </div>
       </div>
       {/* Mis ingredientes */}
@@ -59,16 +70,22 @@ const DetallesPlato = ({
         <div className="pb-1 border-primaryGreen border-b-[2px] text-xl font-black">
           Ingredientes:
         </div>
-        {ingredientes.map((ingrediente, index) => (
-          <div
-            key={ingrediente.id}
-            className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"
-          >
-            <p className="w-full">
-              {index + 1}. {ingrediente.nombre}
-            </p>
+        {ingredientes.length > 0 ? (
+          ingredientes.map((ingrediente, index) => (
+            <div
+              key={ingrediente.id}
+              className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"
+            >
+              <p className="w-full">
+                {index + 1}. {ingrediente.nombre}
+              </p>
+            </div>
+          ))
+        ) : (
+          <div className="w-full text-center">
+            este plato no tiene ingredientes
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
