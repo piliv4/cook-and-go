@@ -1,7 +1,7 @@
 import Buscador from "@/components/admins/Buscador";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import supabase from "@/server/client";
-import { Plato } from "@/types/types";
+import { Ingrediente, Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 
@@ -19,6 +19,23 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .from("Articulo")
     .select("*")
     .eq("categoria_id", id);
+  for (let plato of platos as Plato[]) {
+    plato.ingredientes = [];
+    let { data: ingredientesId } = await supabase
+      .from("ArticuloIngrediente")
+      .select("ingrediente_id")
+      .eq("articulo_id", plato.id);
+
+    if (ingredientesId != null) {
+      for (const id of ingredientesId) {
+        let { data: ingrediente } = await supabase
+          .from("Ingrediente")
+          .select("*")
+          .eq("id", id.ingrediente_id);
+        ingrediente && plato.ingredientes.push(ingrediente[0] as Ingrediente);
+      }
+    }
+  }
   return {
     props: {
       platos: platos as Plato[],
