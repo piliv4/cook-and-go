@@ -3,7 +3,7 @@ import { Categoria } from "@/types/types";
 import router from "next/router";
 import { FormEvent, useState } from "react";
 import Popup from "reactjs-popup";
-import SubirImagen from "../SubirImagen";
+import SubirImagen from "../ui/SubirImagen";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,

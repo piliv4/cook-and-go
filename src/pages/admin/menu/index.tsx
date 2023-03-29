@@ -1,4 +1,4 @@
-import SubirImagen from "@/components/admins/SubirImagen";
+import SubirImagen from "@/components/admins/ui/SubirImagen";
 import Link from "next/link";
 
 export default function menu() {

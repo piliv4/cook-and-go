@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { FormEvent, useEffect, useState } from "react";
 import { BsTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
-import SubirImagen from "../SubirImagen";
+import SubirImagen from "../ui/SubirImagen";
 import SeleccionarIngredientes from "./SeleccionarIngredientes";
 
 const CrearPlatoPopUp = ({

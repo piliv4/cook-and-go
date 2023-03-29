@@ -60,7 +60,7 @@ export default function CategoriaCard({
         </p>
 
         <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
-          <Link className="bg-transparent" href={"#"}>
+          <Link className="bg-transparent" href={"/admin/plato/" + plato.id}>
             Ver detalles
           </Link>
         </div>

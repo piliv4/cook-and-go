@@ -1,7 +1,8 @@
 import supabase from "@/server/client";
 import { Ingrediente, Plato } from "@/types/types";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
-import Buscador from "@/components/admins/Buscador";
+import Buscador from "@/components/admins/ui/Buscador";
+import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 
 export async function getServerSideProps() {
   let { data: platos } = await supabase.from("Articulo").select("*");
@@ -31,12 +32,12 @@ export async function getServerSideProps() {
 
 export default function PlatoPage({ platos }: { platos: Plato[] }) {
   return (
-    <div className="flex flex-col gap-4 ">
-      <div className="grid grid-cols-[60%_20%_20%] w-full pb-3 border-primaryGreen border-double border-b-4 ">
+    <div className="flex flex-col gap-4">
+      <CabeceraPagina>
         <h1 className="text-2xl font-black ">Todos mis platos</h1>
         <select className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"></select>
         <Buscador />
-      </div>
+      </CabeceraPagina>
       <DisplayerPlato platos={platos} />
     </div>
   );

@@ -1,9 +1,10 @@
-import Buscador from "@/components/admins/Buscador";
+import Buscador from "@/components/admins/ui/Buscador";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import supabase from "@/server/client";
 import { Ingrediente, Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
+import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 
 //NO FUNCIONA >:[
 
@@ -54,7 +55,7 @@ const DetallesCategoria = ({
   console.log(platos);
   return (
     <div className="flex flex-col gap-4 ">
-      <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
+      <CabeceraPagina>
         <h1 className="text-2xl font-black ">
           <Link className="hover:text-primaryOrange" href={"/admin/categoria"}>
             Todas mis categorias
@@ -62,7 +63,7 @@ const DetallesCategoria = ({
           / Platos de {titulo}
         </h1>
         <Buscador />
-      </div>
+      </CabeceraPagina>
       <DisplayerPlato platos={platos} />
     </div>
   );
