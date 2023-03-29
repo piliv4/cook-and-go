@@ -12,25 +12,17 @@ const CrearPlatoPopUp = ({
   cerrarPopUp,
   open,
 }: {
-  platoEditar: Plato | null;
+  platoEditar: Plato;
   cerrarPopUp: Function;
   open: boolean;
 }) => {
   const router = useRouter();
   const categoriaURI = router.query;
-  const [ingredientes, setIngredientes] = useState<Ingrediente[]>(
-    platoEditar ? platoEditar.ingredientes : []
-  );
+  const [plato, setPlato] = useState<Plato>(platoEditar);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [imagen, setImagen] = useState(
-    platoEditar ? platoEditar?.imagenURL : ""
-  );
+
   useEffect(() => {
-    console.log("culo");
-    if (platoEditar) {
-      setImagen(platoEditar.imagenURL);
-      setIngredientes(platoEditar.ingredientes);
-    }
+    setPlato(platoEditar);
   }, [platoEditar]);
 
   useEffect(() => {
@@ -40,41 +32,34 @@ const CrearPlatoPopUp = ({
     };
     getCategorias();
   }, []);
-  console.log(platoEditar?.ingredientes);
-  async function crearPlato(
-    nombre: string,
-    descripcion: string,
-    categoria: string
-  ) {
+
+  async function crearPlato() {
     const { data, error } = await supabase
       .from("Articulo")
       .insert([
         {
-          nombre: nombre,
-          descripcion: descripcion,
-          precio: 10,
-          categoria_id: categoria,
-          imagenURL: imagen,
+          nombre: plato.nombre,
+          descripcion: plato.descripcion,
+          precio: plato.precio,
+          categoria_id: plato.categoria,
+          imagenURL: plato.imagenURL,
         },
       ])
       .select();
     !error && agregarIngredientes((data as Plato[])[0].id);
   }
 
-  async function editarPlato(
-    nombre: string,
-    descripcion: string,
-    categoria: string
-  ) {
+  async function editarPlato() {
+    console.log(plato.categoria);
     const { error } = await supabase
       .from("Articulo")
       .update([
         {
-          nombre: nombre,
-          descripcion: descripcion,
-          precio: 10,
-          categoria_id: categoria,
-          imagenURL: imagen,
+          nombre: plato.nombre,
+          descripcion: plato.descripcion,
+          precio: plato.precio,
+          categoria_id: plato.categoria,
+          imagenURL: plato.imagenURL,
         },
       ])
       .eq("id", platoEditar?.id);
@@ -89,7 +74,7 @@ const CrearPlatoPopUp = ({
   }
 
   function agregarIngredientes(platoId: string) {
-    ingredientes.map(async (ingrediente) => {
+    plato.ingredientes.map(async (ingrediente) => {
       const { error } = await supabase.from("ArticuloIngrediente").insert([
         {
           ingrediente_id: ingrediente.id,
@@ -105,16 +90,7 @@ const CrearPlatoPopUp = ({
   const aceptar = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (open) {
-      const { nombre, descripcion, categoria } = e.target as typeof e.target & {
-        nombre: { value: string };
-        descripcion: { value: string };
-        categoria: { value: string };
-      };
-      platoEditar
-        ? editarPlato(nombre.value, descripcion.value, categoria.value)
-        : crearPlato(nombre.value, descripcion.value, categoria.value);
-      setIngredientes([]);
-      setImagen("");
+      plato.id ? editarPlato() : crearPlato();
       cerrarPopUp();
     }
   };
@@ -127,7 +103,12 @@ const CrearPlatoPopUp = ({
             <div className="bg-primaryGreen py-2 text-center font-semibold text-lg text-white">
               Crear nuevo plato
             </div>
-            <SubirImagen imagen={imagen} setImagen={setImagen} />
+            <SubirImagen
+              imagen={plato.imagenURL}
+              setImagen={(imagen: string) => {
+                setPlato({ ...plato, imagenURL: imagen });
+              }}
+            />
             <div className="grid grid-cols-2">
               <div className="flex flex-col px-4 gap-y-2 items-center py-2 mt-4 border-r-[1px] ">
                 <h1 className="text-xl w-full text-center border-b-[1px] border-primaryGreen">
@@ -138,20 +119,28 @@ const CrearPlatoPopUp = ({
                   <input
                     type={"text"}
                     id="nombre"
-                    defaultValue={platoEditar?.nombre}
+                    defaultValue={plato.nombre}
+                    onChange={(e) => {
+                      setPlato({ ...plato, nombre: e.target.value });
+                    }}
                     className="px-6 border-[1px] rounded-md"
                   />
                 </div>
 
                 <div className="flex flex-col gap-y-[1px] w-full">
                   <p className="font-thin">Categoría</p>
-                  <select id="categoria">
+                  <select
+                    id="categoria"
+                    onChange={(e) => {
+                      setPlato({ ...plato, categoria: e.target.value });
+                    }}
+                  >
                     {categorias?.map((categoria) => (
                       <option
                         key={categoria.id}
                         value={categoria.id}
                         selected={
-                          platoEditar?.categoria == categoria.id ||
+                          plato.categoria == categoria.id ||
                           categoriaURI.id == categoria.id
                         }
                       >
@@ -178,14 +167,19 @@ const CrearPlatoPopUp = ({
                 </h1>
                 <div className="pt-[20px]">
                   <SeleccionarIngredientes
-                    anyadirIngrediente={setIngredientes}
+                    anyadirIngrediente={(ingrediente: Ingrediente) =>
+                      setPlato({
+                        ...plato,
+                        ingredientes: plato.ingredientes.concat([ingrediente]),
+                      })
+                    }
                   />
                 </div>
                 <div className="flex flex-col pt-2 relative">
                   <h1 className=" w-full text-center border-b-[1px] border-secondaryGreen">
                     Mis ingredientes:
                   </h1>
-                  {ingredientes?.map((ingrediente, index) => (
+                  {plato.ingredientes.map((ingrediente, index) => (
                     <div
                       key={ingrediente.id}
                       className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"
@@ -196,10 +190,11 @@ const CrearPlatoPopUp = ({
                       <button
                         className="px-1"
                         onClick={() =>
-                          setIngredientes((ingredientes) => {
-                            return ingredientes.filter(
+                          setPlato({
+                            ...plato,
+                            ingredientes: plato.ingredientes.filter(
                               (value, i) => i !== index
-                            );
+                            ),
                           })
                         }
                       >
@@ -214,11 +209,7 @@ const CrearPlatoPopUp = ({
             <div className="mb-3 mr-3 flex justify-end gap-2 font-">
               <button
                 className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-                onClick={() => {
-                  setIngredientes([]);
-                  setImagen("");
-                  cerrarPopUp();
-                }}
+                onClick={() => cerrarPopUp()}
               >
                 Cancelar
               </button>

@@ -73,10 +73,7 @@ const SeleccionarIngredientes = ({
               </p>
               <p
                 onClick={() => {
-                  anyadirIngrediente((ingredientes: Ingrediente[]) => [
-                    ...ingredientes,
-                    ingrediente,
-                  ]);
+                  anyadirIngrediente(ingrediente);
                 }}
               >
                 Añadir
