@@ -35,12 +35,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   let { data: categoria } = await supabase
     .from("Categoria")
     .select("*")
-    .eq("id", plato.categoria)
+    .eq("id", plato.categoria_id)
     .single();
 
   return {
     props: {
-      plato: plato && (plato as Plato),
+      plato: plato,
       categoria: categoria as Categoria,
     },
   };
@@ -56,13 +56,20 @@ const DetallesPlato = ({
   const [open, setOpen] = useState(false);
 
   async function borrarPlato() {
-    const { error } = await supabase
+    //Primero borramos la relacion con ingredientes
+    const { error: error1 } = await supabase
+      .from("ArticuloIngrediente")
+      .delete()
+      .eq("articulo_id", plato.id);
+
+    //Despues hacemos el borrado del campo
+    const { error: error2 } = await supabase
       .from("Articulo")
       .delete()
       .eq("id", plato.id);
-    console.log(error);
-    if (!error) {
-      router.replace("/admin/platos");
+    //Si no hay errores refrescamos la página
+    if (!error1 && !error2) {
+      router.replace("/admin/plato");
     }
   }
   return (
