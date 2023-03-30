@@ -11,7 +11,7 @@ const SeccionMenu = ({ titulo }: { titulo: string }) => {
           type="checkbox"
         />
       </div>
-      <div>
+      <div className="">
         <div className="flex flex-row py-1 border-b-[2px] border-primaryOrange border-dotted ">
           <p className="w-full">Plato</p>
           <BsTrash className=" self-end" />
