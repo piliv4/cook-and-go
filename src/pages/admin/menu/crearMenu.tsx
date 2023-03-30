@@ -13,6 +13,7 @@ export default function CrearMenu() {
       <div>
         <h1>Información general</h1>
       </div>
+      {/* SECCIONES DEL MENU */}
       <div className=" flex flex-col">
         {menuCategorias.map((categoria) => (
           <SeccionMenu titulo={categoria} key={categoria} />
