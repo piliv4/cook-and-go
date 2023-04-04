@@ -45,6 +45,24 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
           setPlatosAnyadidos={setEntrantes}
           platosAnyadidos={entrantes}
         />
+        <SeccionMenu
+          titulo={"Primeros"}
+          platos={platos}
+          setPlatosAnyadidos={setPrimeros}
+          platosAnyadidos={primeros}
+        />
+        <SeccionMenu
+          titulo={"Segundos"}
+          platos={platos}
+          setPlatosAnyadidos={setSegundos}
+          platosAnyadidos={segundos}
+        />
+        <SeccionMenu
+          titulo={"Postres"}
+          platos={platos}
+          setPlatosAnyadidos={setPostres}
+          platosAnyadidos={postres}
+        />
       </div>
       <div className="flex flex-col gap-y-2">
         <div className="flex flex-row border-b-[1px] border-primaryGreen">
@@ -62,7 +80,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
           </label>
         </div>
       </div>
-      <div className=" flex flex-row justify-end gap-x-2 font-black">
+      <div className=" flex flex-row justify-end gap-x-2 font-black py-4">
         <button className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3">
           Guardar
         </button>

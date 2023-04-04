@@ -62,11 +62,11 @@ const SeccionMenu = ({
           </div>
 
           {/* SELECTOR DE PLATOS */}
-          <div className=" flex flex-col group   pt-2 ">
+          <div className=" flex flex-col  group mt-2 ">
             <div className="bg-white  flex flex-row rounded-[30px] border-neutral  border-[1px] overflow-hidden">
               <div className="px-2 py-1 w-full">
                 <input
-                  className="input  w-full bg-transparent text-sm text-neutral focus:outline-0 sm:h-full"
+                  className=" w-full bg-transparent text-sm text-neutral focus:outline-0 sm:h-full"
                   autoComplete="off"
                   id="searchBar"
                   type="text"
