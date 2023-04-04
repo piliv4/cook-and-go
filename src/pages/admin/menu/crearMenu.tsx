@@ -62,12 +62,12 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
             tipo: tipo,
           },
         ]);
+        if (!error) {
+          return true;
+        } else {
+          return false;
+        }
       });
-      if (!error) {
-        return true;
-      } else {
-        return false;
-      }
     } else {
       return true;
     }
