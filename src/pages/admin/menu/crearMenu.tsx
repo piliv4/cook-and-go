@@ -2,6 +2,7 @@ import SeccionMenu from "@/components/admins/menu/SeccionMenu";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
 import { Menu, Plato } from "@/types/types";
+import router from "next/router";
 import { useState } from "react";
 
 export async function getStaticProps() {
@@ -43,10 +44,11 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
       ])
       .select();
     if (!error) {
-      anyadirPlatos(entrantes, (data[0] as Menu).id, "entrantes");
-      anyadirPlatos(primeros, (data[0] as Menu).id, "primeros");
-      anyadirPlatos(segundos, (data[0] as Menu).id, "terceros");
-      anyadirPlatos(postres, (data[0] as Menu).id, "postres");
+      anyadirPlatos(entrantes, (data[0] as Menu).id, "entrantes") &&
+        anyadirPlatos(primeros, (data[0] as Menu).id, "primeros") &&
+        anyadirPlatos(segundos, (data[0] as Menu).id, "terceros") &&
+        anyadirPlatos(postres, (data[0] as Menu).id, "postres") &&
+        router.push("/admin/menu/");
     }
   }
 
@@ -61,6 +63,13 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
           },
         ]);
       });
+      if (!error) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
     }
   }
 
@@ -164,7 +173,10 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
         >
           Guardar
         </button>
-        <button className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3">
+        <button
+          className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          onClick={() => router.push("/admin/menu/")}
+        >
           Cancelar
         </button>
       </div>
