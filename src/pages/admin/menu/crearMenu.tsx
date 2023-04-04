@@ -13,9 +13,9 @@ export async function getStaticProps() {
   };
 }
 
-export default function CrearMenu(platos: Plato[]) {
+export default function CrearMenu({ platos }: { platos: Plato[] }) {
   const menuCategorias = ["Entrantes", "Primeros", "Segundos", "Postres"];
-  const [entrantes, setEntrantes] = useState([]);
+  const [entrantes, setEntrantes] = useState<Plato[]>([]);
   const [primeros, setPrimeros] = useState([]);
   const [segundos, setSegundos] = useState([]);
   const [postres, setPostres] = useState([]);
@@ -42,7 +42,7 @@ export default function CrearMenu(platos: Plato[]) {
         <SeccionMenu
           titulo={"Entrantes"}
           platos={platos}
-          anyadirPlato={setEntrantes}
+          setPlatosAnyadidos={setEntrantes}
           platosAnyadidos={entrantes}
         />
       </div>
