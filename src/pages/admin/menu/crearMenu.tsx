@@ -29,7 +29,6 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
   const [postres, setPostres] = useState<Plato[]>([]);
 
   async function crearMenu() {
-    console.log(menu);
     const { data, error } = await supabase
       .from("Menu")
       .insert([
@@ -56,7 +55,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
       platos.map(async (platoAux) => {
         const { error } = await supabase.from("MenuArticulo").insert([
           {
-            ingrediente_id: platoAux.id,
+            menu_id: menuId,
             articulo_id: platoAux.id,
             tipo: tipo,
           },
