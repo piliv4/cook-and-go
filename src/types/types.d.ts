@@ -21,3 +21,12 @@ export interface Plato {
   imagenURL: string;
   ingredientes: Ingrediente[];
 }
+
+export interface Menu {
+  id: string;
+  nombre: string;
+  precio: number;
+  comensales: number;
+  incluyePan: boolean;
+  incluyeBebida: boolean;
+}
