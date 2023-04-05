@@ -48,7 +48,34 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
         anyadirPlatos(primeros, (data[0] as Menu).id, "primeros") &&
         anyadirPlatos(segundos, (data[0] as Menu).id, "terceros") &&
         anyadirPlatos(postres, (data[0] as Menu).id, "postres") &&
-        router.push("/admin/menu/");
+        router.push("/admin/menu");
+    }
+  }
+
+  function validacionCampos() {
+    if (menu.nombre == "" || menu.nombre == null) {
+      return false;
+    }
+    if (menu.precio == null || menu.precio <= 0) {
+      return false;
+    }
+    if (menu.comensales == null || menu.comensales <= 0) {
+      return false;
+    }
+    if (
+      primeros.length <= 0 &&
+      segundos.length <= 0 &&
+      entrantes.length <= 0 &&
+      postres.length <= 0
+    ) {
+      return false;
+    }
+    return true;
+  }
+
+  function guardar() {
+    if (validacionCampos()) {
+      crearMenu();
     }
   }
 
@@ -81,40 +108,48 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
         </h1>
       </CabeceraPagina>
       <div>
-        <h1>Información general</h1>
-        <div className="flex flex-col gap-y-[1px] w-full">
-          <p className="font-thin">Nombre</p>
-          <input
-            type={"text"}
-            className="px-6 border-[1px] rounded-md"
-            onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
-          />
-        </div>
-        <div className="flex flex-row">
-          <div className="flex flex-col gap-y-[1px] w-full">
-            <p className="font-thin">Precio</p>
+        <h1 className="w-full border-b-2 pb-1 text-center pt-4 font-black text-lg border-primaryGreen">
+          INFORMACIÓN GENERAL
+        </h1>
+        <div>
+          <div className="flex flex-col gap-y-[1px] w-full pt-2">
+            <p className="">Nombre</p>
             <input
-              type={"tel"}
-              className="px-6 border-[1px] rounded-md"
-              onChange={(e) =>
-                setMenu({ ...menu, precio: parseFloat(e.target.value) })
-              }
+              type={"text"}
+              className="px-6  border-[1px] rounded-md"
+              onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
             />
           </div>
-          <div className="flex flex-col gap-y-[1px] w-full">
-            <p className="font-thin">Comensales</p>
-            <input
-              type="number"
-              className="px-6 border-[1px] rounded-md"
-              onChange={(e) =>
-                setMenu({ ...menu, comensales: parseInt(e.target.value) })
-              }
-            />
+          <div className="flex pt-2 flex-row gap-x-4">
+            <div className="flex flex-col gap-y-[1px] w-full">
+              <p className="">Precio</p>
+              <input
+                type={"tel"}
+                className="px-6 border-[1px] rounded-md"
+                onChange={(e) =>
+                  setMenu({ ...menu, precio: parseFloat(e.target.value) })
+                }
+              />
+            </div>
+            <div className="flex flex-col gap-y-[1px] w-full">
+              <p className="">Número de comensales</p>
+              <input
+                type="number"
+                className="px-6 border-[1px] rounded-md"
+                onChange={(e) =>
+                  setMenu({ ...menu, comensales: parseInt(e.target.value) })
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
       {/* SECCIONES DEL MENU */}
+
       <div className=" flex flex-col">
+        <h1 className="w-full border-b-2 pb-1 pt-6 text-center font-black text-lg border-primaryGreen">
+          PLATOS
+        </h1>
         <SeccionMenu
           titulo={"Entrantes"}
           platos={platos}
@@ -140,7 +175,10 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
           platosAnyadidos={postres}
         />
       </div>
-      <div className="flex flex-col gap-y-2">
+      <h1 className="w-full border-b-2 pb-1 pt-6 text-center font-black text-lg border-primaryGreen">
+        EXTRAS
+      </h1>
+      <div className="flex flex-col gap-y-4 pt-4">
         <div className="flex flex-row border-b-[1px] border-primaryGreen">
           <p className="w-full font-black">¿Incluir pan?</p>
           <label className="flex flex-row gap-x-1 font-light">
@@ -169,13 +207,13 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
       <div className=" flex flex-row justify-end gap-x-2 font-black py-4">
         <button
           className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-          onClick={() => crearMenu()}
+          onClick={() => guardar()}
         >
           Guardar
         </button>
         <button
           className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-          onClick={() => router.push("/admin/menu/")}
+          onClick={() => router.push("/admin/menu")}
         >
           Cancelar
         </button>
