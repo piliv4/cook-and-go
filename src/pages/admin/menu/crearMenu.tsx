@@ -23,7 +23,9 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
     incluyePan: false,
     incluyeBebida: false,
   });
-
+  const [errorTitulo, setErrorTitulo] = useState("");
+  const [errorPrecio, setErrorPrecio] = useState("");
+  const [errorComensales, setErrorComensales] = useState("");
   const [entrantes, setEntrantes] = useState<Plato[]>([]);
   const [primeros, setPrimeros] = useState<Plato[]>([]);
   const [segundos, setSegundos] = useState<Plato[]>([]);
@@ -53,14 +55,17 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
   }
 
   function validacionCampos() {
+    setErrorComensales("");
+    setErrorPrecio("");
+    setErrorTitulo("");
     if (menu.nombre == "" || menu.nombre == null) {
-      return false;
+      setErrorTitulo("Introduzca un titulo");
     }
     if (menu.precio == null || menu.precio <= 0) {
-      return false;
+      setErrorPrecio("Introduzca un precio");
     }
     if (menu.comensales == null || menu.comensales <= 0) {
-      return false;
+      setErrorComensales("Introduzca un número de comensales");
     }
     if (
       primeros.length <= 0 &&
@@ -68,6 +73,9 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
       entrantes.length <= 0 &&
       postres.length <= 0
     ) {
+      return false;
+    }
+    if (errorComensales == "" || errorPrecio == "" || errorTitulo == "") {
       return false;
     }
     return true;
@@ -119,6 +127,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
               className="px-6  border-[1px] rounded-md"
               onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
             />
+            <p className="text-red-600 font-medium">{errorTitulo}</p>
           </div>
           <div className="flex pt-2 flex-row gap-x-4">
             <div className="flex flex-col gap-y-[1px] w-full">
@@ -130,6 +139,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
                   setMenu({ ...menu, precio: parseFloat(e.target.value) })
                 }
               />
+              <p className="text-red-600 font-medium">{errorPrecio}</p>
             </div>
             <div className="flex flex-col gap-y-[1px] w-full">
               <p className="">Número de comensales</p>
@@ -140,6 +150,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
                   setMenu({ ...menu, comensales: parseInt(e.target.value) })
                 }
               />
+              <p className="text-red-600 font-medium">{errorComensales}</p>
             </div>
           </div>
         </div>
