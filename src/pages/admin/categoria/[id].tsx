@@ -6,8 +6,6 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 
-//NO FUNCIONA >:[
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
 
