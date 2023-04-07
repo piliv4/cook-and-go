@@ -1,3 +1,4 @@
+import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
 import { Menu } from "@/types/types";
 import { GetServerSideProps } from "next";
@@ -55,7 +56,68 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 
 const DetallesMenu = ({ menu }: { menu: Menu }) => {
-  return <div>{menu ? menu.nombre : "uhoh :("}</div>;
+  return (
+    <div className="px-48 ">
+      <CabeceraPagina>
+        <h1 className="text-2xl font-black col-span-3 text-center uppercase ">
+          {menu.nombre}
+        </h1>
+      </CabeceraPagina>
+      <div>
+        <div className="flex flex-row">
+          <p>Comensales</p>
+          <p>{menu.comensales}</p>
+        </div>
+        <div className="flex flex-row">
+          <p>Precio</p>
+          <p>{menu.precio}</p>
+        </div>
+      </div>
+      {/* SECCIONES DEL MENU */}
+      <div className=" flex flex-col">
+        {menu.entrantes.length > 0 && (
+          <div>
+            <h1>Entrantes</h1>
+            <div className="flex">
+              {menu.entrantes.map((plato) => (
+                <p key={plato.id}>{plato.nombre}</p>
+              ))}
+            </div>
+          </div>
+        )}
+        {menu.primeros.length > 0 && (
+          <div>
+            <h1>Primeros</h1>
+            <div className="flex">
+              {menu.entrantes.map((plato) => (
+                <p key={plato.id}>{plato.nombre}</p>
+              ))}
+            </div>
+          </div>
+        )}
+        {menu.segundos.length > 0 && (
+          <div>
+            <h1>Segundos</h1>
+            <div className="flex">
+              {menu.entrantes.map((plato) => (
+                <p key={plato.id}>{plato.nombre}</p>
+              ))}
+            </div>
+          </div>
+        )}
+        {menu.postres.length > 0 && (
+          <div>
+            <h1>Postres</h1>
+            <div className="flex">
+              {menu.entrantes.map((plato) => (
+                <p key={plato.id}>{plato.nombre}</p>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default DetallesMenu;
