@@ -1,7 +1,46 @@
+import DisplayerPlatos from "@/components/admins/menu/DisplayerPlatos";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
-import { Menu } from "@/types/types";
+import { Menu, Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
+
+const DetallesMenu = ({ menu }: { menu: Menu }) => {
+  console.log(menu);
+  const tiposMenu = ["entrantes", "primeros", "segundos", "postres"];
+  function montarCadena() {
+    let incluyeTexto = "";
+    if (!menu.incluyeBebida && !menu.incluyeBebida) {
+      incluyeTexto = "Pan y bebida no incluidos";
+      return incluyeTexto;
+    }
+    if (menu.incluyeBebida) {
+      incluyeTexto += "bebida ";
+      menu.incluyePan && incluyeTexto + "y ";
+    }
+    if (menu.incluyePan) incluyeTexto += "pan ";
+    incluyeTexto += "incluida";
+    if (menu.incluyePan && menu.incluyeBebida) incluyeTexto += "s";
+    return incluyeTexto;
+  }
+  return (
+    <div className="px-48 ">
+      <CabeceraPagina>
+        <h1 className="text-2xl font-black col-span-3 text-center uppercase ">
+          {menu.nombre} para {menu.comensales} persona(s)
+        </h1>
+      </CabeceraPagina>
+      {/* SECCIONES DEL MENU */}
+      {tiposMenu.map((tipoMenu) => (
+        <DisplayerPlatos
+          key={tipoMenu}
+          titulo={tipoMenu}
+          platos={menu[tipoMenu as keyof Menu] as Plato[]}
+        />
+      ))}
+      <p>{montarCadena()}</p>
+    </div>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -16,6 +55,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   menu.primeros = [];
   menu.segundos = [];
   menu.postres = [];
+  menu.incluyePan = menu.incluye_pan;
+  menu.incluyeBebida = menu.incluye_bebida;
 
   let { data: platosId } = await supabase
     .from("MenuArticulo")
@@ -53,74 +94,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   return {
     props: {
-      menu: menu,
+      menu: menu as Menu,
     },
   };
-};
-
-const DetallesMenu = ({ menu }: { menu: Menu }) => {
-  return (
-    <div className="px-48 ">
-      <CabeceraPagina>
-        <h1 className="text-2xl font-black col-span-3 text-center uppercase ">
-          {menu.nombre}
-        </h1>
-      </CabeceraPagina>
-      <div>
-        <div className="flex flex-row">
-          <p>Comensales</p>
-          <p>{menu.comensales}</p>
-        </div>
-        <div className="flex flex-row">
-          <p>Precio</p>
-          <p>{menu.precio}</p>
-        </div>
-      </div>
-      {/* SECCIONES DEL MENU */}
-      <div className=" flex flex-col">
-        {menu.entrantes.length > 0 && (
-          <div>
-            <h1>Entrantes</h1>
-            <div className="flex">
-              {menu.entrantes.map((plato) => (
-                <p key={plato.id}>{plato.nombre}</p>
-              ))}
-            </div>
-          </div>
-        )}
-        {menu.primeros.length > 0 && (
-          <div>
-            <h1>Primeros</h1>
-            <div className="flex">
-              {menu.primeros.map((plato) => (
-                <p key={plato.id}>{plato.nombre}</p>
-              ))}
-            </div>
-          </div>
-        )}
-        {menu.segundos.length > 0 && (
-          <div>
-            <h1>Segundos</h1>
-            <div className="flex">
-              {menu.segundos.map((plato) => (
-                <p key={plato.id}>{plato.nombre}</p>
-              ))}
-            </div>
-          </div>
-        )}
-        {menu.postres.length > 0 && (
-          <div>
-            <h1>Postres</h1>
-            <div className="flex">
-              {menu.postres.map((plato) => (
-                <p key={plato.id}>{plato.nombre}</p>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
 };
 
 export default DetallesMenu;

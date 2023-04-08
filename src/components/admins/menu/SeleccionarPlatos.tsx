@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";
 
-const SeccionMenu = ({
+const SeleccionarPlatos = ({
   titulo,
   platos,
   platosAnyadidos,
@@ -120,4 +120,4 @@ const SeccionMenu = ({
     </div>
   );
 };
-export default SeccionMenu;
+export default SeleccionarPlatos;

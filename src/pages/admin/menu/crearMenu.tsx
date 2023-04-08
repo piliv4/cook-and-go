@@ -1,4 +1,4 @@
-import SeccionMenu from "@/components/admins/menu/SeccionMenu";
+import SeleccionarPlatos from "@/components/admins/menu/SeleccionarPlatos";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
 import { Menu, Plato } from "@/types/types";
@@ -188,7 +188,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
           PLATOS
         </h1>
         {tiposPlato.map((tipoPlato) => (
-          <SeccionMenu
+          <SeleccionarPlatos
             key={tipoPlato}
             titulo={tipoPlato}
             platos={platos}
