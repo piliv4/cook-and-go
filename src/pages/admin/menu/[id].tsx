@@ -10,10 +10,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .select("*")
     .eq("id", id)
     .single();
+
   //RECUPERAMOS LOS PLATOS
-  (menu as Menu).primeros = [];
-  menu.segundos = [];
   menu.entrantes = [];
+  menu.primeros = [];
+  menu.segundos = [];
   menu.postres = [];
 
   let { data: platosId } = await supabase
@@ -26,22 +27,24 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       let { data: plato } = await supabase
         .from("Articulo")
         .select("*")
-        .eq("id", id.articulo_id);
+        .eq("id", id.articulo_id)
+        .single();
       if (plato) {
         switch (id.tipo) {
-          case "primero":
+          case "entrantes":
+            menu.entrantes.push(plato);
+            break;
+
+          case "primeros":
             menu.primeros.push(plato);
             break;
-          case "segundo":
-            menu.primeros.push(plato);
-            break;
-          case "entrante":
+
+          case "segundos":
             menu.segundos.push(plato);
             break;
-          case "postre":
+
+          case "postres":
             menu.postres.push(plato);
-            break;
-          default:
             break;
         }
       }
@@ -89,7 +92,7 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
           <div>
             <h1>Primeros</h1>
             <div className="flex">
-              {menu.entrantes.map((plato) => (
+              {menu.primeros.map((plato) => (
                 <p key={plato.id}>{plato.nombre}</p>
               ))}
             </div>
@@ -99,7 +102,7 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
           <div>
             <h1>Segundos</h1>
             <div className="flex">
-              {menu.entrantes.map((plato) => (
+              {menu.segundos.map((plato) => (
                 <p key={plato.id}>{plato.nombre}</p>
               ))}
             </div>
@@ -109,7 +112,7 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
           <div>
             <h1>Postres</h1>
             <div className="flex">
-              {menu.entrantes.map((plato) => (
+              {menu.postres.map((plato) => (
                 <p key={plato.id}>{plato.nombre}</p>
               ))}
             </div>
