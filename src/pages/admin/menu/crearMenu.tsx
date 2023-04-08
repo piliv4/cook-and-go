@@ -78,7 +78,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
     ) {
       return false;
     }
-    if (errorComensales == "" || errorPrecio == "" || errorTitulo == "") {
+    if (errorComensales != "" || errorPrecio != "" || errorTitulo != "") {
       return false;
     }
     return true;
@@ -112,14 +112,10 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
   }
 
   function anyadirPlato(plato: Plato, tipoPlato: string) {
-    console.log("entrando...");
     let key = tipoPlato as keyof Menu;
-    console.log(plato);
-    console.log(tipoPlato);
 
     !(menu[key] as Plato[]).includes(plato) &&
       setMenu({ ...menu, [key]: (menu[key] as Plato[]).concat([plato]) });
-    console.log(menu[key]);
   }
 
   function eliminarPlatoPorIndice(index: number, tipoPlato: string) {
