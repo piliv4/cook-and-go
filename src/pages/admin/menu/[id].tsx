@@ -8,19 +8,16 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
   console.log(menu);
   const tiposMenu = ["entrantes", "primeros", "segundos", "postres"];
   function montarCadena() {
-    let incluyeTexto = "";
-    if (!menu.incluyeBebida && !menu.incluyeBebida) {
-      incluyeTexto = "Pan y bebida no incluidos";
-      return incluyeTexto;
+    if (menu.incluyeBebida && !menu.incluyePan) {
+      return "Bebida incluida";
     }
-    if (menu.incluyeBebida) {
-      incluyeTexto += "bebida ";
-      menu.incluyePan && incluyeTexto + "y ";
+    if (!menu.incluyeBebida && menu.incluyePan) {
+      return "Pan incluido";
     }
-    if (menu.incluyePan) incluyeTexto += "pan ";
-    incluyeTexto += "incluida";
-    if (menu.incluyePan && menu.incluyeBebida) incluyeTexto += "s";
-    return incluyeTexto;
+    if (menu.incluyeBebida && menu.incluyePan) {
+      return "Pan y bebida incluidos";
+    }
+    return "Pan y bebida no incluidos";
   }
   return (
     <div className="px-48 ">
@@ -37,7 +34,11 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
           platos={menu[tipoMenu as keyof Menu] as Plato[]}
         />
       ))}
-      <p>{montarCadena()}</p>
+      <p className="w-full text-center py-2">{montarCadena()}</p>
+      <div className="flex flex-row font-black text-xl">
+        <p className="w-full">Precio</p>
+        <p>{(Math.round(menu.precio * 100) / 100).toFixed(2)}€</p>
+      </div>
     </div>
   );
 };
