@@ -2,34 +2,34 @@ import { Plato } from "@/types/types";
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";
+
 const SeccionMenu = ({
   titulo,
   platos,
   platosAnyadidos,
-  setPlatosAnyadidos,
+  anyadirPlato,
+  eliminarPlatoPorIndice,
+  eliminarPlatos,
 }: {
   titulo: string;
   platos: Plato[];
   platosAnyadidos: Plato[];
-  setPlatosAnyadidos: Function;
+  anyadirPlato: Function;
+  eliminarPlatos: Function;
+  eliminarPlatoPorIndice: Function;
 }) => {
   const [incuido, setIncluido] = useState(false);
   const [value, setValue] = useState("");
   function desincluirPlatos(valor: boolean) {
     setValue("");
-    !valor && setPlatosAnyadidos([]);
+    !valor && eliminarPlatos(titulo);
     setIncluido(valor);
-  }
-
-  function anyadirPlato(plato: Plato) {
-    !platosAnyadidos.includes(plato) &&
-      setPlatosAnyadidos(platosAnyadidos.concat([plato]));
   }
 
   return (
     <div className="flex justify-center flex-col">
       <div className="font-black pt-4  border-b-[1px] border-primaryGreen flex flex-row">
-        <h1 className="w-full">{titulo}</h1>
+        <h1 className="w-full capitalize">{titulo}</h1>
         <label className="font-light pr-1">Incluir</label>
         <input
           className="accent-primaryOrange "
@@ -51,11 +51,7 @@ const SeccionMenu = ({
                 <p className="w-full">{plato.nombre}</p>
                 <BsTrash
                   className=" self-end"
-                  onClick={() =>
-                    setPlatosAnyadidos((platosAnyadidos: Plato[]) => {
-                      return platosAnyadidos.filter((value, i) => i !== index);
-                    })
-                  }
+                  onClick={() => eliminarPlatoPorIndice(index, titulo)}
                 />
               </div>
             ))}
@@ -110,7 +106,7 @@ const SeccionMenu = ({
                       className="px-4"
                       onClick={() => {
                         setValue("");
-                        anyadirPlato(plato);
+                        anyadirPlato(plato, titulo);
                       }}
                     >
                       Añadir

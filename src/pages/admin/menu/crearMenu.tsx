@@ -22,15 +22,15 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
     comensales: 0,
     incluyePan: false,
     incluyeBebida: false,
+    entrantes: [],
+    primeros: [],
+    segundos: [],
+    postres: [],
   });
   const [errorTitulo, setErrorTitulo] = useState("");
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorComensales, setErrorComensales] = useState("");
-  const [entrantes, setEntrantes] = useState<Plato[]>([]);
-  const [primeros, setPrimeros] = useState<Plato[]>([]);
-  const [segundos, setSegundos] = useState<Plato[]>([]);
-  const [postres, setPostres] = useState<Plato[]>([]);
-
+  const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
   async function crearMenu() {
     const { data, error } = await supabase
       .from("Menu")
@@ -46,11 +46,14 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
       ])
       .select();
     if (!error) {
-      anyadirPlatos(entrantes, (data[0] as Menu).id, "entrantes") &&
-        anyadirPlatos(primeros, (data[0] as Menu).id, "primeros") &&
-        anyadirPlatos(segundos, (data[0] as Menu).id, "terceros") &&
-        anyadirPlatos(postres, (data[0] as Menu).id, "postres") &&
-        router.push("/admin/menu");
+      tiposPlato.map((tipoPlato) =>
+        insertarPlatos(
+          menu[tipoPlato as keyof Menu] as Plato[],
+          (data[0] as Menu).id,
+          tipoPlato
+        )
+      );
+      router.push("/admin/menu");
     }
   }
 
@@ -68,10 +71,10 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
       setErrorComensales("Introduzca un número de comensales");
     }
     if (
-      primeros.length <= 0 &&
-      segundos.length <= 0 &&
-      entrantes.length <= 0 &&
-      postres.length <= 0
+      menu.entrantes.length <= 0 &&
+      menu.primeros.length <= 0 &&
+      menu.segundos.length <= 0 &&
+      menu.postres.length <= 0
     ) {
       return false;
     }
@@ -87,7 +90,7 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
     }
   }
 
-  function anyadirPlatos(platos: Plato[], menuId: string, tipo: string) {
+  function insertarPlatos(platos: Plato[], menuId: string, tipo: string) {
     if (platos.length > 0) {
       platos.map(async (platoAux) => {
         const { error } = await supabase.from("MenuArticulo").insert([
@@ -106,6 +109,33 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
     } else {
       return true;
     }
+  }
+
+  function anyadirPlato(plato: Plato, tipoPlato: string) {
+    console.log("entrando...");
+    let key = tipoPlato as keyof Menu;
+    console.log(plato);
+    console.log(tipoPlato);
+
+    !(menu[key] as Plato[]).includes(plato) &&
+      setMenu({ ...menu, [key]: (menu[key] as Plato[]).concat([plato]) });
+    console.log(menu[key]);
+  }
+
+  function eliminarPlatoPorIndice(index: number, tipoPlato: string) {
+    let key = tipoPlato as keyof Menu;
+    setMenu({
+      ...menu,
+      [key]: (menu[key] as Plato[]).filter((value, i) => i !== index),
+    });
+  }
+
+  function eliminarPlatos(tipoPlato: string) {
+    let key = tipoPlato as keyof Menu;
+    setMenu({
+      ...menu,
+      [key]: [],
+    });
   }
 
   return (
@@ -161,30 +191,17 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
         <h1 className="w-full border-b-2 pb-1 pt-6 text-center font-black text-lg border-primaryGreen">
           PLATOS
         </h1>
-        <SeccionMenu
-          titulo={"Entrantes"}
-          platos={platos}
-          setPlatosAnyadidos={setEntrantes}
-          platosAnyadidos={entrantes}
-        />
-        <SeccionMenu
-          titulo={"Primeros"}
-          platos={platos}
-          setPlatosAnyadidos={setPrimeros}
-          platosAnyadidos={primeros}
-        />
-        <SeccionMenu
-          titulo={"Segundos"}
-          platos={platos}
-          setPlatosAnyadidos={setSegundos}
-          platosAnyadidos={segundos}
-        />
-        <SeccionMenu
-          titulo={"Postres"}
-          platos={platos}
-          setPlatosAnyadidos={setPostres}
-          platosAnyadidos={postres}
-        />
+        {tiposPlato.map((tipoPlato) => (
+          <SeccionMenu
+            key={tipoPlato}
+            titulo={tipoPlato}
+            platos={platos}
+            eliminarPlatoPorIndice={eliminarPlatoPorIndice}
+            eliminarPlatos={eliminarPlatos}
+            anyadirPlato={anyadirPlato}
+            platosAnyadidos={menu[tipoPlato as keyof Menu] as Plato[]}
+          />
+        ))}
       </div>
       <h1 className="w-full border-b-2 pb-1 pt-6 text-center font-black text-lg border-primaryGreen">
         EXTRAS

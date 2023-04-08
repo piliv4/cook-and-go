@@ -29,9 +29,6 @@ export interface Menu {
   comensales: number;
   incluyePan: boolean;
   incluyeBebida: boolean;
-}
-
-export interface Menu {
   entrantes: Plato[];
   primeros: Plato[];
   segundos: Plato[];

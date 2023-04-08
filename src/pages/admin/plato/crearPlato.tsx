@@ -125,14 +125,13 @@ export default function CrearIngrediente({
               name={ingrediente.id}
               value={ingrediente.id}
               onClick={(e) => {
-                (e.target as HTMLInputElement).checked
-                  ? setPlato({
-                      ...plato,
-                      ingredientes: plato.ingredientes.concat([
-                        (e.target as HTMLInputElement).value,
-                      ]),
-                    } as Plato)
-                  : console.log("Eliminar plato");
+                (e.target as HTMLInputElement).checked &&
+                  setPlato({
+                    ...plato,
+                    ingredientes: plato.ingredientes.concat([
+                      (e.target as HTMLInputElement).value,
+                    ]),
+                  } as Plato);
               }}
             />
             <label>{ingrediente.nombre}</label>

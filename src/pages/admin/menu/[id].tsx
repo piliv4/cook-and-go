@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .eq("id", id)
     .single();
   //RECUPERAMOS LOS PLATOS
-  menu.primeros = [];
+  (menu as Menu).primeros = [];
   menu.segundos = [];
   menu.entrantes = [];
   menu.postres = [];
