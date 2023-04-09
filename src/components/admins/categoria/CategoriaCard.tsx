@@ -14,7 +14,6 @@ export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
       .from("Categoria")
       .delete()
       .eq("id", categoria.id);
-    console.log(error);
     if (!error) {
       router.replace(router.asPath);
     }

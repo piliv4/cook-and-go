@@ -105,6 +105,7 @@ const MenuFormulario = ({
             <input
               type={"text"}
               className="px-6  border-[1px] rounded-md"
+              defaultValue={menu.nombre}
               onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
             />
             <p className="text-red-600 font-medium">{errorTitulo}</p>
@@ -115,6 +116,7 @@ const MenuFormulario = ({
               <input
                 type={"tel"}
                 className="px-6 border-[1px] rounded-md"
+                defaultValue={menu.precio}
                 onChange={(e) =>
                   setMenu({ ...menu, precio: parseFloat(e.target.value) })
                 }
@@ -126,6 +128,7 @@ const MenuFormulario = ({
               <input
                 type="number"
                 className="px-6 border-[1px] rounded-md"
+                defaultValue={menu.comensales}
                 onChange={(e) =>
                   setMenu({ ...menu, comensales: parseInt(e.target.value) })
                 }
@@ -163,6 +166,7 @@ const MenuFormulario = ({
             Incluir
             <input
               type="checkbox"
+              defaultChecked={menu.incluyePan}
               onChange={(e) =>
                 setMenu({ ...menu, incluyePan: e.target.checked })
               }
@@ -175,6 +179,7 @@ const MenuFormulario = ({
             Incluir
             <input
               type="checkbox"
+              defaultChecked={menu.incluyeBebida}
               onChange={(e) =>
                 setMenu({ ...menu, incluyeBebida: e.target.checked })
               }

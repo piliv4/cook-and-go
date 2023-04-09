@@ -1,10 +1,7 @@
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
-import SeleccionarPlatos from "@/components/admins/menu/SeleccionarPlatos";
-import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
 import { Menu, Plato } from "@/types/types";
 import router from "next/router";
-import { useState } from "react";
 
 export async function getStaticProps() {
   let { data: platos } = await supabase.from("Articulo").select("*");
@@ -18,7 +15,6 @@ export async function getStaticProps() {
 export default function CrearMenu({ platos }: { platos: Plato[] }) {
   const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
   async function crearMenu(menu: Menu) {
-    console.log(menu);
     const { data, error } = await supabase
       .from("Menu")
       .insert([

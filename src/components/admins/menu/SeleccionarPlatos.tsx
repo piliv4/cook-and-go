@@ -18,7 +18,7 @@ const SeleccionarPlatos = ({
   eliminarPlatos: Function;
   eliminarPlatoPorIndice: Function;
 }) => {
-  const [incuido, setIncluido] = useState(false);
+  const [incluido, setIncluido] = useState(platosAnyadidos.length > 0);
   const [value, setValue] = useState("");
   function desincluirPlatos(valor: boolean) {
     setValue("");
@@ -34,13 +34,14 @@ const SeleccionarPlatos = ({
         <input
           className="accent-primaryOrange "
           type="checkbox"
+          defaultChecked={incluido}
           onChange={(e) => {
             desincluirPlatos(e.target.checked);
           }}
         />
       </div>
       {/* SI MARCAMOS INCLUIDO ENTONCES MOSTRAREMOS LAS OPCIONES DE AÑADRI PLATO */}
-      {incuido && (
+      {incluido && (
         <div>
           <div>
             {platosAnyadidos.map((plato, index) => (
