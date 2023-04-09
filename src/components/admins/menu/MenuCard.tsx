@@ -1,39 +1,54 @@
-import { Menu } from "@/types/types";
+import { Menu, Plato } from "@/types/types";
 import Link from "next/link";
+import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import DisplayerPlatos from "./DisplayerPlatos";
+import supabase from "@/server/client";
 
 export default function MenuCard({ menu }: { menu: Menu }) {
-  async function borrarMenu() {}
+  async function borrarMenu() {
+    //Primero borramos la relacion con ingredientes
+    const { error: error1 } = await supabase
+      .from("MenuArticulo")
+      .delete()
+      .eq("menu_id", menu.id);
+
+    //Despues hacemos el borrado del campo
+    const { error: error2 } = await supabase
+      .from("Menu")
+      .delete()
+      .eq("id", menu.id);
+    //Si no hay errores refrescamos la página
+    if (!error1 && !error2) {
+      router.replace("/admin/menu");
+    }
+  }
   return (
-    <div
-      className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
-      key={menu.id}
-    >
-      <div className="relative flex pt-2 items-center">
-        <div className="flex-grow border-t border-primaryGreen"></div>
-        <span className="flex-shrink mx-1 font-bold text-sm uppercase">
-          {menu.nombre}
-        </span>
-        <div className="flex-grow border-t border-primaryGreen"></div>
+    <Link className="bg-transparent" href={"/admin/menu/" + menu.id}>
+      <div
+        className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
+        key={menu.id}
+      >
+        <div className="relative flex pt-2 flex-row">
+          <span className="flex-shrink mx-1 font-bold text-sm uppercase w-full">
+            {menu.nombre}
+          </span>
+          <div className="flex flex-row gap-1 items-end">
+            <BsFillPencilFill
+              className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+              onClick={() => router.push("/admin/menu/editar/" + menu.id)}
+            />
+            <BsTrashFill
+              className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+              onClick={() => borrarMenu()}
+            />
+          </div>
+        </div>
+        <div className=" flex flex-row px-2 pb-2">
+          <p className="font-bold w-full">Precio</p>
+          {menu.precio}
+        </div>
       </div>
-
-      <p className=" px-2 pb-1 font-extralight text-sm">{menu.precio}</p>
-
-      <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
-        <Link className="bg-transparent" href={"/admin/menu/" + menu.id}>
-          Ver detalles
-        </Link>
-      </div>
-      <div className="grid grid-cols-2 absolute right-2 top-2 gap-1 z-10">
-        <BsFillPencilFill
-          className="group fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => {}}
-        />
-        <BsTrashFill
-          className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => borrarMenu()}
-        />
-      </div>
-    </div>
+    </Link>
   );
 }

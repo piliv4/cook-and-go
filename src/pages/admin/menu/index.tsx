@@ -22,7 +22,7 @@ export default function menu({ menus }: { menus: Menu[] }) {
         <h1 className="text-2xl font-black col-span-2 ">Todos mis menús</h1>
         <Buscador />
       </CabeceraPagina>
-      <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+      <div className="pt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-1 sm:gap-3 ">
         {menus.map((menu) => (
           <MenuCard key={menu.id} menu={menu} />
         ))}
