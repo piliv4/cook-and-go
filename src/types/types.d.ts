@@ -34,3 +34,15 @@ export interface Menu {
   segundos: Plato[];
   postres: Plato[];
 }
+
+export interface Local {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  cif: string;
+  correo: string;
+  web: string;
+  telefono: string;
+  ciudad: string;
+  direccion: string;
+}

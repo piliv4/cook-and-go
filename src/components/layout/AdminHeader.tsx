@@ -1,9 +1,12 @@
+import supabase from "@/server/client";
+import { Local } from "@/types/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 const AdminHeader = () => {
   const router = useRouter();
   let seccion = router.pathname.split("/")[2];
+
   return (
     <div className="flex justify-center bg-background">
       <div className="bg-primaryGreen py-2 px-8 flex flex-row mb-4 gap-x-3 rounded-b-full w-[95%]  text-white">
