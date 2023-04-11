@@ -1,7 +1,9 @@
 import { Ingrediente } from "@/types/types";
 import IngredienteRow from "./IngredienteRow";
+import { useState } from "react";
 
 const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
+  const [editarIndex, setEditarIndex] = useState(-1);
   return (
     <div className="w-full">
       <table className="w-full mt-2 border-collapse ">
@@ -19,8 +21,14 @@ const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
           </tr>
         </thead>
         <tbody>
-          {ingrediente.map((ingrediente) => (
-            <IngredienteRow key={ingrediente.id} ingrediente={ingrediente} />
+          {ingrediente.map((ingrediente, index) => (
+            <IngredienteRow
+              key={ingrediente.id}
+              ingrediente={ingrediente}
+              index={index}
+              indexGlobal={editarIndex}
+              setIndexGlobal={setEditarIndex}
+            />
           ))}
         </tbody>
       </table>

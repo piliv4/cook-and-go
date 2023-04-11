@@ -6,12 +6,37 @@ import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import supabase from "@/server/client";
 
-const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
-  const [editar, setEditar] = useState(false);
+const IngredienteRow = ({
+  ingrediente,
+  indexGlobal,
+  setIndexGlobal,
+  index,
+}: {
+  ingrediente: Ingrediente;
+  indexGlobal: number;
+  setIndexGlobal: Function;
+  index: number;
+}) => {
   const router = useRouter();
   const [ingredienteEditar, setIngredienteEditar] =
     useState<Ingrediente>(ingrediente);
 
+  async function borrarIngrediente() {
+    const { error: error1 } = await supabase
+      .from("ArticuloIngrediente")
+      .delete()
+      .eq("ingrediente_id", ingrediente?.id);
+    console.log(error1);
+    if (!error1) {
+      const { error } = await supabase
+        .from("Ingrediente")
+        .delete()
+        .eq("id", ingrediente?.id);
+      if (!error) {
+        router.replace(router.asPath);
+      }
+    }
+  }
   async function editarIngrediente() {
     const { error } = await supabase
       .from("Ingrediente")
@@ -25,7 +50,7 @@ const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
       .eq("id", ingrediente?.id);
     if (!error) {
       router.replace(router.asPath);
-      setEditar(false);
+      setIndexGlobal(-1);
     }
   }
 
@@ -35,7 +60,7 @@ const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
       className="font-light hover:bg-secondaryOrange bg-white"
     >
       <td className="border border-secondaryGreen pl-2">
-        {!editar ? (
+        {indexGlobal != index ? (
           <p>{ingrediente.nombre}</p>
         ) : (
           <input
@@ -51,7 +76,7 @@ const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
         )}
       </td>
       <td className="border border-secondaryGreen pl-2">
-        {!editar ? (
+        {indexGlobal != index ? (
           <p>{ingrediente.descripcion}</p>
         ) : (
           <input
@@ -68,7 +93,7 @@ const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
       </td>
 
       <td className="border border-secondaryGreen pl-2">
-        {!editar ? (
+        {indexGlobal != index ? (
           <p>{ingrediente.precioSuplemento}</p>
         ) : (
           <input
@@ -90,11 +115,11 @@ const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
 
       <td className="border border-secondaryGreen ">
         <div className="flex justify-center items-center">
-          {!editar ? (
+          {indexGlobal != index ? (
             <BsFillPencilFill
               className=" fill-primaryOrange hover:fill-white transition duration-150"
               onClick={() => {
-                setEditar(true);
+                setIndexGlobal(index);
               }}
             />
           ) : (
@@ -109,12 +134,15 @@ const IngredienteRow = ({ ingrediente }: { ingrediente: Ingrediente }) => {
       </td>
       <td className="border border-secondaryGreen">
         <div className="flex justify-center items-center h-full">
-          {!editar ? (
-            <BsTrashFill className="fill-primaryOrange hover:fill-white transition duration-150" />
+          {indexGlobal != index ? (
+            <BsTrashFill
+              className="fill-primaryOrange hover:fill-white transition duration-150"
+              onClick={() => borrarIngrediente()}
+            />
           ) : (
             <AiOutlineClose
               className="fill-primaryOrange hover:fill-white transition duration-150"
-              onClick={() => setEditar(false)}
+              onClick={() => setIndexGlobal(-1)}
             />
           )}
         </div>

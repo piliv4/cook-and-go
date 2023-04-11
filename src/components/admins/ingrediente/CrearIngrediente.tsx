@@ -8,32 +8,51 @@ const CrearIngrediente = () => {
   const unidadMedida = ["kg", "g", "mg", "l", "ml", "unidades"];
 
   //El ingrediente a crear TENGO QUE AÑADIR COSAS MIRAR SI LO HAGO CON UN FORMULARIO!!!
-  const [ingrediente, setIngrediente] = useState<Ingrediente>({
+
+  const ingredienteVacio = {
     id: "",
     nombre: "",
     descripcion: "",
     precioSuplemento: 0,
-  });
+  };
+  const [ingrediente, setIngrediente] = useState<Ingrediente>(ingredienteVacio);
+
+  function validarCampos() {
+    if (ingrediente.nombre == null || ingrediente.nombre == "") {
+      return false;
+    }
+    if (ingrediente.precioSuplemento <= 0) {
+      console.log(ingrediente.precioSuplemento);
+      return false;
+    }
+    return true;
+  }
 
   //CREAR INGREDIENTE
   async function crearIngrediente() {
-    console.log("crear ingrediente");
-    const { error } = await supabase.from("Ingrediente").insert([
-      {
-        nombre: ingrediente.nombre,
-        descripcion: ingrediente.descripcion,
-        precio_suplemento: ingrediente.precioSuplemento,
-      },
-    ]);
-    !error ? router.replace(router.asPath) : console.log(error);
+    if (validarCampos()) {
+      const { error } = await supabase.from("Ingrediente").insert([
+        {
+          nombre: ingrediente.nombre,
+          descripcion: ingrediente.descripcion,
+          precio_suplemento: ingrediente.precioSuplemento,
+        },
+      ]);
+      if (!error) {
+        router.replace(router.asPath);
+        setIngrediente(ingredienteVacio);
+      } else {
+        console.log(error);
+      }
+    }
   }
 
   return (
     <div>
-      <h1 className="text-lg font-thin">Crear ingrediente:</h1>
-      <div className="flex flex-row gap-x-4 pl-6 w-full rounded-sm border-[1px] border-primaryOrange bg-">
-        <div>
-          <p className="font-light">Nombre:</p>
+      <h1 className="text-lg font-black">Nuevo ingrediente</h1>
+      <div className="flex flex-row gap-x-4 pl-6 w-full rounded-sm border-[1px] border-pr border-primaryGreen ">
+        <div className="w-full">
+          <p>Nombre:</p>
           <input
             type="text"
             className="border-[1px] border-black rounded-sm w-full"
@@ -46,8 +65,8 @@ const CrearIngrediente = () => {
             }
           />
         </div>
-        <div>
-          <p className="font-light">Descripción:</p>
+        <div className="w-full">
+          <p>Descripción:</p>
           <textarea
             placeholder="Introduce una breve descripción"
             rows={1}
@@ -60,8 +79,8 @@ const CrearIngrediente = () => {
             }
           />
         </div>
-        <div>
-          <p className="font-light">Precio suplemento:</p>
+        <div className="w-full">
+          <p>Precio suplemento:</p>
           <input
             type="number"
             className="border-[1px] border-black rounded-sm w-full"
@@ -69,21 +88,21 @@ const CrearIngrediente = () => {
             onChange={(e) =>
               setIngrediente({
                 ...ingrediente,
-                precioSuplemento: parseInt(e.target.value),
+                precioSuplemento: parseFloat(e.target.value),
               } as Ingrediente)
             }
           />
         </div>
-        <div>
-          <p className="font-light">Stock:</p>
+        <div className="w-full">
+          <p>Stock:</p>
           <input
             type="number"
             className="border-[1px] border-black rounded-sm w-full"
             placeholder="Introduce el stock actual"
           />
         </div>
-        <div>
-          <p className="font-light">Unidad medida:</p>
+        <div className="w-full">
+          <p>Unidad de medida:</p>
           <select className="border-[1px] border-black rounded-sm w-full">
             {unidadMedida.map((unidad, index) => (
               <option key={index} value={unidad}>
@@ -93,7 +112,7 @@ const CrearIngrediente = () => {
           </select>
         </div>
         <button
-          className="border-[1px] border-blue-600  rounded-sm m-4 mt-6 hover:bg-blue-600 hover:text-white"
+          className="w-full border-[1px] py-1 bg-primaryOrange text-white font-black rounded-full  m-4 mt-5 hover:bg-secondaryOrange "
           onClick={() => crearIngrediente()}
         >
           Crear Ingrediente
