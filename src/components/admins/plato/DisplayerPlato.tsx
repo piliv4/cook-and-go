@@ -3,12 +3,16 @@ import { useState } from "react";
 import CrearPlatoCard from "./CrearPlatoCard";
 import CrearPlatoPopUp from "./CrearPlatoPopUp";
 import PlatoCard from "./PlatoCard";
+import { useRouter } from "next/router";
 
 const DisplayerPlato = ({ platos }: { platos: Plato[] }) => {
+  const router = useRouter();
+  const categoriaURI = router.query;
+  const categoriaAux = categoriaURI?.id ? categoriaURI.id.toString() : "";
   const platoVacio = {
     nombre: "",
     descripcion: "",
-    categoria: "",
+    categoria: categoriaAux,
     precio: 0,
     id: "",
     ingredientes: [],
