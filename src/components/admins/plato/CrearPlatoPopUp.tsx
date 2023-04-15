@@ -204,6 +204,9 @@ const CrearPlatoPopUp = ({
                   defaultValue={platoEditar?.descripcion}
                   rows={3}
                   className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
+                  onChange={(e) => {
+                    setPlato({ ...plato, descripcion: e.target.value });
+                  }}
                 ></textarea>
               </div>
             </div>

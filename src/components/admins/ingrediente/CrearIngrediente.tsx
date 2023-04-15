@@ -15,10 +15,16 @@ const CrearIngrediente = () => {
     descripcion: "",
     precioSuplemento: 0,
   };
-  const [ingrediente, setIngrediente] = useState<Ingrediente>(ingredienteVacio);
+  const [ingrediente, setIngrediente] = useState<Ingrediente>({
+    id: "",
+    nombre: "",
+    descripcion: "",
+    precioSuplemento: 0,
+  });
 
   function validarCampos() {
     if (ingrediente.nombre == null || ingrediente.nombre == "") {
+      console.log(ingrediente);
       return false;
     }
     if (ingrediente.precioSuplemento <= 0) {
