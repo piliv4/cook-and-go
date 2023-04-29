@@ -4,6 +4,19 @@ import { Plato } from "@/types/Plato";
 import { Menu } from "@/types/Menu";
 
 export const eliminarMenu = async (id: string) => {
+  eliminarRelacionesDeMenu(id);
+  try {
+    const { error } = await supabase.from("Menu").delete().eq("id", id);
+    if (error) {
+      throw new Error("Error al eliminar el menu");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+const eliminarRelacionesDeMenu = async (id: string) => {
   try {
     const { error: error } = await supabase
       .from("MenuArticulo")
@@ -12,14 +25,6 @@ export const eliminarMenu = async (id: string) => {
 
     if (error) {
       throw new Error("Error al eliminar las referencias de menu a plato");
-    } else {
-      const { error: error2 } = await supabase
-        .from("Menu")
-        .delete()
-        .eq("id", id);
-      if (error2) {
-        throw new Error("Error al eliminar el menu");
-      }
     }
   } catch (error) {
     console.error(error);
@@ -109,6 +114,42 @@ export const crearMenu = async (menu: Menu) => {
       );
     }
 
+    if (error) {
+      throw new Error("Error al crear la categoria");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const modificarMenu = async (menu: Menu) => {
+  const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
+  eliminarRelacionesDeMenu(menu.id);
+  try {
+    const { data, error } = await supabase
+      .from("Menu")
+      .update([
+        {
+          nombre: menu.nombre,
+          precio: menu.precio,
+          comensales: menu.comensales,
+          incluye_pan: menu.incluyePan,
+          incluye_bebida: menu.incluyeBebida,
+          restaurante_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
+        },
+      ])
+      .eq("id", menu.id)
+      .select();
+    if (!error) {
+      tiposPlato.map((tipoPlato) =>
+        insertarPlatos(
+          menu[tipoPlato as keyof Menu] as Plato[],
+          (data[0] as Menu).id,
+          tipoPlato
+        )
+      );
+    }
     if (error) {
       throw new Error("Error al crear la categoria");
     }
