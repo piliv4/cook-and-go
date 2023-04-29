@@ -16,6 +16,22 @@ export const eliminarMenu = async (id: string) => {
   }
 };
 
+export const getAllMenus = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Menu")
+      .select("*")
+      .order("nombre");
+    if (error) {
+      throw new Error("Error al eliminar el menu");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 const eliminarRelacionesDeMenu = async (id: string) => {
   try {
     const { error: error } = await supabase

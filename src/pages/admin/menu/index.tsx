@@ -1,14 +1,14 @@
+import { getAllMenus } from "@/api/menu";
 import MenuCard from "@/components/admins/menu/MenuCard";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import supabase from "@/server/client";
 import { Menu } from "@/types/Menu";
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("Menu").select("*").order("nombre");
+  let menus = await getAllMenus();
   return {
     props: {
-      menus: data,
+      menus: menus,
     },
   };
 }
