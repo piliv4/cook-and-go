@@ -3,25 +3,18 @@ import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import supabase from "@/server/client";
 import { Menu } from "@/types/Menu";
+import { eliminarMenu } from "@/api/menu";
 
 export default function MenuCard({ menu }: { menu: Menu }) {
-  async function borrarMenu() {
-    //Primero borramos la relacion con ingredientes
-    const { error: error1 } = await supabase
-      .from("MenuArticulo")
-      .delete()
-      .eq("menu_id", menu.id);
-
-    //Despues hacemos el borrado del campo
-    const { error: error2 } = await supabase
-      .from("Menu")
-      .delete()
-      .eq("id", menu.id);
-    //Si no hay errores refrescamos la página
-    if (!error1 && !error2) {
-      router.replace("/admin/menu");
+  async function eliminar() {
+    try {
+      await eliminarMenu(menu.id);
+    } catch (error) {
+      console.log("Error al eliminar el menu");
     }
+    router.replace("/admin/menu");
   }
+
   return (
     <Link className="bg-transparent" href={"/admin/menu/" + menu.id}>
       <div
@@ -39,7 +32,7 @@ export default function MenuCard({ menu }: { menu: Menu }) {
             />
             <BsTrashFill
               className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-              onClick={() => borrarMenu()}
+              onClick={() => eliminar()}
             />
           </div>
         </div>
