@@ -3,8 +3,8 @@ import { useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
-import supabase from "@/server/client";
 import { Ingrediente } from "@/types/Ingrediente";
+import { editarIngrediente, eliminarIngrediente } from "@/api/ingrediente";
 
 const IngredienteRow = ({
   ingrediente,
@@ -21,37 +21,22 @@ const IngredienteRow = ({
   const [ingredienteEditar, setIngredienteEditar] =
     useState<Ingrediente>(ingrediente);
 
-  async function borrarIngrediente() {
-    const { error: error1 } = await supabase
-      .from("ArticuloIngrediente")
-      .delete()
-      .eq("ingrediente_id", ingrediente?.id);
-    console.log(error1);
-    if (!error1) {
-      const { error } = await supabase
-        .from("Ingrediente")
-        .delete()
-        .eq("id", ingrediente?.id);
-      if (!error) {
-        router.replace(router.asPath);
-      }
+  async function eliminar() {
+    try {
+      await eliminarIngrediente(ingrediente.id);
+    } catch (error) {
+      console.log("Error al eliminar el ingrediente");
     }
+    router.replace(router.asPath);
   }
-  async function editarIngrediente() {
-    const { error } = await supabase
-      .from("Ingrediente")
-      .update([
-        {
-          nombre: ingredienteEditar.nombre,
-          descripcion: ingredienteEditar.descripcion,
-          precio_suplemento: ingredienteEditar.precioSuplemento,
-        },
-      ])
-      .eq("id", ingrediente?.id);
-    if (!error) {
-      router.replace(router.asPath);
-      setIndexGlobal(-1);
+  async function editar() {
+    try {
+      await editarIngrediente(ingredienteEditar);
+    } catch (error) {
+      console.log("Error al editar el ingrediente");
     }
+    router.replace(router.asPath);
+    setIndexGlobal(-1);
   }
 
   return (
@@ -126,7 +111,7 @@ const IngredienteRow = ({
             <BiSave
               className=" fill-primaryOrange hover:fill-white transition duration-150"
               onClick={() => {
-                editarIngrediente();
+                editar();
               }}
             />
           )}
@@ -137,7 +122,7 @@ const IngredienteRow = ({
           {indexGlobal != index ? (
             <BsTrashFill
               className="fill-primaryOrange hover:fill-white transition duration-150"
-              onClick={() => borrarIngrediente()}
+              onClick={() => eliminar()}
             />
           ) : (
             <AiOutlineClose
