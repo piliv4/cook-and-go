@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import Popup from "reactjs-popup";
 import SubirImagen from "../ui/SubirImagen";
 import { Categoria } from "@/types/Categoria";
+import { crearCategoria, editarCategoria } from "@/api/categoria";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,
@@ -21,33 +22,18 @@ const CrearCategoriaPopup = ({
   const [errorNombre, setErrorNombre] = useState("");
   const [errorDescripcion, setErrorDescripcion] = useState("");
 
-  async function crearCategoria(nombre: string, descripcion: string) {
-    const { error } = await supabase.from("Categoria").insert([
-      {
-        nombre: nombre,
-        descripcion: descripcion,
-        imagenURL: imagen,
-      },
-    ]);
-    if (!error) {
-      router.replace(router.asPath);
-    }
+  async function crear(categoria: Categoria) {
+    try {
+      await crearCategoria(categoria);
+    } catch (error) {}
+    router.replace(router.asPath);
   }
 
-  async function editarCategoria(nombre: string, descripcion: string) {
-    const { error } = await supabase
-      .from("Categoria")
-      .update([
-        {
-          nombre: nombre,
-          descripcion: descripcion,
-          imagenURL: imagen,
-        },
-      ])
-      .eq("id", categoriaEditar?.id);
-    if (!error) {
-      router.replace(router.asPath);
-    }
+  async function editar(categoria: Categoria) {
+    try {
+      await editarCategoria(categoria);
+    } catch (error) {}
+    router.replace(router.asPath);
   }
   function validarForm(nombre: string, descripcion: string) {
     setErrorNombre("");
@@ -72,9 +58,13 @@ const CrearCategoriaPopup = ({
         descripcion: { value: string };
       };
       if (validarForm(nombre.value, descripcion.value)) {
-        categoriaEditar
-          ? editarCategoria(nombre.value, descripcion.value)
-          : crearCategoria(nombre.value, descripcion.value);
+        const ingrediente = {
+          id: categoriaEditar?.id || "",
+          nombre: nombre.value,
+          descripcion: descripcion.value,
+          imagenURL: imagen,
+        };
+        categoriaEditar ? editar(ingrediente) : crear(ingrediente);
         cerrarPopUp();
       }
     }

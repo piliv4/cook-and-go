@@ -1,8 +1,8 @@
 import { Ingrediente } from "@/types/Ingrediente";
+import { getAllIngredientes } from "@/api/ingrediente";
 import CrearIngrediente from "@/components/admins/ingrediente/CrearIngrediente";
 import Buscador from "@/components/admins/ui/Buscador";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";
-import { getAllIngredientes } from "@/api/ingrediente";
 
 export async function getServerSideProps() {
   const ingredientes = await getAllIngredientes();

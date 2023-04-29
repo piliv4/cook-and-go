@@ -6,17 +6,17 @@ import { useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import CrearCategoriaPopup from "./CrearCategoriaPopup";
 import { Categoria } from "@/types/Categoria";
+import { eliminarCategoria } from "@/api/categoria";
 
 export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
   const [open, setOpen] = useState(false);
   async function borrarCategoria() {
-    const { data, error } = await supabase
-      .from("Categoria")
-      .delete()
-      .eq("id", categoria.id);
-    if (!error) {
-      router.replace(router.asPath);
+    try {
+      await eliminarCategoria(categoria.id);
+    } catch (error) {
+      console.log("Error al eliminar la categoria");
     }
+    router.replace(router.asPath);
   }
   return (
     <div
