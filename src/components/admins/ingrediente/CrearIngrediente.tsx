@@ -1,7 +1,7 @@
-import supabase from "@/server/client";
 import { Ingrediente } from "@/types/Ingrediente";
-import router from "next/router";
 import { useState } from "react";
+import { crearIngrediente } from "@/api/ingrediente";
+import router from "next/router";
 
 const CrearIngrediente = () => {
   //CAMBIAR CUANDO PUEDAS POR EL ENUMERADO CORRECTO
@@ -15,12 +15,7 @@ const CrearIngrediente = () => {
     descripcion: "",
     precioSuplemento: 0,
   };
-  const [ingrediente, setIngrediente] = useState<Ingrediente>({
-    id: "",
-    nombre: "",
-    descripcion: "",
-    precioSuplemento: 0,
-  });
+  const [ingrediente, setIngrediente] = useState<Ingrediente>(ingredienteVacio);
 
   function validarCampos() {
     if (ingrediente.nombre == null || ingrediente.nombre == "") {
@@ -35,21 +30,15 @@ const CrearIngrediente = () => {
   }
 
   //CREAR INGREDIENTE
-  async function crearIngrediente() {
+  async function crear() {
     if (validarCampos()) {
-      const { error } = await supabase.from("Ingrediente").insert([
-        {
-          nombre: ingrediente.nombre,
-          descripcion: ingrediente.descripcion,
-          precio_suplemento: ingrediente.precioSuplemento,
-        },
-      ]);
-      if (!error) {
-        router.replace(router.asPath);
-        setIngrediente(ingredienteVacio);
-      } else {
-        console.log(error);
+      try {
+        await crearIngrediente(ingrediente);
+      } catch (error) {
+        console.log("error al crear un ingrediente");
       }
+      router.replace(router.asPath);
+      setIngrediente(ingredienteVacio);
     }
   }
 
@@ -63,6 +52,7 @@ const CrearIngrediente = () => {
             type="text"
             className="border-[1px] border-black rounded-sm w-full"
             placeholder="Introduce un nombre"
+            value={ingrediente.nombre}
             onChange={(e) =>
               setIngrediente({
                 ...ingrediente,
@@ -77,6 +67,7 @@ const CrearIngrediente = () => {
             placeholder="Introduce una breve descripción"
             rows={1}
             className="border-[1px] border-black rounded-sm w-full resize-none"
+            value={ingrediente.descripcion}
             onChange={(e) =>
               setIngrediente({
                 ...ingrediente,
@@ -91,6 +82,7 @@ const CrearIngrediente = () => {
             type="number"
             className="border-[1px] border-black rounded-sm w-full"
             placeholder="Introduce el precio por suplemento"
+            value={ingrediente.precioSuplemento}
             onChange={(e) =>
               setIngrediente({
                 ...ingrediente,
@@ -105,6 +97,7 @@ const CrearIngrediente = () => {
             type="number"
             className="border-[1px] border-black rounded-sm w-full"
             placeholder="Introduce el stock actual"
+            //FALTA AÑADIR EL STOCK
           />
         </div>
         <div className="w-full">
@@ -119,7 +112,7 @@ const CrearIngrediente = () => {
         </div>
         <button
           className="w-full border-[1px] py-1 bg-primaryOrange text-white font-black rounded-full  m-4 mt-5 hover:bg-secondaryOrange "
-          onClick={() => crearIngrediente()}
+          onClick={() => crear()}
         >
           Crear Ingrediente
         </button>
