@@ -3,12 +3,13 @@ import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
 import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
+import { getAllCategorias } from "@/api/categoria";
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("Categoria").select("*").order("nombre");
+  let categorias = await getAllCategorias();
   return {
     props: {
-      categorias: data,
+      categorias: categorias,
     },
   };
 }

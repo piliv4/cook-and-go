@@ -64,3 +64,20 @@ export const eliminarCategoria = async (id: string) => {
     throw error;
   }
 };
+
+export const getAllCategorias = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .select("*")
+      .order("nombre");
+
+    if (error) {
+      throw new Error("Error al obtener todas las categorias");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
