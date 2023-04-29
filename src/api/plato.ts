@@ -2,6 +2,23 @@ import supabase from "@/server/client";
 import { Plato } from "@/types/Plato";
 import { getIngredientesByPlato } from "./ingrediente";
 
+export const getAllPlatos = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Articulo")
+      .select("*")
+      .order("nombre");
+
+    if (error) {
+      throw new Error("Error al obtener todas lps platos");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getPlatosByCategoria = async (id: string) => {
   try {
     const { data: platos, error } = await supabase
