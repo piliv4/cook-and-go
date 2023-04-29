@@ -1,14 +1,14 @@
-import supabase from "../../../server/client";
 import { Ingrediente } from "@/types/Ingrediente";
 import CrearIngrediente from "@/components/admins/ingrediente/CrearIngrediente";
 import Buscador from "@/components/admins/ui/Buscador";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";
+import { getAllIngredientes } from "@/api/ingrediente";
 
 export async function getServerSideProps() {
-  let { data } = await supabase.from("Ingrediente").select("*").order("nombre");
+  const ingredientes = await getAllIngredientes();
   return {
     props: {
-      ingredientes: data,
+      ingredientes: ingredientes,
     },
   };
 }

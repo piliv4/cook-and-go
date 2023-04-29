@@ -21,6 +21,23 @@ export const crearIngrediente = async (ingrediente: Ingrediente) => {
   }
 };
 
+export const getAllIngredientes = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Ingrediente")
+      .select("*")
+      .order("nombre");
+
+    if (error) {
+      throw new Error("Error al obtener todos los ingredientes");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const editarIngrediente = async (ingrediente: Ingrediente) => {
   try {
     const { error } = await supabase
