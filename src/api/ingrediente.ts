@@ -21,23 +21,6 @@ export const crearIngrediente = async (ingrediente: Ingrediente) => {
   }
 };
 
-export const getAllIngredientes = async () => {
-  try {
-    const { data, error } = await supabase
-      .from("Ingrediente")
-      .select("*")
-      .order("nombre");
-
-    if (error) {
-      throw new Error("Error al obtener todos los ingredientes");
-    }
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-};
-
 export const editarIngrediente = async (ingrediente: Ingrediente) => {
   try {
     const { error } = await supabase
@@ -80,6 +63,51 @@ export const eliminarIngrediente = async (id: string) => {
         throw new Error("Error al eliminar el ingrediente");
       }
     }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getAllIngredientes = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Ingrediente")
+      .select("*")
+      .order("nombre");
+
+    if (error) {
+      throw new Error("Error al obtener todos los ingredientes");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getIngredientesByPlato = async (id: string) => {
+  try {
+    const ingredientes = [];
+    const { data: ingredientesId, error } = await supabase
+      .from("ArticuloIngrediente")
+      .select("ingrediente_id")
+      .eq("articulo_id", id);
+
+    if (ingredientesId != null) {
+      for (const id of ingredientesId) {
+        let { data: ingrediente } = await supabase
+          .from("Ingrediente")
+          .select("*")
+          .eq("id", id.ingrediente_id);
+        ingrediente && ingredientes.push(ingrediente[0] as Ingrediente);
+      }
+    }
+
+    if (error) {
+      throw new Error("Error al obtener los ingredientes por plato");
+    }
+    return ingredientes;
   } catch (error) {
     console.error(error);
     throw error;

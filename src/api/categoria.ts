@@ -81,3 +81,20 @@ export const getAllCategorias = async () => {
     throw error;
   }
 };
+
+export const getCategoriaTitulo = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .select("nombre")
+      .eq("id", id);
+
+    if (error) {
+      throw new Error("Error al obtener todas las categorias");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

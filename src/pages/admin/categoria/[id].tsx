@@ -5,37 +5,13 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { Ingrediente } from "@/types/Ingrediente";
+import { getCategoriaTitulo } from "@/api/categoria";
+import { getPlatosByCategoria } from "@/api/plato";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-
-  let { data: titulo } = await supabase
-    .from("Categoria")
-    .select("nombre")
-    .eq("id", id);
-
-  let { data: platos } = await supabase
-    .from("Articulo")
-    .select("*")
-    .eq("categoria_id", id);
-  for (let plato of platos as Plato[]) {
-    plato.ingredientes = [];
-    let { data: ingredientesId } = await supabase
-      .from("ArticuloIngrediente")
-      .select("ingrediente_id")
-      .eq("articulo_id", plato.id);
-
-    if (ingredientesId != null) {
-      for (const id of ingredientesId) {
-        let { data: ingrediente } = await supabase
-          .from("Ingrediente")
-          .select("*")
-          .eq("id", id.ingrediente_id);
-        ingrediente && plato.ingredientes.push(ingrediente[0] as Ingrediente);
-      }
-    }
-  }
+  let titulo = await getCategoriaTitulo(id as string);
+  let platos = await getPlatosByCategoria(id as string);
   return {
     props: {
       platos: platos as Plato[],
