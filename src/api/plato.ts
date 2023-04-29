@@ -21,3 +21,23 @@ export const getPlatosByCategoria = async (id: string) => {
     throw error;
   }
 };
+
+export const getPlatoById = async (id: string) => {
+  try {
+    const { data: plato, error } = await supabase
+      .from("Articulo")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    plato.ingredientes = await getIngredientesByPlato(plato.id);
+
+    if (error) {
+      throw new Error("Error al los platos a partir del id");
+    }
+    return plato;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

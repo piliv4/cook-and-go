@@ -1,6 +1,6 @@
+import { eliminarMenu, getMenuById } from "@/api/menu";
 import DisplayerPlatos from "@/components/admins/menu/DisplayerPlatos";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import supabase from "@/server/client";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
 import { GetServerSideProps } from "next";
@@ -11,21 +11,12 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
   const tiposMenu = ["entrantes", "primeros", "segundos", "postres"];
 
   async function borrarMenu() {
-    //Primero borramos la relacion con ingredientes
-    const { error: error1 } = await supabase
-      .from("MenuArticulo")
-      .delete()
-      .eq("menu_id", menu.id);
-
-    //Despues hacemos el borrado del campo
-    const { error: error2 } = await supabase
-      .from("Menu")
-      .delete()
-      .eq("id", menu.id);
-    //Si no hay errores refrescamos la página
-    if (!error1 && !error2) {
-      router.replace("/admin/menu");
+    try {
+      await eliminarMenu(menu.id);
+    } catch (error) {
+      console.log("Error al eliminar el menu");
     }
+    router.replace("/admin/menu");
   }
 
   function montarCadena() {
@@ -79,53 +70,7 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-  let { data: menu } = await supabase
-    .from("Menu")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  //RECUPERAMOS LOS PLATOS
-  menu.entrantes = [];
-  menu.primeros = [];
-  menu.segundos = [];
-  menu.postres = [];
-  menu.incluyePan = menu.incluye_pan;
-  menu.incluyeBebida = menu.incluye_bebida;
-
-  let { data: platosId } = await supabase
-    .from("MenuArticulo")
-    .select()
-    .eq("menu_id", menu.id);
-
-  if (platosId != null) {
-    for (const id of platosId) {
-      let { data: plato } = await supabase
-        .from("Articulo")
-        .select("*")
-        .eq("id", id.articulo_id)
-        .single();
-      if (plato) {
-        switch (id.tipo) {
-          case "entrantes":
-            menu.entrantes.push(plato);
-            break;
-
-          case "primeros":
-            menu.primeros.push(plato);
-            break;
-
-          case "segundos":
-            menu.segundos.push(plato);
-            break;
-
-          case "postres":
-            menu.postres.push(plato);
-            break;
-        }
-      }
-    }
-  }
+  let menu = await getMenuById(id as string);
 
   return {
     props: {
