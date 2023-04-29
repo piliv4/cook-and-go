@@ -1,4 +1,4 @@
-import { Ingrediente } from "@/types/types";
+import { Ingrediente } from "@/types/Ingrediente";
 import IngredienteRow from "./IngredienteRow";
 import { useState } from "react";
 

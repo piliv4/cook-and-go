@@ -1,5 +1,5 @@
 import supabase from "@/server/client";
-import { Ingrediente } from "@/types/types";
+import { Ingrediente } from "@/types/Ingrediente";
 import router from "next/router";
 import { useState } from "react";
 

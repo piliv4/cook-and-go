@@ -1,7 +1,8 @@
 import DisplayerPlatos from "@/components/admins/menu/DisplayerPlatos";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
-import { Menu, Plato } from "@/types/types";
+import { Menu } from "@/types/Menu";
+import { Plato } from "@/types/Plato";
 import { GetServerSideProps } from "next";
 import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";

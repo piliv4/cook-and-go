@@ -1,10 +1,7 @@
-import Link from "next/link";
 import supabase from "../../../server/client";
-import { Ingrediente } from "@/types/types";
-import IngredienteCard from "@/components/admins/ingrediente/IngredienteCard";
+import { Ingrediente } from "@/types/Ingrediente";
 import CrearIngrediente from "@/components/admins/ingrediente/CrearIngrediente";
 import Buscador from "@/components/admins/ui/Buscador";
-import { BsPlus } from "react-icons/bs";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";
 
 export async function getServerSideProps() {

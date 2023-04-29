@@ -1,12 +1,14 @@
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import supabase from "@/server/client";
 import Image from "next/image";
-import { Categoria, Ingrediente, Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import CrearPlatoPopUp from "@/components/admins/plato/CrearPlatoPopUp";
 import { useState } from "react";
 import router from "next/router";
+import { Ingrediente } from "@/types/Ingrediente";
+import { Categoria } from "@/types/Categoria";
+import { Plato } from "@/types/Plato";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

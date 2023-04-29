@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Image from "next/image";
 import supabase, { supabaseUrl } from "@/server/client";
 import { useRouter } from "next/router";

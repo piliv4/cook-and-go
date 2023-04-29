@@ -1,9 +1,9 @@
-import { Plato } from "@/types/types";
 import { useState } from "react";
 import CrearPlatoCard from "./CrearPlatoCard";
 import CrearPlatoPopUp from "./CrearPlatoPopUp";
 import PlatoCard from "./PlatoCard";
 import { useRouter } from "next/router";
+import { Plato } from "@/types/Plato";
 
 const DisplayerPlato = ({ platos }: { platos: Plato[] }) => {
   const router = useRouter();

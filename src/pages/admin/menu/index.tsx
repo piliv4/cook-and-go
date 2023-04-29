@@ -1,10 +1,8 @@
 import MenuCard from "@/components/admins/menu/MenuCard";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import SubirImagen from "@/components/admins/ui/SubirImagen";
 import supabase from "@/server/client";
-import { Menu } from "@/types/types";
-import Link from "next/link";
+import { Menu } from "@/types/Menu";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Menu").select("*").order("nombre");

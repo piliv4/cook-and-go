@@ -1,5 +1,3 @@
-import supabase from "@/server/client";
-import { Local } from "@/types/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

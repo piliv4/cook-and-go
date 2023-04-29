@@ -1,8 +1,9 @@
 import supabase from "@/server/client";
-import { Ingrediente, Plato } from "@/types/types";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
+import { Ingrediente } from "@/types/Ingrediente";
+import { Plato } from "@/types/Plato";
 
 export async function getServerSideProps() {
   let { data: platos } = await supabase.from("Articulo").select("*");

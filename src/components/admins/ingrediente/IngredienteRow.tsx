@@ -1,10 +1,10 @@
-import { Ingrediente } from "@/types/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import supabase from "@/server/client";
+import { Ingrediente } from "@/types/Ingrediente";
 
 const IngredienteRow = ({
   ingrediente,

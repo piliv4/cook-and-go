@@ -1,6 +1,5 @@
 import supabase from "@/server/client";
-import { Ingrediente } from "@/types/types";
-import { Console } from "console";
+import { Ingrediente } from "@/types/Ingrediente";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 

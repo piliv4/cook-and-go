@@ -1,13 +1,13 @@
-import { Local } from "@/types/types";
 import CabeceraPagina from "../ui/CabeceraPagina";
 import { useState } from "react";
 import router from "next/router";
+import { Establecimiento } from "@/types/Establecimiento";
 
 const LocalFormulario = ({
   localProp,
   crearEditar,
 }: {
-  localProp: Local | null;
+  localProp: Establecimiento | null;
   crearEditar: Function;
 }) => {
   const [local, setLocal] = useState(

@@ -1,10 +1,10 @@
 import LocalFormulario from "@/components/admins/local/LocalFormulario";
 import supabase from "@/server/client";
-import { Local } from "@/types/types";
+import { Establecimiento } from "@/types/Establecimiento";
 import router from "next/router";
 
 export default function CrearLocal() {
-  async function crearLocal(local: Local) {
+  async function crearLocal(local: Establecimiento) {
     const { error } = await supabase
       .from("Local")
       .insert([

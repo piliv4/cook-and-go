@@ -1,15 +1,8 @@
-import { Categoria, Ingrediente } from "@/types/types";
 import { useState } from "react";
 import supabase from "../../../server/client";
-
-type Plato = {
-  id: string;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  categoria: string;
-  ingredientes: string[];
-};
+import { Categoria } from "@/types/Categoria";
+import { Ingrediente } from "@/types/Ingrediente";
+import { Plato } from "@/types/Plato";
 
 export async function getServerSideProps() {
   let { data: categorias } = await supabase.from("Categoria").select("*");

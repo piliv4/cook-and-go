@@ -1,8 +1,8 @@
 import supabase from "@/server/client";
-import { Ingrediente } from "@/types/types";
 import router from "next/router";
 import { useState } from "react";
 import CrearIngrediente from "./CrearIngrediente";
+import { Ingrediente } from "@/types/Ingrediente";
 
 const IngredienteCard = ({ ingrediente }: { ingrediente: Ingrediente }) => {
   const [modificar, setModificar] = useState(false);

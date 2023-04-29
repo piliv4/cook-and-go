@@ -1,5 +1,5 @@
 import supabase from "@/server/client";
-import { Plato } from "@/types/types";
+import { Plato } from "@/types/Plato";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";

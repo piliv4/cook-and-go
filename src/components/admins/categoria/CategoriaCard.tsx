@@ -1,11 +1,11 @@
 import supabase from "@/server/client";
-import { Categoria } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
 import { useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import CrearCategoriaPopup from "./CrearCategoriaPopup";
+import { Categoria } from "@/types/Categoria";
 
 export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
   const [open, setOpen] = useState(false);

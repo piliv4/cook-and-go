@@ -2,7 +2,7 @@ import Buscador from "@/components/admins/ui/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
 import supabase from "@/server/client";
-import { Categoria } from "@/types/types";
+import { Categoria } from "@/types/Categoria";
 
 export async function getServerSideProps() {
   let { data } = await supabase.from("Categoria").select("*").order("nombre");

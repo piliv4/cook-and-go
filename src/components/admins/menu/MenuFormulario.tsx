@@ -1,8 +1,9 @@
-import { Menu, Plato } from "@/types/types";
 import CabeceraPagina from "../ui/CabeceraPagina";
 import { useState } from "react";
 import SeleccionarPlatos from "./SeleccionarPlatos";
 import router from "next/router";
+import { Menu } from "@/types/Menu";
+import { Plato } from "@/types/Plato";
 
 const MenuFormulario = ({
   menuProp,

@@ -1,11 +1,13 @@
 import supabase from "@/server/client";
-import { Categoria, Ingrediente, Plato } from "@/types/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsTrashFill } from "react-icons/bs";
 import Popup from "reactjs-popup";
 import SubirImagen from "../ui/SubirImagen";
 import SeleccionarIngredientes from "./SeleccionarIngredientes";
+import { Plato } from "@/types/Plato";
+import { Categoria } from "@/types/Categoria";
+import { Ingrediente } from "@/types/Ingrediente";
 
 const CrearPlatoPopUp = ({
   platoEditar,

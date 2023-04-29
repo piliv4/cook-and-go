@@ -1,8 +1,7 @@
-import { Categoria } from "@/types/types";
+import { Categoria } from "@/types/Categoria";
 import { useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
-import Popup from "reactjs-popup";
-import CrearCategoriaPopup from "./categoria/CrearCategoriaPopup";
+import CrearCategoriaPopup from "../categoria/CrearCategoriaPopup";
 
 const EditarborrarCategoria = ({
   categoria,

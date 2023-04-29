@@ -1,6 +1,7 @@
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
 import supabase from "@/server/client";
-import { Menu, Plato } from "@/types/types";
+import { Menu } from "@/types/Menu";
+import { Plato } from "@/types/Plato";
 import router from "next/router";
 
 export async function getStaticProps() {

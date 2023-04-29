@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { Ingrediente } from "@/types/types";
+import { Ingrediente } from "@/types/Ingrediente";
 import supabase from "../../../server/client";
 
 async function crearIngrediente({ ingrediente }: { ingrediente: Ingrediente }) {

@@ -1,4 +1,4 @@
-import { Plato } from "@/types/types";
+import { Plato } from "@/types/Plato";
 
 const DisplayerPlatos = ({
   titulo,

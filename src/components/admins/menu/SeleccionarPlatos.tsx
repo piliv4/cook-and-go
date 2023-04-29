@@ -1,4 +1,4 @@
-import { Plato } from "@/types/types";
+import { Plato } from "@/types/Plato";
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { BsTrash } from "react-icons/bs";

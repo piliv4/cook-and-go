@@ -1,9 +1,8 @@
-import { Menu, Plato } from "@/types/types";
 import Link from "next/link";
 import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
-import DisplayerPlatos from "./DisplayerPlatos";
 import supabase from "@/server/client";
+import { Menu } from "@/types/Menu";
 
 export default function MenuCard({ menu }: { menu: Menu }) {
   async function borrarMenu() {

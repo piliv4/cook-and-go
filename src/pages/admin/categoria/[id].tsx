@@ -1,10 +1,11 @@
 import Buscador from "@/components/admins/ui/Buscador";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import supabase from "@/server/client";
-import { Ingrediente, Plato } from "@/types/types";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
+import { Plato } from "@/types/Plato";
+import { Ingrediente } from "@/types/Ingrediente";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
