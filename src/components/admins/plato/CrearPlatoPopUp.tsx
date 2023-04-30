@@ -1,4 +1,3 @@
-import supabase from "@/server/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsTrashFill } from "react-icons/bs";
@@ -8,6 +7,8 @@ import SeleccionarIngredientes from "./SeleccionarIngredientes";
 import { Plato } from "@/types/Plato";
 import { Categoria } from "@/types/Categoria";
 import { Ingrediente } from "@/types/Ingrediente";
+import { getAllCategorias } from "@/api/categoria";
+import { crearPlato, editarPlato } from "@/api/plato";
 
 const CrearPlatoPopUp = ({
   platoEditar,
@@ -31,63 +32,28 @@ const CrearPlatoPopUp = ({
 
   useEffect(() => {
     const getCategorias = async () => {
-      const { data } = await supabase.from("Categoria").select();
+      let data = await getAllCategorias();
       setCategorias(data as Categoria[]);
     };
     getCategorias();
   }, []);
 
-  async function crearPlato() {
-    const { data, error } = await supabase
-      .from("Articulo")
-      .insert([
-        {
-          nombre: plato.nombre,
-          descripcion: plato.descripcion,
-          precio: plato.precio,
-          categoria_id: plato.categoria,
-          imagenURL: plato.imagenURL,
-        },
-      ])
-      .select();
-    !error && agregarIngredientes((data as Plato[])[0].id);
+  async function crear() {
+    try {
+      crearPlato(plato);
+    } catch (error) {
+      console.log("Error al crear el plato");
+    }
+    router.replace(router.asPath);
   }
 
-  async function editarPlato() {
-    const { error } = await supabase
-      .from("Articulo")
-      .update([
-        {
-          nombre: plato.nombre,
-          descripcion: plato.descripcion,
-          precio: plato.precio,
-          categoria_id: plato.categoria,
-          imagenURL: plato.imagenURL,
-        },
-      ])
-      .eq("id", platoEditar?.id);
-
-    //Borrar relaciones anteriores de la tabla ArticuloIngrediente
-    const { error: error2 } = await supabase
-      .from("ArticuloIngrediente")
-      .delete()
-      .eq("articulo_id", platoEditar?.id);
-    //Agregar los ingredientes
-    platoEditar && !error && agregarIngredientes(platoEditar.id);
-  }
-
-  function agregarIngredientes(platoId: string) {
-    plato.ingredientes.map(async (ingrediente) => {
-      const { error } = await supabase.from("ArticuloIngrediente").insert([
-        {
-          ingrediente_id: ingrediente.id,
-          articulo_id: platoId,
-        },
-      ]);
-      if (!error) {
-        router.replace(router.asPath);
-      }
-    });
+  async function editar() {
+    try {
+      await editarPlato(plato);
+    } catch (error) {
+      console.log("Error al editar el plato");
+    }
+    router.replace(router.asPath);
   }
 
   function validarCampos() {
@@ -115,7 +81,7 @@ const CrearPlatoPopUp = ({
   function aceptar() {
     if (open && validarCampos()) {
       console.log(plato);
-      plato.id ? editarPlato() : crearPlato();
+      plato.id ? editar() : crear();
       cerrarPopUp();
     }
   }
