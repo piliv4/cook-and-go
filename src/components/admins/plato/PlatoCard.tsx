@@ -1,4 +1,4 @@
-import supabase from "@/server/client";
+import { eliminarPlato } from "@/api/plato";
 import { Plato } from "@/types/Plato";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,22 +14,13 @@ export default function CategoriaCard({
   abrirPopUp: Function;
   setPlatoEditar: Function;
 }) {
-  async function borrarPlato() {
-    //Primero borramos la relacion con ingredientes
-    const { error: error1 } = await supabase
-      .from("ArticuloIngrediente")
-      .delete()
-      .eq("articulo_id", plato.id);
-
-    //Despues hacemos el borrado del campo
-    const { error: error2 } = await supabase
-      .from("Articulo")
-      .delete()
-      .eq("id", plato.id);
-    //Si no hay errores refrescamos la página
-    if (!error1 && !error2) {
-      router.replace(router.asPath);
+  async function eliminar() {
+    try {
+      eliminarPlato(plato.id);
+    } catch (error) {
+      console.log("Error al eliminar el plato");
     }
+    router.replace(router.asPath);
   }
   return (
     <div
@@ -75,7 +66,7 @@ export default function CategoriaCard({
         />
         <BsTrashFill
           className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => borrarPlato()}
+          onClick={() => eliminar()}
         />
       </div>
     </div>

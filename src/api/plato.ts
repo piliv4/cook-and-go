@@ -52,6 +52,19 @@ export const editarPlato = async (plato: Plato) => {
   insertarIngredientes(plato.ingredientes, plato.id);
 };
 
+export const eliminarPlato = async (id: string) => {
+  eliminarIngredientes(id);
+  try {
+    const { error } = await supabase.from("Articulo").delete().eq("id", id);
+    if (error) {
+      throw new Error("Error al eliminar el plato");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getAllPlatos = async () => {
   try {
     const { data, error } = await supabase
