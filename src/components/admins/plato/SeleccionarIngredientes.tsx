@@ -1,4 +1,4 @@
-import supabase from "@/server/client";
+import { getAllIngredientes } from "@/api/ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
@@ -13,8 +13,8 @@ const SeleccionarIngredientes = ({
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const { data } = await supabase.from("Ingrediente").select();
-      setIngredientes(data as Ingrediente[]);
+      let ingredientes = await getAllIngredientes();
+      setIngredientes(ingredientes as Ingrediente[]);
     };
     fetchPosts();
   }, []);
