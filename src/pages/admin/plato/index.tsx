@@ -2,28 +2,11 @@ import supabase from "@/server/client";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import { Ingrediente } from "@/types/Ingrediente";
 import { Plato } from "@/types/Plato";
+import { getAllPlatos } from "@/api/plato";
 
 export async function getServerSideProps() {
-  let { data: platos } = await supabase.from("Articulo").select("*");
-  for (let plato of platos as Plato[]) {
-    plato.ingredientes = [];
-    let { data: ingredientesId } = await supabase
-      .from("ArticuloIngrediente")
-      .select("ingrediente_id")
-      .eq("articulo_id", plato.id);
-
-    if (ingredientesId != null) {
-      for (const id of ingredientesId) {
-        let { data: ingrediente } = await supabase
-          .from("Ingrediente")
-          .select("*")
-          .eq("id", id.ingrediente_id);
-        ingrediente && plato.ingredientes.push(ingrediente[0] as Ingrediente);
-      }
-    }
-  }
+  let platos = await getAllPlatos();
   return {
     props: {
       platos: platos,

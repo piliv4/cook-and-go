@@ -3,22 +3,21 @@ import Image from "next/image";
 import { GetServerSideProps } from "next";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import CrearPlatoPopUp from "@/components/admins/plato/CrearPlatoPopUp";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import router from "next/router";
-import { Ingrediente } from "@/types/Ingrediente";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";
-import { getPlatoById } from "@/api/plato";
-import { getCategoriaById } from "@/api/categoria";
+import { eliminarPlato, getPlatoById } from "@/api/plato";
+import { getCategoriaById, getCategoriaTitulo } from "@/api/categoria";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   let plato = await getPlatoById(id as string);
-  let categoria = await getCategoriaById((plato as Plato).categoria);
+  let categoria = await getCategoriaById(plato.categoria_id as string);
   return {
     props: {
       plato: plato,
-      categoria: categoria as Categoria,
+      categoria: categoria,
     },
   };
 };
@@ -34,10 +33,11 @@ const DetallesPlato = ({
 
   async function borrarPlato() {
     try {
-      
-    } catch () {
-      
+      await eliminarPlato(plato.id);
+    } catch (e) {
+      console.log("Error al eliminar el plato");
     }
+    router.replace(router.asPath);
   }
   return (
     <div className="mx-48">
@@ -82,7 +82,7 @@ const DetallesPlato = ({
             </div>
             <div className="flex flex-row border-b-[2px] border-primaryOrange border-dotted">
               <p className="font-black">Categoria:</p>
-              <p className="w-full text-right">{categoria?.nombre}</p>
+              <p className="w-full text-right">{categoria.nombre}</p>
             </div>
             <div className="flex flex-row border-b-[2px] border-primaryOrange border-dotted">
               <p className="font-black">Precio:</p>
