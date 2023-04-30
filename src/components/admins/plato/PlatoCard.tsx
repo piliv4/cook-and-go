@@ -1,4 +1,4 @@
-import { eliminarPlato } from "@/services/plato";
+import { eliminarPlato } from "@/api/plato";
 import { Plato } from "@/types/Plato";
 import Image from "next/image";
 import Link from "next/link";

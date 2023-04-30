@@ -1,6 +1,6 @@
 import { Ingrediente } from "@/types/Ingrediente";
 import { useState } from "react";
-import { crearIngrediente } from "@/services/ingrediente";
+import { crearIngrediente } from "@/api/ingrediente";
 import router from "next/router";
 
 const CrearIngrediente = () => {

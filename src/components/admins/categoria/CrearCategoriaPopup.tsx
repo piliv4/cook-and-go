@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import Popup from "reactjs-popup";
 import SubirImagen from "../ui/SubirImagen";
 import { Categoria } from "@/types/Categoria";
-import { crearCategoria, editarCategoria } from "@/services/categoria";
+import { crearCategoria, editarCategoria } from "@/api/categoria";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,

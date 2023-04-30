@@ -1,4 +1,4 @@
-import { getAllIngredientes } from "@/services/ingrediente";
+import { getAllIngredientes } from "@/api/ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";

@@ -6,7 +6,7 @@ import { useState } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import CrearCategoriaPopup from "./CrearCategoriaPopup";
 import { Categoria } from "@/types/Categoria";
-import { eliminarCategoria } from "@/services/categoria";
+import { eliminarCategoria } from "@/api/categoria";
 
 export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
   const [open, setOpen] = useState(false);

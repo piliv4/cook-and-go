@@ -2,7 +2,7 @@ import Link from "next/link";
 import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { Menu } from "@/types/Menu";
-import { eliminarMenu } from "@/services/menu";
+import { eliminarMenu } from "@/api/menu";
 
 export default function MenuCard({ menu }: { menu: Menu }) {
   async function eliminar() {

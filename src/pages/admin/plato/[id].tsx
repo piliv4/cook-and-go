@@ -8,8 +8,8 @@ import router from "next/router";
 import { Ingrediente } from "@/types/Ingrediente";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";
-import { getPlatoById } from "@/services/plato";
-import { getCategoriaById } from "@/services/categoria";
+import { getPlatoById } from "@/api/plato";
+import { getCategoriaById } from "@/api/categoria";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

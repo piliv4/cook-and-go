@@ -1,5 +1,5 @@
-import { crearMenu } from "@/services/menu";
-import { getAllPlatos } from "@/services/plato";
+import { crearMenu } from "@/api/menu";
+import { getAllPlatos } from "@/api/plato";
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
