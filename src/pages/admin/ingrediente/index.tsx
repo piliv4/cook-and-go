@@ -1,5 +1,5 @@
 import { Ingrediente } from "@/types/Ingrediente";
-import { getAllIngredientes } from "@/api/ingrediente";
+import { getAllIngredientes } from "@/services/ingrediente";
 import CrearIngrediente from "@/components/admins/ingrediente/CrearIngrediente";
 import Buscador from "@/components/admins/ui/Buscador";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";

@@ -4,7 +4,7 @@ import { BiSave } from "react-icons/bi";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { Ingrediente } from "@/types/Ingrediente";
-import { editarIngrediente, eliminarIngrediente } from "@/api/ingrediente";
+import { editarIngrediente, eliminarIngrediente } from "@/services/ingrediente";
 
 const IngredienteRow = ({
   ingrediente,

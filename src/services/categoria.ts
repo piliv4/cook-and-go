@@ -82,6 +82,24 @@ export const getAllCategorias = async () => {
   }
 };
 
+export const getCategoriaById = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .select()
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error("Error al obtener la categoria por id");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getCategoriaTitulo = async (id: string) => {
   try {
     const { data, error } = await supabase
@@ -90,7 +108,7 @@ export const getCategoriaTitulo = async (id: string) => {
       .eq("id", id);
 
     if (error) {
-      throw new Error("Error al obtener todas las categorias");
+      throw new Error("Error al obtener el titulo de la categoria");
     }
     return data;
   } catch (error) {

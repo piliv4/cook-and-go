@@ -5,8 +5,8 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { getCategoriaTitulo } from "@/api/categoria";
-import { getPlatosByCategoria } from "@/api/plato";
+import { getCategoriaTitulo } from "@/services/categoria";
+import { getPlatosByCategoria } from "@/services/plato";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

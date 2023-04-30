@@ -3,7 +3,7 @@ import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
 import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
-import { getAllCategorias } from "@/api/categoria";
+import { getAllCategorias } from "@/services/categoria";
 
 export async function getServerSideProps() {
   let categorias = await getAllCategorias();

@@ -1,4 +1,4 @@
-import { eliminarMenu, getMenuById } from "@/api/menu";
+import { eliminarMenu, getMenuById } from "@/services/menu";
 import DisplayerPlatos from "@/components/admins/menu/DisplayerPlatos";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Menu } from "@/types/Menu";

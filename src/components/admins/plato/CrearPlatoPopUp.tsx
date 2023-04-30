@@ -7,8 +7,8 @@ import SeleccionarIngredientes from "./SeleccionarIngredientes";
 import { Plato } from "@/types/Plato";
 import { Categoria } from "@/types/Categoria";
 import { Ingrediente } from "@/types/Ingrediente";
-import { getAllCategorias } from "@/api/categoria";
-import { crearPlato, editarPlato } from "@/api/plato";
+import { getAllCategorias } from "@/services/categoria";
+import { crearPlato, editarPlato } from "@/services/plato";
 
 const CrearPlatoPopUp = ({
   platoEditar,

@@ -1,4 +1,4 @@
-import { getAllMenus } from "@/api/menu";
+import { getAllMenus } from "@/services/menu";
 import MenuCard from "@/components/admins/menu/MenuCard";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";

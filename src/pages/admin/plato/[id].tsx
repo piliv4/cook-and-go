@@ -1,5 +1,4 @@
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import supabase from "@/server/client";
 import Image from "next/image";
 import { GetServerSideProps } from "next";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
@@ -9,37 +8,13 @@ import router from "next/router";
 import { Ingrediente } from "@/types/Ingrediente";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";
+import { getPlatoById } from "@/services/plato";
+import { getCategoriaById } from "@/services/categoria";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-  let { data: plato } = await supabase
-    .from("Articulo")
-    .select("*")
-    .eq("id", id)
-    .single();
-  //RECUPERAMOS LOS INGREDIENTES
-  plato.ingredientes = [];
-  let { data: ingredientesId } = await supabase
-    .from("ArticuloIngrediente")
-    .select("ingrediente_id")
-    .eq("articulo_id", plato.id);
-
-  if (ingredientesId != null) {
-    for (const id of ingredientesId) {
-      let { data: ingrediente } = await supabase
-        .from("Ingrediente")
-        .select("*")
-        .eq("id", id.ingrediente_id);
-      ingrediente && plato.ingredientes.push(ingrediente[0] as Ingrediente);
-    }
-  }
-  //RECUPERAMOS LA CATEGORIA
-  let { data: categoria } = await supabase
-    .from("Categoria")
-    .select("*")
-    .eq("id", plato.categoria_id)
-    .single();
-
+  let plato = await getPlatoById(id as string);
+  let categoria = await getCategoriaById((plato as Plato).categoria);
   return {
     props: {
       plato: plato,
@@ -58,20 +33,10 @@ const DetallesPlato = ({
   const [open, setOpen] = useState(false);
 
   async function borrarPlato() {
-    //Primero borramos la relacion con ingredientes
-    const { error: error1 } = await supabase
-      .from("ArticuloIngrediente")
-      .delete()
-      .eq("articulo_id", plato.id);
-
-    //Despues hacemos el borrado del campo
-    const { error: error2 } = await supabase
-      .from("Articulo")
-      .delete()
-      .eq("id", plato.id);
-    //Si no hay errores refrescamos la página
-    if (!error1 && !error2) {
-      router.replace("/admin/plato");
+    try {
+      
+    } catch () {
+      
     }
   }
   return (
