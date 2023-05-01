@@ -3,7 +3,12 @@ import { Establecimiento } from "@/types/Establecimiento";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { BsFillPersonFill } from "react-icons/bs";
+import {
+  BsFillPencilFill,
+  BsFillPersonFill,
+  BsPenFill,
+  BsTrashFill,
+} from "react-icons/bs";
 
 export default function AdminHeader() {
   const router = useRouter();
