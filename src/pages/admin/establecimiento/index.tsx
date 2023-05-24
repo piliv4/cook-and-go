@@ -1,7 +1,9 @@
 import { getAllEstablecimientos } from "@/api/establecimiento";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Establecimiento } from "@/types/Establecimiento";
+import { useContext } from "react";
 
 export async function getServerSideProps() {
   let establecimientos = await getAllEstablecimientos();
@@ -17,6 +19,8 @@ export default function EstablecimientoPage({
 }: {
   establecimientos: Establecimiento[];
 }) {
+  const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   return (
     <div className="flex flex-col gap-4">
       <CabeceraPagina>
@@ -26,7 +30,15 @@ export default function EstablecimientoPage({
       </CabeceraPagina>
       <div>
         {establecimientos.map((establecimiento) => (
-          <div key={establecimiento.id}>{establecimiento.nombre}</div>
+          <div
+            key={establecimiento.id}
+            onClick={() => {
+              console.log(establecimientoGlobal);
+              setEstablecimientoGlobal(establecimiento);
+            }}
+          >
+            {establecimiento.nombre}
+          </div>
         ))}
       </div>
     </div>
