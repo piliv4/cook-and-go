@@ -51,12 +51,22 @@ export default function AdminHeader() {
             >
               Mis ingredientes
             </Link>
+            <Link
+              href={"/admin/empleado"}
+              className={`px-2 pt-[1px] font-light text-sm transition duration-200 hover:underline underline-offset-[5px] ${
+                seccion == "empleado" && "underline "
+              }`}
+            >
+              Mis empleados
+            </Link>
+            <div className="w-1/2 flex justify-end text-sm">
+              <p className="">{nombreEstablecimiento}</p>
+            </div>
           </div>
         ) : (
           <p>¡Seleccione un establecimiento para empezar a gestionarlo!</p>
         )}
-        <div className="mt-[3px] gap-x-3 flex flex-row text-sm">
-          <p>{nombreEstablecimiento}</p>
+        <div className="mt-[3px] ">
           <BsFillPersonFill className="fill-white pl-" size={24} />
         </div>
       </div>

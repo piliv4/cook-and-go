@@ -1,6 +1,5 @@
 import { crearEstablecimiento } from "@/api/establecimiento";
 import LocalFormulario from "@/components/admins/establecimiento/EstablecimientoFormulario";
-import supabase from "@/server/client";
 import { Establecimiento } from "@/types/Establecimiento";
 import router from "next/router";
 
@@ -14,5 +13,5 @@ export default function CrearEstablecimiento() {
     router.push("/admin/menu");
   }
 
-  return <LocalFormulario crearEditar={crear} localProp={null} />;
+  return <LocalFormulario establecimientoProp={null} crearEditar={crear} />;
 }

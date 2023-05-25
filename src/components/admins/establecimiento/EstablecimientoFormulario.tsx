@@ -12,19 +12,7 @@ const EstablecimientoFormulario = ({
   crearEditar: Function;
 }) => {
   const [establecimiento, setEstablecimiento] = useState(
-    establecimientoProp
-      ? establecimientoProp
-      : {
-          id: "",
-          nombre: "",
-          descripcion: "",
-          cif: "",
-          correo: "",
-          web: "",
-          telefono: 0,
-          ciudad: "",
-          direccion: "",
-        }
+    establecimientoProp ? establecimientoProp : ({} as Establecimiento)
   );
   const [errorNombre, setErrorNombre] = useState("");
 
