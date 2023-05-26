@@ -19,28 +19,40 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
       key={empleado.id}
     >
       {/* Imagen */}
-
-      <div className="relative px-10 mx-2  ">
+      <div className="relative w-20 mx-2">
         <Image
           src={empleado.imagenURL}
           alt="imagen_categoria.jpg"
-          className="absolute rounded-full"
+          className="rounded-full mx-1 absolute"
           fill
         />
       </div>
 
-      <div className="flex flex-col w-full">
+      <div className="ml-1 flex flex-col w-full">
         <div className=" flex flex-row w-full justify-end gap-1 pr-1">
-          <BsFillPencilFill className=" fill- hover:fill-secondaryOrange transition duration-150" />
+          <BsFillPencilFill
+            className=" fill- hover:fill-secondaryOrange transition duration-150"
+            onClick={() => router.push("/admin/empleado/editar/" + empleado.id)}
+          />
           <BsTrashFill
             className="fill- hover:fill-secondaryOrange transition duration-150"
             onClick={() => borrarEmpleado()}
           />
         </div>
         <p className="font-medium">{empleado.nombre}</p>
-        <p className="text-sm rounded-full bg-red-400  w-2/5 text-center text-white">
-          {empleado.rol}
-        </p>
+        <div className="w-full flex">
+          <p
+            className={`text-sm px-1 rounded-full bg-red-400  text-center text-white ${
+              empleado.rol == "Administrador"
+                ? "bg-red-400"
+                : empleado.rol == "Cocinero"
+                ? "bg-emerald-500"
+                : "bg-indigo-600"
+            } `}
+          >
+            {empleado.rol}
+          </p>
+        </div>
       </div>
     </div>
   );
