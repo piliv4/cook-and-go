@@ -2,7 +2,12 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { BsFillPersonFill } from "react-icons/bs";
+import {
+  BsArrowBarDown,
+  BsArrowDown,
+  BsFillPersonFill,
+  BsFillTriangleFill,
+} from "react-icons/bs";
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -59,15 +64,39 @@ export default function AdminHeader() {
             >
               Mis empleados
             </Link>
-            <div className="w-1/2 flex justify-end text-sm">
-              <p className="">{nombreEstablecimiento}</p>
-            </div>
           </div>
         ) : (
           <p>¡Seleccione un establecimiento para empezar a gestionarlo!</p>
         )}
-        <div className="mt-[3px] ">
-          <BsFillPersonFill className="fill-white pl-" size={24} />
+        <div className="mt-[3px] flex flex-row w-full justify-end ">
+          <Link
+            className="pr-2 font-light"
+            href={"/admin/establecimiento/" + establecimientoGlobal.id}
+          >
+            {nombreEstablecimiento}
+          </Link>
+          <div className="relative group">
+            <BsFillPersonFill className="fill-white " size={24} />
+            <div className="absolute  hidden group-hover:flex flex-col -left-[152px] w-44 ">
+              <div className="flex justify-end">
+                <BsFillTriangleFill className="mr-1 -mb-1 fill-secondaryGreen " />
+              </div>
+              <div className="w-full bg-secondaryGreen flex flex-col  rounded-md p-1">
+                <Link
+                  href={"/admin/empleado/"}
+                  className="text-black rounded-md hover:bg-background"
+                >
+                  Mi perfil
+                </Link>
+                <Link
+                  href={"/admin/establecimiento"}
+                  className="text-black pt-1 rounded-md hover:bg-terciaryIntermediate"
+                >
+                  Mis establecimientos
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
