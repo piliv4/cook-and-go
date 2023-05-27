@@ -2,7 +2,7 @@ import CabeceraPagina from "../ui/CabeceraPagina";
 import { useState } from "react";
 import router from "next/router";
 import { Empleado } from "@/types/Empleado";
-import SubirImagen from "../ui/SubirImagen";
+import SubirImagenCircular from "../ui/SubirImagenCircular";
 
 const EmpleadoFormulario = ({
   empleadoProp,
@@ -34,13 +34,15 @@ const EmpleadoFormulario = ({
         </h1>
       </CabeceraPagina>
       <div>
-        {/* INFORMACION GENERAL */}
-        <SubirImagen
-          imagen={empleado.imagenURL}
-          setImagen={(imagen: string) => {
-            setEmpleado({ ...empleado, imagenURL: imagen });
-          }}
-        />
+        <div className="flex justify-center pt-4">
+          {/* INFORMACION GENERAL */}
+          <SubirImagenCircular
+            imagen={empleado.imagenURL}
+            setImagen={(imagen: string) => {
+              setEmpleado({ ...empleado, imagenURL: imagen });
+            }}
+          />
+        </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
           <p className="">Nombre y Apellidos</p>
           <input
@@ -62,7 +64,7 @@ const EmpleadoFormulario = ({
           <input
             type={"text"}
             className="px-6  border-[1px] rounded-md"
-            placeholder="Código de identificación fiscal"
+            placeholder="Documento de identificación"
             defaultValue={empleado.dni}
             onChange={(e) =>
               setEmpleado({
@@ -94,7 +96,7 @@ const EmpleadoFormulario = ({
           <input
             type={"password"}
             className="px-6  border-[1px] rounded-md"
-            placeholder="Correo electrónico"
+            placeholder="Contraseña"
             defaultValue={empleado.contraseña}
             onChange={(e) =>
               setEmpleado({

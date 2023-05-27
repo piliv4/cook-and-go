@@ -42,7 +42,7 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
         <p className="font-medium">{empleado.nombre}</p>
         <div className="w-full flex">
           <p
-            className={`text-sm px-1 rounded-full bg-red-400  text-center text-white ${
+            className={`text-sm px-1 rounded-full  text-center text-white ${
               empleado.rol == "Administrador"
                 ? "bg-red-400"
                 : empleado.rol == "Cocinero"
