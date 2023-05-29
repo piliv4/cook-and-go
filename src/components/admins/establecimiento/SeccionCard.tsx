@@ -26,8 +26,14 @@ const SeccionCard = ({
     <div>
       <input className="mt-4 px-2 font-black ml-2 bg-background inline-block" />
       <div className="-mt-[12px] border-2  border-secondaryGreen ">
-        {establecimiento.secciones[index].mesas?.map((mesa, index) => (
-          <MesaCard index={index} mesa={mesa} key={index} />
+        {establecimiento.secciones[index].mesas?.map((mesa, indexMesa) => (
+          <MesaCard
+            indexMesa={indexMesa}
+            indexSeccion={index}
+            establecimiento={establecimiento}
+            setEstablecimiento={setEstablecimiento}
+            key={index}
+          />
         ))}
         <MesaFormulario anyadirMesa={(mesa: Mesa) => anyadirMesa(mesa)} />
       </div>
