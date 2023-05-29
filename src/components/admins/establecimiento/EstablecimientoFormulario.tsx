@@ -23,7 +23,7 @@ const EstablecimientoFormulario = ({
   function guardar() {
     console.log("Mi establecimiento " + establecimiento);
     if (validacionCampos()) {
-      //crearEditar(establecimiento);
+      crearEditar(establecimiento);
     }
   }
 
@@ -53,7 +53,7 @@ const EstablecimientoFormulario = ({
                 <p className="">Nombre</p>
                 <input
                   type={"text"}
-                  className="px-6  border-[1px] rounded-md"
+                  className="px-6  border-[1px] rounded-md border-primaryGreen"
                   placeholder="Nombre del establecimiento"
                   defaultValue={establecimiento.nombre}
                   onChange={(e) =>
@@ -69,7 +69,7 @@ const EstablecimientoFormulario = ({
                 <p className="">CIF</p>
                 <input
                   type={"text"}
-                  className="px-6  border-[1px] rounded-md"
+                  className="px-6  border-[1px] rounded-md border-primaryGreen"
                   placeholder="Código de identificación fiscal"
                   defaultValue={establecimiento.cif}
                   onChange={(e) =>
@@ -87,7 +87,7 @@ const EstablecimientoFormulario = ({
             <p className="">Detalles</p>
             <input
               type={"text"}
-              className="px-6  border-[1px] rounded-md"
+              className="px-6  border-[1px] rounded-md border-primaryGreen"
               placeholder="Detalles sobre el establecimiento"
               defaultValue={establecimiento.descripcion}
               onChange={(e) =>
@@ -105,11 +105,11 @@ const EstablecimientoFormulario = ({
             </h1>
 
             <div className="flex flex-row gap-6">
-              <div className="flex flex-col gap-y-[1px] w-full pt-2">
+              <div className="flex flex-col gap-y-[1px] w-full pt-2 ">
                 <p className="">Número de teléfono</p>
                 <input
                   type={"tel"}
-                  className="px-6  border-[1px] rounded-md"
+                  className="px-6  border-[1px] rounded-md border-primaryGreen"
                   placeholder="Número de teléfono del establecimiento"
                   defaultValue={
                     (establecimiento.telefono = !0 && establecimiento.telefono)
@@ -127,7 +127,7 @@ const EstablecimientoFormulario = ({
                 <p className="">Correo electronico</p>
                 <input
                   type={"email"}
-                  className="px-6  border-[1px] rounded-md"
+                  className="px-6  border-[1px] rounded-md border-primaryGreen"
                   placeholder="Dirección de correo electrónico"
                   defaultValue={establecimiento.correo}
                   onChange={(e) =>
@@ -144,7 +144,7 @@ const EstablecimientoFormulario = ({
               <p className="">Web</p>
               <input
                 type={"url"}
-                className="px-6  border-[1px] rounded-md"
+                className="px-6  border-[1px] rounded-md border-primaryGreen"
                 placeholder="Dirección de la página web"
                 defaultValue={establecimiento.web}
                 onChange={(e) =>
@@ -166,7 +166,7 @@ const EstablecimientoFormulario = ({
                 <p className="">Localidad</p>
                 <input
                   type={"text"}
-                  className="px-6  border-[1px] rounded-md"
+                  className="px-6  border-[1px] rounded-md border-primaryGreen"
                   placeholder="Localidad"
                   defaultValue={establecimiento.ciudad}
                   onChange={(e) =>
@@ -182,7 +182,7 @@ const EstablecimientoFormulario = ({
                 <p className="">Direccion</p>
                 <input
                   type={"text"}
-                  className="px-6  border-[1px] rounded-md"
+                  className="px-6  border-[1px] rounded-md border-primaryGreen"
                   placeholder="Dirección del establecimiento"
                   defaultValue={establecimiento.direccion}
                   onChange={(e) =>

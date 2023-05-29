@@ -52,7 +52,7 @@ const SeccionCard = ({
           </div>
         </div>
       </div>
-      <div className="-mt-[12px] border-2  border-primaryGreen rounded-md p-2 bg-terciaryIntermediate">
+      <div className="-mt-[12px] border-2  border-primaryGreen rounded-md p-2 ">
         {establecimiento.secciones[index].mesas?.map((mesa, indexMesa) => (
           <MesaCard
             indexMesa={indexMesa}
