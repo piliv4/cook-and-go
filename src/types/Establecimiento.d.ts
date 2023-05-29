@@ -21,5 +21,5 @@ export interface Seccion {
 export interface Mesa {
   id: string;
   tipo: string;
-  comensales: string;
+  comensales: number;
 }

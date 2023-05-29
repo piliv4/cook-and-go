@@ -1,13 +1,14 @@
 import { Mesa } from "@/types/Establecimiento";
 import { useState } from "react";
-import { BsTrashFill } from "react-icons/bs";
 
 const MesaFormulario = ({ anyadirMesa }: { anyadirMesa: Function }) => {
-  const [mesa, setMesa] = useState<Mesa>({} as Mesa);
+  const MESA_DEFAULT = { id: "", tipo: "Mesa", comensales: 1 };
+  const [mesa, setMesa] = useState<Mesa>(MESA_DEFAULT);
   return (
     <div className="flex flex-row border-2 border-primaryOrange m-2 mt-4 p-1">
       <select
         className=" bg-transparent"
+        value={mesa.tipo}
         onChange={(e) => setMesa({ ...mesa, tipo: e.target.value })}
       >
         <option>Mesa</option>
@@ -18,8 +19,10 @@ const MesaFormulario = ({ anyadirMesa }: { anyadirMesa: Function }) => {
       <div className="w-full flex flex-row justify-center">
         <input
           type="number"
-          defaultValue={1}
-          onChange={(e) => setMesa({ ...mesa, comensales: e.target.value })}
+          value={mesa.comensales}
+          onChange={(e) =>
+            setMesa({ ...mesa, comensales: parseInt(e.target.value) })
+          }
           className="w-6 text-right border-2"
         ></input>
         <p className="text-center">comensales</p>
@@ -28,7 +31,7 @@ const MesaFormulario = ({ anyadirMesa }: { anyadirMesa: Function }) => {
         className="bg-primaryOrange px-2 rounded-md font-black text-white"
         onClick={() => {
           anyadirMesa(mesa);
-          setMesa({} as Mesa);
+          setMesa(MESA_DEFAULT);
         }}
       >
         Añadir
