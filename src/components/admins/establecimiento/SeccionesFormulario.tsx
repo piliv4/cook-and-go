@@ -24,15 +24,24 @@ const SeccionesFormulario = ({
       <h1 className="w-full border-b-2 pb-1 text-center pt-4 font-black text-lg border-primaryGreen">
         ESTABLECER SECCIONES
       </h1>
-      {establecimiento.secciones?.map((seccion, index) => (
-        <SeccionCard
-          key={index}
-          index={index}
-          establecimiento={establecimiento}
-          setEstablecimiento={setEstablecimiento}
-        />
-      ))}
-      <button onClick={() => anyadirSeccion()}>Añadir sección</button>
+      <div className=" overflow-y-auto overflow-hidden  max-h-[332px] my-1 flex justify-center">
+        <div className=" max-w-[520px] w-full">
+          {establecimiento.secciones?.map((seccion, index) => (
+            <SeccionCard
+              key={index}
+              index={index}
+              establecimiento={establecimiento}
+              setEstablecimiento={setEstablecimiento}
+            />
+          ))}
+        </div>
+      </div>
+      <button
+        onClick={() => anyadirSeccion()}
+        className="mt-2 mx-3 w-full text-center font-black bg-primaryOrange text-lg text-white uppercase rounded-full py-2"
+      >
+        Añadir sección
+      </button>
     </div>
   );
 };

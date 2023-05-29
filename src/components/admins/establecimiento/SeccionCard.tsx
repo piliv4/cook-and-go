@@ -38,21 +38,21 @@ const SeccionCard = ({
 
   return (
     <div>
-      <div className="flex flex-row mt-4">
+      <div className="flex flex-row mt-2">
         <input
           placeholder="Introduzca el nombre de la sección..."
           defaultValue={establecimiento.secciones[index].nombre}
           value={establecimiento.secciones[index].nombre}
           onChange={(e) => cambiarNombre(e.target.value)}
-          className="placeholder:font-normal placeholder:text-sm  px-2 font-black ml-2  inline-block border-2 rounded-md border-secondaryGreen"
+          className="placeholder:font-normal placeholder:text-sm  px-2 font-black ml-2  inline-block border-2 rounded-md border-primaryGreen"
         />
         <div className="w-full flex justify-end pr-2">
-          <div className="  border-2 flex justify-center bg-background items-center rounded-md border-secondaryGreen">
+          <div className="  border-2 flex justify-center bg-background items-center rounded-md border-primaryGreen">
             <BsTrashFill size={20} onClick={() => eliminarSeccion()} />
           </div>
         </div>
       </div>
-      <div className="-mt-[12px] border-2  border-secondaryGreen rounded-md p-2 ">
+      <div className="-mt-[12px] border-2  border-primaryGreen rounded-md p-2 bg-terciaryIntermediate">
         {establecimiento.secciones[index].mesas?.map((mesa, indexMesa) => (
           <MesaCard
             indexMesa={indexMesa}

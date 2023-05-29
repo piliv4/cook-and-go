@@ -19,7 +19,7 @@ const MesaCard = ({
     setEstablecimiento(establecimientoCopia);
   }
   return (
-    <div className="flex flex-row border-b-2 border-dotted px-2 border-primaryOrange m-2 mt-4">
+    <div className="flex flex-row border-b-2 border-dotted px-2 border-primaryGreen m-2 mt-4">
       <p className="pr-2">{indexMesa + 1}. </p>
       <p>{mesa.tipo}</p>
       <p className="w-full text-center">{mesa.comensales} comensales</p>

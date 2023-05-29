@@ -5,9 +5,9 @@ const MesaFormulario = ({ anyadirMesa }: { anyadirMesa: Function }) => {
   const MESA_DEFAULT = { id: "", tipo: "Mesa", comensales: 1 };
   const [mesa, setMesa] = useState<Mesa>(MESA_DEFAULT);
   return (
-    <div className="flex flex-row border-2 border-primaryOrange m-2 mt-4 p-1">
+    <div className="flex flex-row  bg-secondaryGreen rounded-full mx-2 pl-6 mt-4 p-1">
       <select
-        className=" bg-transparent"
+        className=" bg-transparent mr-8"
         value={mesa.tipo}
         onChange={(e) => setMesa({ ...mesa, tipo: e.target.value })}
       >
@@ -23,12 +23,12 @@ const MesaFormulario = ({ anyadirMesa }: { anyadirMesa: Function }) => {
           onChange={(e) =>
             setMesa({ ...mesa, comensales: parseInt(e.target.value) })
           }
-          className="w-6 text-right border-2"
+          className="w-6 text-center bg-background   border-[1px] border-primaryGreen rounded-md mr-1 "
         ></input>
         <p className="text-center">comensales</p>
       </div>
       <button
-        className="bg-primaryOrange px-2 rounded-md font-black text-white"
+        className="bg-primaryGreen  px-4 rounded-full  font-black text-white"
         onClick={() => {
           anyadirMesa(mesa);
           setMesa(MESA_DEFAULT);
