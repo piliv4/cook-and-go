@@ -1,6 +1,6 @@
 import supabase from "@/server/client";
 import { Establecimiento, Seccion } from "@/types/Establecimiento";
-import { crearSeccion, eliminarSeccionesByEstablecimientoId } from "./seccion";
+import { crearSeccion, eliminarSecciones } from "./seccion";
 
 export const crearEstablecimiento = async (
   establecimiento: Establecimiento
@@ -40,7 +40,7 @@ export const editarEstablecimiento = async (
   establecimiento: Establecimiento
 ) => {
   try {
-    eliminarSeccionesByEstablecimientoId(establecimiento.id);
+    eliminarSecciones(establecimiento.id);
     const { error } = await supabase
       .from("Establecimiento")
       .update([
@@ -61,6 +61,22 @@ export const editarEstablecimiento = async (
     }
     if (establecimiento.secciones.length > 0)
       insertarSecciones(establecimiento.secciones, establecimiento.id);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const eliminarEstablecimiento = async (id: string) => {
+  eliminarSecciones(id);
+  try {
+    const { error } = await supabase
+      .from("Establecimiento")
+      .delete()
+      .eq("id", id);
+    if (error) {
+      throw new Error("Error al eliminar el establecimiento");
+    }
   } catch (error) {
     console.error(error);
     throw error;

@@ -1,5 +1,7 @@
-import { getAllEstablecimientos } from "@/api/establecimiento";
-import Buscador from "@/components/admins/ui/Buscador";
+import {
+  eliminarEstablecimiento,
+  getAllEstablecimientos,
+} from "@/api/establecimiento";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Establecimiento } from "@/types/Establecimiento";
@@ -20,8 +22,16 @@ export default function EstablecimientoPage({
 }: {
   establecimientos: Establecimiento[];
 }) {
+  async function borrarEstablecimiento(id: string) {
+    try {
+      await eliminarEstablecimiento(id);
+    } catch (error) {
+      console.log("Error al eliminar el establecimiento");
+    }
+    router.replace(router.asPath);
+  }
   const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
-  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+  // const { establecimientoGlobal } = useContext(EstablecimientoContext);
   return (
     <div className="flex flex-col gap-4">
       <CabeceraPagina>
@@ -39,14 +49,17 @@ export default function EstablecimientoPage({
       </CabeceraPagina>
       <div>
         {establecimientos.map((establecimiento) => (
-          <div
-            key={establecimiento.id}
-            onClick={() => {
-              console.log(establecimientoGlobal);
-              setEstablecimientoGlobal(establecimiento);
-            }}
-          >
-            {establecimiento.nombre}
+          <div key={establecimiento.id}>
+            <p
+              onClick={() => {
+                setEstablecimientoGlobal(establecimiento);
+              }}
+            >
+              {establecimiento.nombre}
+            </p>
+            <p onClick={() => borrarEstablecimiento(establecimiento.id)}>
+              borrar
+            </p>
           </div>
         ))}
       </div>
