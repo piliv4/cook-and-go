@@ -1,8 +1,9 @@
 import CabeceraPagina from "../ui/CabeceraPagina";
 import { useState } from "react";
 import router from "next/router";
-import { Establecimiento } from "@/types/Establecimiento";
+import { Establecimiento, Seccion } from "@/types/Establecimiento";
 import SeccionesFormulario from "./SeccionesFormulario";
+import SubirImagen from "../ui/SubirImagen";
 
 const EstablecimientoFormulario = ({
   establecimientoProp,
@@ -14,11 +15,15 @@ const EstablecimientoFormulario = ({
   const [establecimiento, setEstablecimiento] = useState(
     establecimientoProp ? establecimientoProp : ({} as Establecimiento)
   );
-  const [errorNombre, setErrorNombre] = useState("");
+
+  const [secciones, setSecciones] = useState(
+    establecimientoProp?.secciones ? establecimientoProp.secciones : []
+  );
 
   function guardar() {
+    console.log("Mi establecimiento " + establecimiento);
     if (validacionCampos()) {
-      crearEditar(establecimiento);
+      //crearEditar(establecimiento);
     }
   }
 
@@ -35,6 +40,7 @@ const EstablecimientoFormulario = ({
             : "Crear un establecimiento"}
         </h1>
       </CabeceraPagina>
+      {/* <SubirImagen imagen="" setImagen={() => console.log("implemetar")} /> */}
       <div>
         <h1 className="w-full border-b-2 pb-1 text-center pt-4 font-black text-lg border-primaryGreen">
           INFORMACIÓN GENERAL
@@ -153,11 +159,11 @@ const EstablecimientoFormulario = ({
           </h1>
           <div className="flex flex-row gap-6">
             <div className="flex flex-col gap-y-[1px] w-full pt-2">
-              <p className="">establecimientoidad</p>
+              <p className="">Localidad</p>
               <input
                 type={"text"}
                 className="px-6  border-[1px] rounded-md"
-                placeholder="establecimientoidad"
+                placeholder="Localidad"
                 defaultValue={establecimiento.ciudad}
                 onChange={(e) =>
                   setEstablecimiento({
@@ -187,7 +193,10 @@ const EstablecimientoFormulario = ({
           </div>
         </div>
       </div>
-      <SeccionesFormulario />
+      <SeccionesFormulario
+        establecimiento={establecimiento}
+        setEstablecimiento={setEstablecimiento}
+      />
       <div className=" flex flex-row justify-end gap-x-2 font-black py-4">
         <button
           className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
