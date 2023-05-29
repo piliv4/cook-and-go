@@ -2,6 +2,7 @@ import { useState } from "react";
 import MesaCard from "./MesaCard";
 import { Establecimiento, Mesa, Seccion } from "@/types/Establecimiento";
 import MesaFormulario from "./MesaFormulario";
+import { BsTrashFill } from "react-icons/bs";
 
 const SeccionCard = ({
   index,
@@ -12,6 +13,7 @@ const SeccionCard = ({
   establecimiento: Establecimiento;
   setEstablecimiento: Function;
 }) => {
+  const seccion = establecimiento.secciones[index];
   function anyadirMesa(mesa: Mesa) {
     let establecimientoCopia = { ...establecimiento };
     establecimientoCopia.secciones[index].mesas == undefined
@@ -22,10 +24,35 @@ const SeccionCard = ({
     setEstablecimiento(establecimientoCopia);
   }
 
+  function cambiarNombre(nombre: string) {
+    let establecimientoCopia = { ...establecimiento };
+    establecimientoCopia.secciones[index].nombre = nombre;
+    setEstablecimiento(establecimientoCopia);
+  }
+
+  function eliminarSeccion() {
+    let establecimientoCopia = { ...establecimiento };
+    establecimientoCopia.secciones.splice(index, 1);
+    setEstablecimiento(establecimientoCopia);
+  }
+
   return (
     <div>
-      <input className="mt-4 px-2 font-black ml-2 bg-background inline-block" />
-      <div className="-mt-[12px] border-2  border-secondaryGreen ">
+      <div className="flex flex-row mt-4">
+        <input
+          placeholder="Introduzca el nombre de la sección..."
+          defaultValue={establecimiento.secciones[index].nombre}
+          value={establecimiento.secciones[index].nombre}
+          onChange={(e) => cambiarNombre(e.target.value)}
+          className="placeholder:font-normal placeholder:text-sm  px-2 font-black ml-2  inline-block border-2 rounded-md border-secondaryGreen"
+        />
+        <div className="w-full flex justify-end pr-2">
+          <div className="  border-2 flex justify-center bg-background items-center rounded-md border-secondaryGreen">
+            <BsTrashFill size={20} onClick={() => eliminarSeccion()} />
+          </div>
+        </div>
+      </div>
+      <div className="-mt-[12px] border-2  border-secondaryGreen rounded-md p-2 ">
         {establecimiento.secciones[index].mesas?.map((mesa, indexMesa) => (
           <MesaCard
             indexMesa={indexMesa}

@@ -19,8 +19,8 @@ const MesaCard = ({
     setEstablecimiento(establecimientoCopia);
   }
   return (
-    <div className="flex flex-row border-b-2 border-dotted border-primaryOrange m-2 mt-4">
-      <p>{indexMesa} </p>
+    <div className="flex flex-row border-b-2 border-dotted px-2 border-primaryOrange m-2 mt-4">
+      <p className="pr-2">{indexMesa + 1}. </p>
       <p>{mesa.tipo}</p>
       <p className="w-full text-center">{mesa.comensales} comensales</p>
       <BsTrashFill className="" onClick={() => eliminarMesa()} />
