@@ -10,7 +10,7 @@ export default function CrearEstablecimiento() {
     } catch (error) {
       console.log("Error al crear un establecimiento");
     }
-    router.push("/admin/menu");
+    router.push("/admin/establecimiento");
   }
 
   return <LocalFormulario establecimientoProp={null} crearEditar={crear} />;
