@@ -1,6 +1,6 @@
 import supabase from "@/server/client";
 import { Establecimiento, Seccion } from "@/types/Establecimiento";
-import { crearSeccion } from "./seccion";
+import { crearSeccion, eliminarSeccionesByEstablecimientoId } from "./seccion";
 
 export const crearEstablecimiento = async (
   establecimiento: Establecimiento
@@ -40,6 +40,7 @@ export const editarEstablecimiento = async (
   establecimiento: Establecimiento
 ) => {
   try {
+    eliminarSeccionesByEstablecimientoId(establecimiento.id);
     const { error } = await supabase
       .from("Establecimiento")
       .update([
@@ -58,6 +59,8 @@ export const editarEstablecimiento = async (
     if (error) {
       throw new Error("Error al modificar el establecimiento");
     }
+    if (establecimiento.secciones.length > 0)
+      insertarSecciones(establecimiento.secciones, establecimiento.id);
   } catch (error) {
     console.error(error);
     throw error;

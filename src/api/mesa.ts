@@ -11,7 +11,7 @@ export const crearMesa = async (mesa: Mesa, seccionId: string) => {
       },
     ]);
     if (error) {
-      throw new Error("Error al crear la seccion");
+      throw new Error("Error al crear la mesa");
     }
   } catch (error) {
     console.error(error);
@@ -19,14 +19,14 @@ export const crearMesa = async (mesa: Mesa, seccionId: string) => {
   }
 };
 
-export const eliminarMesaBySeccionId = async (seccionId: string) => {
+export const eliminarMesasBySeccionId = async (seccionId: string) => {
   try {
     const { error } = await supabase
       .from("Mesa")
       .delete()
       .eq("seccion_id", seccionId);
     if (error) {
-      throw new Error("Error al crear la seccion");
+      throw new Error("Error al eliminar las mesas");
     }
   } catch (error) {
     console.error(error);

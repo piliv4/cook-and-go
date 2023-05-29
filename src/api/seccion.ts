@@ -25,6 +25,22 @@ export const crearSeccion = async (seccion: Seccion, restauranteID: string) => {
   }
 };
 
+export const eliminarSeccionesByEstablecimientoId = async (
+  establecimientoId: string
+) => {
+  try {
+    const { error } = await supabase
+      .from("Seccion")
+      .delete()
+      .eq("establecimiento_id", establecimientoId);
+    if (error) {
+      throw new Error("Error al eliminar las secciones");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 const insertarMesas = async (mesas: Mesa[], seccionId: string) => {
   mesas.map(async (mesa) => {
     try {
