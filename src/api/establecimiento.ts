@@ -1,25 +1,35 @@
 import supabase from "@/server/client";
-import { Establecimiento } from "@/types/Establecimiento";
+import { Establecimiento, Seccion } from "@/types/Establecimiento";
+import { crearSeccion } from "./seccion";
 
 export const crearEstablecimiento = async (
   establecimiento: Establecimiento
 ) => {
   try {
-    const { error } = await supabase.from("Establecimiento").insert([
-      {
-        nombre: establecimiento.nombre,
-        descripcion: establecimiento.descripcion,
-        cif: establecimiento.cif,
-        correo: establecimiento.correo,
-        web: establecimiento.web,
-        telefono: establecimiento.telefono,
-        ciudad: establecimiento.ciudad,
-        direccion: establecimiento.direccion,
-      },
-    ]);
+    const { data, error } = await supabase
+      .from("Establecimiento")
+      .insert([
+        {
+          nombre: establecimiento.nombre,
+          descripcion: establecimiento.descripcion,
+          cif: establecimiento.cif,
+          correo: establecimiento.correo,
+          web: establecimiento.web,
+          telefono: establecimiento.telefono,
+          ciudad: establecimiento.ciudad,
+          direccion: establecimiento.direccion,
+        },
+      ])
+      .select()
+      .single();
     if (error) {
       throw new Error("Error al crear el establecimiento");
     }
+    if (establecimiento.secciones.length > 0)
+      insertarSecciones(
+        establecimiento.secciones,
+        (data as Establecimiento).id
+      );
   } catch (error) {
     console.error(error);
     throw error;
@@ -69,4 +79,18 @@ export const getAllEstablecimientos = async () => {
     console.error(error);
     throw error;
   }
+};
+
+const insertarSecciones = async (
+  secciones: Seccion[],
+  establecimientoId: string
+) => {
+  secciones.map(async (seccion) => {
+    try {
+      crearSeccion(seccion, establecimientoId);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  });
 };
