@@ -9,7 +9,7 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
     try {
       await eliminarEmpleado(empleado.id);
     } catch (error) {
-      console.log("Error al eliminar la categoria");
+      console.log("Error al eliminar el empleado");
     }
     router.replace(router.asPath);
   }
