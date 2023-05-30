@@ -33,3 +33,20 @@ export const eliminarMesasBySeccionId = async (seccionId: string) => {
     throw error;
   }
 };
+
+export const getMesaBySeccionId = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Mesa")
+      .select()
+      .eq("seccion_id", id);
+
+    if (error) {
+      throw new Error("Error al obtener todas las mesas");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -2,6 +2,7 @@ import {
   eliminarEstablecimiento,
   getAllEstablecimientos,
 } from "@/api/establecimiento";
+import EstablecimientoCard from "@/components/admins/establecimiento/EstablecimientoCard";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Establecimiento } from "@/types/Establecimiento";
@@ -22,14 +23,6 @@ export default function EstablecimientoPage({
 }: {
   establecimientos: Establecimiento[];
 }) {
-  async function borrarEstablecimiento(id: string) {
-    try {
-      await eliminarEstablecimiento(id);
-    } catch (error) {
-      console.log("Error al eliminar el establecimiento");
-    }
-    router.replace(router.asPath);
-  }
   const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
   // const { establecimientoGlobal } = useContext(EstablecimientoContext);
   return (
@@ -47,20 +40,12 @@ export default function EstablecimientoPage({
           </button>
         </div>
       </CabeceraPagina>
-      <div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
         {establecimientos.map((establecimiento) => (
-          <div key={establecimiento.id}>
-            <p
-              onClick={() => {
-                setEstablecimientoGlobal(establecimiento);
-              }}
-            >
-              {establecimiento.nombre}
-            </p>
-            <p onClick={() => borrarEstablecimiento(establecimiento.id)}>
-              borrar
-            </p>
-          </div>
+          <EstablecimientoCard
+            establecimiento={establecimiento}
+            key={establecimiento.id}
+          />
         ))}
       </div>
     </div>

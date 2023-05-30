@@ -1,6 +1,11 @@
 import supabase from "@/server/client";
 import { Establecimiento, Seccion } from "@/types/Establecimiento";
-import { crearSeccion, eliminarSecciones } from "./seccion";
+import {
+  crearSeccion,
+  eliminarSecciones,
+  getSeccionesByEstablecimientoId,
+} from "./seccion";
+import { getMesaBySeccionId } from "./mesa";
 
 export const crearEstablecimiento = async (
   establecimiento: Establecimiento
@@ -95,6 +100,36 @@ export const getAllEstablecimientos = async () => {
     if (error) {
       throw new Error("Error al obtener todas los establecimientos");
     }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getEstablecimientoById = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Establecimiento")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error("Error al obtener todas los establecimientos");
+    } else {
+      (data as Establecimiento).secciones =
+        await getSeccionesByEstablecimientoId(id);
+      for (const seccion of (data as Establecimiento).secciones) {
+        try {
+          seccion.mesas = await getMesaBySeccionId(seccion.id);
+        } catch (error) {
+          console.error(error);
+          throw error;
+        }
+      }
+    }
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
