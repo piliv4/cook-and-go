@@ -11,6 +11,7 @@ import { GetServerSideProps } from "next";
 import router from "next/router";
 import { useContext } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import MesaCard from "@/components/admins/establecimiento/MesaCard";
 
 export default function EditarEstablecimiento({
   establecimiento,
@@ -108,8 +109,33 @@ export default function EditarEstablecimiento({
       </div>
       {/* Mis ingredientes */}
       <div className="flex flex-col gap-y-4 mt-4">
-        <div className="pb-1 border-primaryGreen border-b-[2px] text-xl font-black uppercase">
-          Ingredientes:
+        <div className="border-primaryGreen border-b-[2px] text-xl font-black uppercase">
+          Secciones:
+        </div>
+        <div className="grid grid-cols-3">
+          {establecimiento.secciones.map((seccion) => (
+            <div key={seccion.id}>
+              <div className="flex flex-row ">
+                <p className="placeholder:font-normal bg-background placeholder:text-sm  px-2 font-black ml-2  inline-block border-2 rounded-md border-primaryGreen">
+                  {seccion.nombre}
+                </p>
+              </div>
+              <div className="-mt-[12px] border-2  border-primaryGreen rounded-md p-2 ">
+                {seccion.mesas?.map((mesa, indexMesa) => (
+                  <div
+                    key={mesa.id}
+                    className="flex flex-row border-b-2 border-dotted px-2 border-primaryGreen m-2 mt-4"
+                  >
+                    <p className="pr-2">{indexMesa + 1}. </p>
+                    <p>{mesa.tipo}</p>
+                    <p className="w-full text-end">
+                      {mesa.comensales} comensales
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
