@@ -1,7 +1,7 @@
 import CabeceraPagina from "../ui/CabeceraPagina";
 import { useState } from "react";
 import router from "next/router";
-import { Establecimiento, Seccion } from "@/types/Establecimiento";
+import { Establecimiento } from "@/types/Establecimiento";
 import SeccionesFormulario from "./SeccionesFormulario";
 import SubirImagen from "../ui/SubirImagen";
 
@@ -14,10 +14,6 @@ const EstablecimientoFormulario = ({
 }) => {
   const [establecimiento, setEstablecimiento] = useState(
     establecimientoProp ? establecimientoProp : ({} as Establecimiento)
-  );
-
-  const [secciones, setSecciones] = useState(
-    establecimientoProp?.secciones ? establecimientoProp.secciones : []
   );
 
   function guardar() {
@@ -40,7 +36,12 @@ const EstablecimientoFormulario = ({
             : "Crear un establecimiento"}
         </h1>
       </CabeceraPagina>
-      {/* <SubirImagen imagen="" setImagen={() => console.log("implemetar")} /> */}
+      <SubirImagen
+        imagen={establecimiento.imagenURL}
+        setImagen={(imagen: string) =>
+          setEstablecimiento({ ...establecimiento, imagenURL: imagen })
+        }
+      />
       <div className="grid md:grid-cols-2 md:gap-5">
         <div>
           <h1 className="w-full border-b-2 pb-1 text-center pt-4 font-black text-lg border-primaryGreen">

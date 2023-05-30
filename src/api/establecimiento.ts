@@ -18,6 +18,7 @@ export const crearEstablecimiento = async (
           telefono: establecimiento.telefono,
           ciudad: establecimiento.ciudad,
           direccion: establecimiento.direccion,
+          imagenURL: establecimiento.imagenURL,
         },
       ])
       .select()
@@ -53,6 +54,7 @@ export const editarEstablecimiento = async (
           telefono: establecimiento.telefono,
           ciudad: establecimiento.ciudad,
           direccion: establecimiento.direccion,
+          imagenURL: establecimiento.imagenURL,
         },
       ])
       .eq("id", establecimiento.id);

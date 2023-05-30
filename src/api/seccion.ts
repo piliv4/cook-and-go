@@ -2,14 +2,17 @@ import supabase from "@/server/client";
 import { Mesa, Seccion } from "@/types/Establecimiento";
 import { crearMesa, eliminarMesasBySeccionId } from "./mesa";
 
-export const crearSeccion = async (seccion: Seccion, restauranteID: string) => {
+export const crearSeccion = async (
+  seccion: Seccion,
+  establecimientoId: string
+) => {
   try {
     const { data, error } = await supabase
       .from("Seccion")
       .insert([
         {
           nombre: seccion.nombre,
-          restaurante_id: restauranteID,
+          establecimiento_id: establecimientoId,
         },
       ])
       .select()
