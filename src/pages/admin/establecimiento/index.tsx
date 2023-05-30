@@ -1,13 +1,8 @@
-import {
-  eliminarEstablecimiento,
-  getAllEstablecimientos,
-} from "@/api/establecimiento";
+import { getAllEstablecimientos } from "@/api/establecimiento";
 import EstablecimientoCard from "@/components/admins/establecimiento/EstablecimientoCard";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Establecimiento } from "@/types/Establecimiento";
 import router from "next/router";
-import { useContext } from "react";
 
 export async function getServerSideProps() {
   let establecimientos = await getAllEstablecimientos();
@@ -23,8 +18,6 @@ export default function EstablecimientoPage({
 }: {
   establecimientos: Establecimiento[];
 }) {
-  const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
-  // const { establecimientoGlobal } = useContext(EstablecimientoContext);
   return (
     <div className="flex flex-col gap-4">
       <CabeceraPagina>
