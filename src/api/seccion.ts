@@ -40,7 +40,7 @@ export const eliminarSecciones = async (establecimientoId: string) => {
   );
   //Recorremos el array y vamos eliminando sus mesas
   for (const seccion of seccionesABorrar) {
-    eliminarMesasYSeccion(seccion.id);
+    await eliminarMesasYSeccion(seccion.id);
   }
 };
 

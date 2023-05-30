@@ -46,7 +46,7 @@ export const editarEstablecimiento = async (
   establecimiento: Establecimiento
 ) => {
   try {
-    eliminarSecciones(establecimiento.id);
+    await eliminarSecciones(establecimiento.id);
     const { error } = await supabase
       .from("Establecimiento")
       .update([
@@ -75,7 +75,7 @@ export const editarEstablecimiento = async (
 };
 
 export const eliminarEstablecimiento = async (id: string) => {
-  eliminarSecciones(id);
+  await eliminarSecciones(id);
   try {
     const { error } = await supabase
       .from("Establecimiento")

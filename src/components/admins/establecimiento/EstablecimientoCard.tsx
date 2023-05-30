@@ -4,18 +4,19 @@ import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { Establecimiento } from "@/types/Establecimiento";
 import { eliminarEstablecimiento } from "@/api/establecimiento";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
+import { useContext } from "react";
 
 export default function EstablecimientoCard({
   establecimiento,
 }: {
   establecimiento: Establecimiento;
 }) {
+  const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   async function borrarEstablecimiento() {
-    try {
-      await eliminarEstablecimiento(establecimiento.id);
-    } catch (error) {
-      console.log("Error al eliminar el establecimiento");
-    }
+    await eliminarEstablecimiento(establecimiento.id);
+    setEstablecimientoGlobal({} as Establecimiento);
     router.replace(router.asPath);
   }
   return (
@@ -25,7 +26,7 @@ export default function EstablecimientoCard({
     >
       <div className="relative py-16 bg-transparent ">
         <Image
-          src={establecimiento?.imagenURL}
+          src={establecimiento.imagenURL}
           alt="imagen_establecimiento.jpg"
           className="absolute rounded-t-lg"
           fill
@@ -35,9 +36,12 @@ export default function EstablecimientoCard({
 
       <div className="relative flex pt-2 items-center">
         <div className="flex-grow border-t border-primaryGreen"></div>
-        <span className="flex-shrink mx-1 font-bold text-sm uppercase">
+        <Link
+          className="flex-shrink mx-1 font-bold text-sm uppercase hover:underline"
+          href={"/admin/establecimiento/" + establecimiento.id}
+        >
           {establecimiento.nombre}
-        </span>
+        </Link>
         <div className="flex-grow border-t border-primaryGreen"></div>
       </div>
 
@@ -46,12 +50,14 @@ export default function EstablecimientoCard({
       </p>
 
       <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
-        <Link
+        <div
           className="bg-transparent"
-          href={"/admin/establecimiento/" + establecimiento.id}
+          onClick={() => setEstablecimientoGlobal(establecimiento)}
         >
-          Administrar
-        </Link>
+          {establecimientoGlobal.id == establecimiento.id
+            ? "ADMINISTRANDO"
+            : "ADMINISTRAR"}
+        </div>
       </div>
       <div className="grid grid-cols-2 absolute right-2 top-2 gap-1 z-10">
         <BsFillPencilFill
