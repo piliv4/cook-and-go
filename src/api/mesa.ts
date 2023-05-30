@@ -34,6 +34,31 @@ export const eliminarMesasBySeccionId = async (seccionId: string) => {
   }
 };
 
+export const eliminarMesasYSeccion = async (seccionId: string) => {
+  try {
+    const { error } = await supabase
+      .from("Mesa")
+      .delete()
+      .eq("seccion_id", seccionId);
+    if (error) {
+      throw new Error("Error al eliminar las mesas");
+    } else {
+      try {
+        const { error } = await supabase
+          .from("Seccion")
+          .delete()
+          .eq("id", seccionId);
+        if (error) {
+          throw new Error("Error al eliminar las mesas");
+        }
+      } catch (error) {}
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getMesaBySeccionId = async (id: string) => {
   try {
     const { data, error } = await supabase

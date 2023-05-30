@@ -1,6 +1,10 @@
 import supabase from "@/server/client";
 import { Mesa, Seccion } from "@/types/Establecimiento";
-import { crearMesa, eliminarMesasBySeccionId } from "./mesa";
+import {
+  crearMesa,
+  eliminarMesasBySeccionId,
+  eliminarMesasYSeccion,
+} from "./mesa";
 
 export const crearSeccion = async (
   seccion: Seccion,
@@ -36,25 +40,7 @@ export const eliminarSecciones = async (establecimientoId: string) => {
   );
   //Recorremos el array y vamos eliminando sus mesas
   for (const seccion of seccionesABorrar) {
-    try {
-      eliminarMesasBySeccionId(seccion.id);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-  //Una vez eliminado eliminamos todas las secciones
-  try {
-    const { error } = await supabase
-      .from("Seccion")
-      .delete()
-      .eq("establecimiento_id", establecimientoId);
-    if (error) {
-      throw new Error("Error al crear la seccion");
-    }
-  } catch (error) {
-    console.error(error);
-    throw error;
+    eliminarMesasYSeccion(seccion.id);
   }
 };
 
