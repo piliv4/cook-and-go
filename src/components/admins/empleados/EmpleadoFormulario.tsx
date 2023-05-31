@@ -4,6 +4,7 @@ import router from "next/router";
 import { Empleado } from "@/types/Empleado";
 import SubirImagenCircular from "../ui/SubirImagenCircular";
 import { esCorreoValido, esDNIoNIE, esVacio } from "@/validations/validation";
+import MensajeError from "../ui/MensajeError";
 
 const EmpleadoFormulario = ({
   empleadoProp,
@@ -82,7 +83,7 @@ const EmpleadoFormulario = ({
                 })
               }
             />
-            <p className="text-red-600 min-h-[22px] font-thin">{errorNombre}</p>
+            <MensajeError texto={errorNombre} />
           </div>
           <div className="flex flex-col gap-y-[1px] w-full pt-2">
             <p className="">
@@ -100,9 +101,7 @@ const EmpleadoFormulario = ({
                 })
               }
             />
-            <p className="text-red-600  min-h-[22px] font-light">
-              {errorDNINIE}
-            </p>
+            <MensajeError texto={errorDNINIE} />
           </div>
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
@@ -121,7 +120,7 @@ const EmpleadoFormulario = ({
               })
             }
           />
-          <p className="text-red-600  min-h-[22px] font-light">{errorCorreo}</p>
+          <MensajeError texto={errorCorreo} />
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
           <p className="">
@@ -139,9 +138,7 @@ const EmpleadoFormulario = ({
               })
             }
           />
-          <p className="text-red-600  min-h-[22px] font-light">
-            {errorContrasenya}
-          </p>
+          <MensajeError texto={errorContrasenya} />
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
           <p className="">Rol</p>

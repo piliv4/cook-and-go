@@ -9,6 +9,7 @@ import { Categoria } from "@/types/Categoria";
 import { Ingrediente } from "@/types/Ingrediente";
 import { getAllCategorias } from "@/api/categoria";
 import { crearPlato, editarPlato } from "@/api/plato";
+import MensajeError from "../ui/MensajeError";
 
 const CrearPlatoPopUp = ({
   platoEditar,
@@ -105,12 +106,7 @@ const CrearPlatoPopUp = ({
                 Datos genéricos del plato
               </h1>
               <div className="flex flex-col gap-y-[1px] w-full">
-                <p className="font-thin">
-                  Nombre*{" "}
-                  <span className="text-end pl-2 text-red-600">
-                    {errorNombre}
-                  </span>
-                </p>
+                <p className="">Nombre*</p>
                 <input
                   type={"text"}
                   id="nombre"
@@ -120,10 +116,11 @@ const CrearPlatoPopUp = ({
                   }}
                   className="px-6 border-[1px] rounded-md"
                 />
+                <MensajeError texto={errorNombre} />
               </div>
 
               <div className="flex flex-col gap-y-[1px] w-full">
-                <p className="font-thin">Categoría</p>
+                <p className="">Categoría</p>
                 <select
                   id="categoria"
                   onChange={(e) => {
@@ -147,12 +144,7 @@ const CrearPlatoPopUp = ({
 
               <div className="flex flex-col gap-y-[1px] w-full">
                 <div>
-                  <p className="font-thin flex w-full ">
-                    Precio{" "}
-                    <span className="text-end pl-8 text-red-600">
-                      {errorPrecio}
-                    </span>
-                  </p>
+                  <p className=" flex w-full ">Precio</p>
                 </div>
                 <input
                   type={"number"}
@@ -163,10 +155,11 @@ const CrearPlatoPopUp = ({
                   }}
                   className="px-6 border-[1px] rounded-md"
                 />
+                <MensajeError texto={errorPrecio} />
               </div>
 
               <div className="flex flex-col gap-y-[1px] w-full">
-                <p className="font-thin">Descripción</p>
+                <p className="">Descripción</p>
                 <textarea
                   id="descripcion"
                   defaultValue={platoEditar?.descripcion}
@@ -184,9 +177,10 @@ const CrearPlatoPopUp = ({
                 Ingredientes del plato
               </h1>
               <div className="pt-[20px]">
-                <p className="text-red-600">{errorIngredientes}</p>
+                <MensajeError texto={errorIngredientes} />
                 <SeleccionarIngredientes
                   anyadirIngrediente={(ingrediente: Ingrediente) =>
+                    !plato.ingredientes.includes(ingrediente) &&
                     setPlato({
                       ...plato,
                       ingredientes: plato.ingredientes.concat([ingrediente]),

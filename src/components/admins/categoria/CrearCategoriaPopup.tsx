@@ -6,6 +6,7 @@ import SubirImagen from "../ui/SubirImagen";
 import { Categoria } from "@/types/Categoria";
 import { crearCategoria, editarCategoria } from "@/api/categoria";
 import { esVacio } from "@/validations/validation";
+import MensajeError from "../ui/MensajeError";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,
@@ -73,9 +74,7 @@ const CrearCategoriaPopup = ({
                   className="px-6 border-[1px] rounded-md border-primaryGreen"
                   id="nombre"
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorNombre}
-                </p>
+                <MensajeError texto={errorNombre} />
               </div>
               <div className="flex flex-col gap-y-[2px] w-full">
                 <p>
@@ -87,9 +86,7 @@ const CrearCategoriaPopup = ({
                   className="px-6 border-[1px] rounded-md border-primaryGreen"
                   id="descripcion"
                 ></input>
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorDescripcion}
-                </p>
+                <MensajeError texto={errorDescripcion} />
               </div>
             </div>
             <div className="mb-3 mr-3 flex justify-end gap-2 font-">
