@@ -1,5 +1,6 @@
 import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
+import router from "next/router";
 
 export const crearCategoria = async (categoria: Categoria) => {
   try {
@@ -13,6 +14,8 @@ export const crearCategoria = async (categoria: Categoria) => {
 
     if (error) {
       throw new Error("Error al crear la categoria");
+    } else {
+      router.replace(router.asPath);
     }
   } catch (error) {
     console.error(error);
@@ -35,6 +38,8 @@ export const editarCategoria = async (categoria: Categoria) => {
 
     if (error) {
       throw new Error("Error al editar categoria");
+    } else {
+      router.replace(router.asPath);
     }
   } catch (error) {
     console.error(error);

@@ -5,6 +5,7 @@ import Popup from "reactjs-popup";
 import SubirImagen from "../ui/SubirImagen";
 import { Categoria } from "@/types/Categoria";
 import { crearCategoria, editarCategoria } from "@/api/categoria";
+import { esVacio } from "@/validations/validation";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,
@@ -22,34 +23,6 @@ const CrearCategoriaPopup = ({
   const [errorNombre, setErrorNombre] = useState("");
   const [errorDescripcion, setErrorDescripcion] = useState("");
 
-  async function crear(categoria: Categoria) {
-    try {
-      await crearCategoria(categoria);
-    } catch (error) {}
-    router.replace(router.asPath);
-  }
-
-  async function editar(categoria: Categoria) {
-    try {
-      await editarCategoria(categoria);
-    } catch (error) {}
-    router.replace(router.asPath);
-  }
-  function validarForm(nombre: string, descripcion: string) {
-    setErrorNombre("");
-    setErrorDescripcion("");
-    if (nombre == null || nombre == "") {
-      console.log("problema nooo");
-      setErrorNombre("¡Por favor introduzca un nombre!");
-      return false;
-    }
-    if (descripcion == null || descripcion == "") {
-      setErrorDescripcion("¡Por favor introduzca una descripción!");
-      return false;
-    }
-    return true;
-  }
-
   const aceptar = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (open) {
@@ -57,14 +30,21 @@ const CrearCategoriaPopup = ({
         nombre: { value: string };
         descripcion: { value: string };
       };
-      if (validarForm(nombre.value, descripcion.value)) {
-        const ingrediente = {
+      let eNombre = esVacio(nombre.value, "Nombre");
+      setErrorNombre(eNombre);
+      let eDescripcion = esVacio(descripcion.value, "Descripción");
+      setErrorDescripcion(eDescripcion);
+      if (eNombre === "" && eDescripcion === "") {
+        const categoria = {
           id: categoriaEditar?.id || "",
           nombre: nombre.value,
           descripcion: descripcion.value,
           imagenURL: imagen,
         };
-        categoriaEditar ? editar(ingrediente) : crear(ingrediente);
+        categoriaEditar
+          ? editarCategoria(categoria)
+          : crearCategoria(categoria);
+        setImagen("");
         cerrarPopUp();
       }
     }
