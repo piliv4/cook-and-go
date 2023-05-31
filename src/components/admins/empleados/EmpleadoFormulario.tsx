@@ -67,7 +67,9 @@ const EmpleadoFormulario = ({
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-y-[1px] w-full pt-2">
-            <p className="">Nombre y Apellidos</p>
+            <p className="">
+              Nombre y Apellidos<span className="font-thin">*</span>
+            </p>
             <input
               type={"text"}
               className="px-6  border-[1px] rounded-md border-primaryGreen "
@@ -83,7 +85,9 @@ const EmpleadoFormulario = ({
             <p className="text-red-600 min-h-[22px] font-thin">{errorNombre}</p>
           </div>
           <div className="flex flex-col gap-y-[1px] w-full pt-2">
-            <p className="">DNI/NIE</p>
+            <p className="">
+              DNI/NIE<span className="font-thin">*</span>
+            </p>
             <input
               type={"text"}
               className="px-6  border-[1px] rounded-md border-primaryGreen"
@@ -102,7 +106,9 @@ const EmpleadoFormulario = ({
           </div>
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
-          <p className="">Correo</p>
+          <p className="">
+            Correo<span className="font-thin">*</span>
+          </p>
           <input
             type={"email"}
             className="px-6  border-[1px] rounded-md border-primaryGreen"
@@ -118,7 +124,9 @@ const EmpleadoFormulario = ({
           <p className="text-red-600  min-h-[22px] font-light">{errorCorreo}</p>
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
-          <p className="">Contraseña</p>
+          <p className="">
+            Contraseña<span className="font-thin">*</span>
+          </p>
           <input
             type={"password"}
             className="px-6  border-[1px] rounded-md border-primaryGreen"
