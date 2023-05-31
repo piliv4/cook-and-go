@@ -56,7 +56,7 @@ const SeccionCard = ({
         {establecimiento.secciones[index].mesas?.map((mesa, indexMesa) => (
           <MesaCard
             indexMesa={indexMesa}
-            indexSeccion={index}
+            indexSeccion={index * 10 + indexMesa}
             establecimiento={establecimiento}
             setEstablecimiento={setEstablecimiento}
             key={index}

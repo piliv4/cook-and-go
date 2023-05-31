@@ -4,7 +4,6 @@ import router from "next/router";
 import { Establecimiento } from "@/types/Establecimiento";
 import SeccionesFormulario from "./SeccionesFormulario";
 import SubirImagen from "../ui/SubirImagen";
-import { error } from "console";
 import {
   esCIFValido,
   esCorreoValido,
@@ -73,10 +72,6 @@ const EstablecimientoFormulario = ({
       //console.log("culo");
       crearEditar(establecimiento);
     }
-  }
-
-  function validacionCampos() {
-    return true;
   }
 
   return (
