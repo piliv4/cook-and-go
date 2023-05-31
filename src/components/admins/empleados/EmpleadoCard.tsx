@@ -6,14 +6,6 @@ import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import Link from "next/link";
 
 export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
-  async function borrarEmpleado() {
-    try {
-      await eliminarEmpleado(empleado.id);
-    } catch (error) {
-      console.log("Error al eliminar el empleado");
-    }
-    router.replace(router.asPath);
-  }
   return (
     <div
       className="bg-white border flex flex-row border-gray-200 rounded-lg relative hover:scale-105 transition duration-150 overflow-hidden py-2"
@@ -37,11 +29,11 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
           />
           <BsTrashFill
             className="fill- hover:fill-secondaryOrange transition duration-150"
-            onClick={() => borrarEmpleado()}
+            onClick={() => eliminarEmpleado(empleado.id)}
           />
         </div>
         <Link
-          className="font-medium hover:underline"
+          className="font-medium hover:underline h-full"
           href={"/admin/empleado/" + empleado.id}
         >
           {empleado.nombre}

@@ -1,5 +1,6 @@
 import supabase from "@/server/client";
 import { Empleado } from "@/types/Empleado";
+import router from "next/router";
 
 export const crearEmpleado = async (empleado: Empleado) => {
   try {
@@ -61,6 +62,8 @@ export const eliminarEmpleado = async (id: string) => {
         .eq("id", id);
       if (error2) {
         throw new Error("Error al eliminar el empleado");
+      } else {
+        router.replace(router.asPath);
       }
     }
   } catch (error) {
