@@ -4,6 +4,8 @@ import SeleccionarPlatos from "./SeleccionarPlatos";
 import router from "next/router";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
+import { esNumerico, esVacio } from "@/validations/validation";
+import MensajeError from "../ui/MensajeError";
 
 const MenuFormulario = ({
   menuProp,
@@ -30,9 +32,10 @@ const MenuFormulario = ({
           postres: [],
         }
   );
-  const [errorTitulo, setErrorTitulo] = useState("");
+  const [errorNombre, setErrorNombre] = useState("");
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorComensales, setErrorComensales] = useState("");
+  const [errorPlatos, setErrorPlatos] = useState("");
   const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
 
   function anyadirPlato(plato: Plato, tipoPlato: string) {
@@ -64,27 +67,24 @@ const MenuFormulario = ({
   }
 
   function validacionCampos() {
-    setErrorComensales("");
-    setErrorPrecio("");
-    setErrorTitulo("");
-    if (menu.nombre == "" || menu.nombre == null) {
-      setErrorTitulo("Introduzca un titulo");
-    }
-    if (menu.precio == null || menu.precio <= 0) {
-      setErrorPrecio("Introduzca un precio");
-    }
-    if (menu.comensales == null || menu.comensales <= 0) {
-      setErrorComensales("Introduzca un número de comensales");
-    }
+    let eNombre = esVacio(menu.nombre, "nombre");
+    setErrorNombre(eNombre ? eNombre : "");
+    let ePrecio = esNumerico(menu.precio + "", "precio");
+    setErrorPrecio(ePrecio ? ePrecio : "");
+    let eComensales = esNumerico(menu.comensales + "", "comensales");
+    setErrorComensales(eComensales ? eComensales : "");
+
     if (
       menu.entrantes.length <= 0 &&
       menu.primeros.length <= 0 &&
       menu.segundos.length <= 0 &&
       menu.postres.length <= 0
     ) {
-      return false;
+      setErrorPlatos("El menú debe tener al menos un plato");
+    } else {
+      setErrorPlatos("");
     }
-    if (errorComensales != "" || errorPrecio != "" || errorTitulo != "") {
+    if (eNombre || ePrecio || eComensales || errorPlatos != "") {
       return false;
     }
     return true;
@@ -109,7 +109,7 @@ const MenuFormulario = ({
               defaultValue={menu.nombre}
               onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
             />
-            <p className="text-red-600 font-medium">{errorTitulo}</p>
+            <MensajeError texto={errorNombre} />
           </div>
           <div className="flex pt-2 flex-row gap-x-4">
             <div className="flex flex-col gap-y-[1px] w-full">
@@ -122,7 +122,7 @@ const MenuFormulario = ({
                   setMenu({ ...menu, precio: parseFloat(e.target.value) })
                 }
               />
-              <p className="text-red-600 font-medium">{errorPrecio}</p>
+              <MensajeError texto={errorPrecio} />
             </div>
             <div className="flex flex-col gap-y-[1px] w-full">
               <p className="">Número de comensales</p>
@@ -134,7 +134,7 @@ const MenuFormulario = ({
                   setMenu({ ...menu, comensales: parseInt(e.target.value) })
                 }
               />
-              <p className="text-red-600 font-medium">{errorComensales}</p>
+              <MensajeError texto={errorComensales} />
             </div>
           </div>
         </div>
@@ -145,6 +145,7 @@ const MenuFormulario = ({
         <h1 className="w-full border-b-2 pb-1 pt-6 text-center font-black text-lg border-primaryGreen">
           PLATOS
         </h1>
+        <MensajeError texto={errorPlatos} />
         {tiposPlato.map((tipoPlato) => (
           <SeleccionarPlatos
             key={tipoPlato}
