@@ -30,11 +30,14 @@ const CrearCategoriaPopup = ({
         nombre: { value: string };
         descripcion: { value: string };
       };
+
       let eNombre = esVacio(nombre.value, "Nombre");
-      setErrorNombre(eNombre);
+      setErrorNombre(eNombre ? eNombre : "");
+
       let eDescripcion = esVacio(descripcion.value, "Descripción");
-      setErrorDescripcion(eDescripcion);
-      if (eNombre === "" && eDescripcion === "") {
+      setErrorDescripcion(eDescripcion ? eDescripcion : "");
+
+      if (eNombre == undefined && eDescripcion == undefined) {
         const categoria = {
           id: categoriaEditar?.id || "",
           nombre: nombre.value,
