@@ -12,6 +12,7 @@ import router from "next/router";
 import { useContext } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import MesaCard from "@/components/admins/establecimiento/MesaCard";
+import Link from "next/link";
 
 export default function EditarEstablecimiento({
   establecimiento,
@@ -83,25 +84,29 @@ export default function EditarEstablecimiento({
               <h1 className="font-black text-center border-b-2 border-secondaryGreen">
                 Contacto
               </h1>
-              <div className="flex flex-col gap-2">
-                <p className="flex">
-                  Teléfono:
-                  <span className="w-full text-right">
-                    {establecimientoGlobal.telefono}
-                  </span>
+              <div className="flex flex-col gap-3 pt-3 ">
+                <div className="flex border-b-[2px] border-primaryOrange border-dotted ">
+                  <p className="w-full ">Teléfono:</p>
+                  <p className=" ">{establecimiento.telefono}</p>
+                </div>
+                <div className="flex border-b-[2px] border-primaryOrange border-dotted ">
+                  <p className="w-full ">Correo electrónico:</p>
+                  <p className=" ">{establecimiento.correo}</p>
+                </div>
+                <p className="flex border-b-[2px] border-primaryOrange border-dotted">
+                  <p className="w-full">Página web:</p>
+                  <Link className="hover:underline" href={establecimiento.web}>
+                    {establecimiento.web}
+                  </Link>
                 </p>
-                <p className="flex">
-                  Correo electrónico:
-                  <span className=" text-right">
-                    {establecimientoGlobal.correo}
-                  </span>
-                </p>
-                <p className="flex">
-                  Página web:
-                  <span className=" text-right">
-                    {establecimientoGlobal.web}
-                  </span>
-                </p>
+                <button
+                  className="w-full bg-primaryOrange rounded-full py-2 uppercase text-white font-black hover:bg-secondaryOrange"
+                  onClick={() => setEstablecimientoGlobal(establecimiento)}
+                >
+                  {establecimientoGlobal.id == establecimiento.id
+                    ? "Administrando"
+                    : "Administrar"}
+                </button>
               </div>
             </div>
           </div>
@@ -112,7 +117,7 @@ export default function EditarEstablecimiento({
         <div className="border-primaryGreen border-b-[2px] text-xl font-black uppercase">
           Secciones:
         </div>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-3 gap-3">
           {establecimiento.secciones.map((seccion) => (
             <div key={seccion.id}>
               <div className="flex flex-row ">

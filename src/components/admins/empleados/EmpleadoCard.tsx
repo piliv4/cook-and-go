@@ -3,6 +3,7 @@ import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 import Image from "next/image";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import Link from "next/link";
 
 export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
   async function borrarEmpleado() {
@@ -39,7 +40,12 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
             onClick={() => borrarEmpleado()}
           />
         </div>
-        <p className="font-medium">{empleado.nombre}</p>
+        <Link
+          className="font-medium hover:underline"
+          href={"/admin/empleado/" + empleado.id}
+        >
+          {empleado.nombre}
+        </Link>
         <div className="w-full flex">
           <p
             className={`text-sm px-1 rounded-full  text-center text-white ${
