@@ -6,7 +6,7 @@ const CrearCategoriaCard = () => {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className="bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
+      className="bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden min-h-[190px]"
       onClick={() => setOpen(true)}
     >
       <div className="h-full flex justify-center items-center ">
