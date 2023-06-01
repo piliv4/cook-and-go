@@ -1,8 +1,9 @@
-import Link from "next/link";
 import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { Menu } from "@/types/Menu";
 import { eliminarMenu } from "@/api/menu";
+import { FaUtensils } from "react-icons/fa";
+import Link from "next/link";
 
 export default function MenuCard({ menu }: { menu: Menu }) {
   async function eliminar() {
@@ -15,31 +16,37 @@ export default function MenuCard({ menu }: { menu: Menu }) {
   }
 
   return (
-    <Link className="bg-transparent" href={"/admin/menu/" + menu.id}>
-      <div
-        className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
-        key={menu.id}
-      >
-        <div className="relative flex pt-2 flex-row">
-          <span className="flex-shrink mx-1 font-bold text-sm uppercase w-full">
+    <div
+      className="bg-white border grid grid-cols-[30%_70%] border-gray-200 rounded-lg  hover:scale-105 transition duration-150 overflow-hidden relative "
+      key={menu.id}
+    >
+      <div className="flex justify-center items-center bg-primaryOrange   border-r-4 border-double ">
+        <FaUtensils size={46} className="fill-white" />
+      </div>
+      <div className="w-full flex items-center justify-center">
+        <div className=" flex  flex-col  pt-5 px-1 w-fit">
+          <Link
+            className="flex-shrink mx-1 font-black  text-center uppercase w-full hover:underline decoration-primaryOrange"
+            href={"/admin/menu/" + menu.id}
+          >
             {menu.nombre}
-          </span>
-          <div className="flex flex-row gap-1 items-end">
-            <BsFillPencilFill
-              className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-              onClick={() => router.push("/admin/menu/editar/" + menu.id)}
-            />
-            <BsTrashFill
-              className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-              onClick={() => eliminar()}
-            />
+          </Link>
+          <div className=" flex flex-row px-2 pb-2 text-sm">
+            <p className="font-black  w-full">PRECIO</p>
+            {menu.precio}€
           </div>
         </div>
-        <div className=" flex flex-row px-2 pb-2">
-          <p className="font-bold w-full">Precio</p>
-          {menu.precio}
+        <div className="flex flex-row gap-1 items-end absolute top-1 right-1">
+          <BsFillPencilFill
+            className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+            onClick={() => router.push("/admin/menu/editar/" + menu.id)}
+          />
+          <BsTrashFill
+            className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+            onClick={() => eliminar()}
+          />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

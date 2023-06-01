@@ -39,7 +39,7 @@ export const crearMenu = async (menu: Menu) => {
 };
 
 export const eliminarMenu = async (id: string) => {
-  eliminarRelacionesDeMenu(id);
+  await eliminarRelacionesDeMenu(id);
   try {
     const { error } = await supabase.from("Menu").delete().eq("id", id);
     if (error) {

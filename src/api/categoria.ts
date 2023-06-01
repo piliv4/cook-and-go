@@ -1,6 +1,7 @@
 import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
 import router from "next/router";
+import { eliminarPlatosByCategoriaId } from "./plato";
 
 export const crearCategoria = async (categoria: Categoria) => {
   try {
@@ -48,21 +49,14 @@ export const editarCategoria = async (categoria: Categoria) => {
 };
 
 export const eliminarCategoria = async (id: string) => {
+  await eliminarPlatosByCategoriaId(id);
   try {
-    const { error: error } = await supabase
-      .from("Articulo")
+    const { error: error2 } = await supabase
+      .from("Categoria")
       .delete()
-      .eq("categoria_id", id);
-    if (error) {
-      throw new Error("Error al eliminar las referencias los platos");
-    } else {
-      const { error: error2 } = await supabase
-        .from("Categoria")
-        .delete()
-        .eq("id", id);
-      if (error2) {
-        throw new Error("Error al eliminar la categoria");
-      }
+      .eq("id", id);
+    if (error2) {
+      throw new Error("Error al eliminar la categoria");
     }
   } catch (error) {
     console.error(error);

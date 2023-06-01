@@ -192,7 +192,7 @@ const CrearPlatoPopUp = ({
                 <h1 className=" w-full text-center border-b-[1px] border-secondaryGreen">
                   Mis ingredientes:
                 </h1>
-                {plato.ingredientes.map((ingrediente, index) => (
+                {plato.ingredientes?.map((ingrediente, index) => (
                   <div
                     key={ingrediente.id}
                     className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"

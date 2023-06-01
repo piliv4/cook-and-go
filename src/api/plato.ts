@@ -146,6 +146,14 @@ const insertarIngredientes = async (
   });
 };
 
+export const eliminarPlatosByCategoriaId = async (id: string) => {
+  const platos = await getPlatosByCategoria(id);
+  for (const plato of platos) {
+    await eliminarIngredientes(plato.id);
+    eliminarPlato(plato.id);
+  }
+};
+
 const eliminarIngredientes = async (id: string) => {
   try {
     const { error: error } = await supabase
