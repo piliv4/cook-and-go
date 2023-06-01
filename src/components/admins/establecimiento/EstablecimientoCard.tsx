@@ -45,7 +45,7 @@ export default function EstablecimientoCard({
         <div className="flex-grow border-t border-primaryGreen"></div>
       </div>
 
-      <p className=" px-2 pb-1 font-extralight text-sm">
+      <p className=" px-2 pb-1 font-extralight text-sm h-full">
         {establecimiento.descripcion}
       </p>
 

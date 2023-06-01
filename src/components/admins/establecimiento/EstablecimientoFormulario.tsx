@@ -45,11 +45,12 @@ const EstablecimientoFormulario = ({
   const [errorDireccion, setErrorDireccion] = useState("");
 
   function guardar() {
+    console.log(establecimiento);
     let eNombre = esVacio(establecimiento.nombre, "nombre");
     setErrorNombre(eNombre ? eNombre : "");
     let eCIF = esCIFValido(establecimiento.cif);
     setErrorCIF(eCIF ? eCIF : "");
-    let eTelefono = esTelefonoValido(establecimiento.telefono);
+    let eTelefono = esTelefonoValido(establecimiento.telefono.toString());
     setErrorTelefono(eTelefono ? eTelefono : "");
     let eCorreo = esCorreoValido(establecimiento.correo);
     setErrorCorreo(eCorreo ? eCorreo : "");
@@ -69,7 +70,6 @@ const EstablecimientoFormulario = ({
       eLocalidad == null &&
       eDireccion == null
     ) {
-      //console.log("culo");
       crearEditar(establecimiento);
     }
   }

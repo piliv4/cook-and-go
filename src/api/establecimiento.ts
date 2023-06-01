@@ -29,6 +29,7 @@ export const crearEstablecimiento = async (
       .select()
       .single();
     if (error) {
+      console.log(error);
       throw new Error("Error al crear el establecimiento");
     }
     if (establecimiento.secciones.length > 0)

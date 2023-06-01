@@ -56,10 +56,10 @@ const SeccionCard = ({
         {establecimiento.secciones[index].mesas?.map((mesa, indexMesa) => (
           <MesaCard
             indexMesa={indexMesa}
-            indexSeccion={index * 10 + indexMesa}
+            indexSeccion={index}
             establecimiento={establecimiento}
             setEstablecimiento={setEstablecimiento}
-            key={index}
+            key={index * 10 + indexMesa}
           />
         ))}
         <MesaFormulario anyadirMesa={(mesa: Mesa) => anyadirMesa(mesa)} />
