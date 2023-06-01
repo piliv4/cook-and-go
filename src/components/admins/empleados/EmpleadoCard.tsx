@@ -6,6 +6,7 @@ import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import Link from "next/link";
 
 export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
+  console.log(empleado);
   return (
     <div
       className="bg-white border flex flex-row border-gray-200 rounded-lg relative hover:scale-105 transition duration-150 overflow-hidden py-2"

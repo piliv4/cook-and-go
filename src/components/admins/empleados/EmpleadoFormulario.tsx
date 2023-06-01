@@ -144,6 +144,7 @@ const EmpleadoFormulario = ({
           <p className="">Rol</p>
           <select
             className="px-6  border-[1px] rounded-md border-primaryGreen"
+            defaultValue={empleado.rol}
             onChange={(e) =>
               setEmpleado({
                 ...empleado,
