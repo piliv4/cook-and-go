@@ -2,6 +2,8 @@ import { Ingrediente } from "@/types/Ingrediente";
 import { useState } from "react";
 import { crearIngrediente } from "@/api/ingrediente";
 import router from "next/router";
+import { esNumerico, esVacio } from "@/validations/validation";
+import { BsFillExclamationCircleFill } from "react-icons/bs";
 
 const CrearIngrediente = () => {
   //CAMBIAR CUANDO PUEDAS POR EL ENUMERADO CORRECTO
@@ -16,29 +18,35 @@ const CrearIngrediente = () => {
     precioSuplemento: 0,
   };
   const [ingrediente, setIngrediente] = useState<Ingrediente>(ingredienteVacio);
+  const [errorNombre, setErrorNombre] = useState("");
+  const [errorPrecioSuplemento, setErrorPrecioSuplemento] = useState("");
+  const [errorStock, setErrorStock] = useState("");
 
   function validarCampos() {
-    if (ingrediente.nombre == null || ingrediente.nombre == "") {
-      console.log(ingrediente);
-      return false;
-    }
-    if (ingrediente.precioSuplemento <= 0) {
-      console.log(ingrediente.precioSuplemento);
-      return false;
-    }
+    let eNombre = esVacio(ingrediente.nombre, "nombre");
+    setErrorNombre(eNombre ? eNombre : "");
+    let ePrecio = esNumerico(
+      ingrediente.precioSuplemento + "",
+      "precio suplemento"
+    );
+    setErrorPrecioSuplemento(ePrecio ? ePrecio : "");
+
+    // let eStock = noEsNegativo(ingrediente.stock + "", "comensales");
+    // setErrorStock(eStock ? eStock : "");
+
     return true;
   }
 
   //CREAR INGREDIENTE
   async function crear() {
     if (validarCampos()) {
-      try {
-        await crearIngrediente(ingrediente);
-      } catch (error) {
-        console.log("error al crear un ingrediente");
-      }
-      router.replace(router.asPath);
-      setIngrediente(ingredienteVacio);
+      // try {
+      //   await crearIngrediente(ingrediente);
+      // } catch (error) {
+      //   console.log("error al crear un ingrediente");
+      // }
+      // router.replace(router.asPath);
+      // setIngrediente(ingredienteVacio);
     }
   }
 
@@ -48,18 +56,24 @@ const CrearIngrediente = () => {
       <div className="flex flex-row gap-x-4 font-light pl-6 w-full bg-primaryGreen  border-[1px] border-pr rounded-full border-primaryGreen ">
         <div className="w-full mt-1">
           <p className="text-white">Nombre:</p>
-          <input
-            type="text"
-            className="pr-5 pl-2 border-[1px] rounded-md"
-            placeholder="Introduce un nombre"
-            value={ingrediente.nombre}
-            onChange={(e) =>
-              setIngrediente({
-                ...ingrediente,
-                nombre: e.target.value.toString(),
-              } as Ingrediente)
-            }
-          />
+          <div className="flex flex-row pl-1 gap-1 items-center border-[1px] bg-white rounded-md overflow-hidden">
+            {errorNombre && (
+              <abbr title={errorNombre}>
+                <BsFillExclamationCircleFill className="fill-red-500 pl" />
+              </abbr>
+            )}
+            <input
+              type="text"
+              placeholder="Introduce un nombre"
+              value={ingrediente.nombre}
+              onChange={(e) =>
+                setIngrediente({
+                  ...ingrediente,
+                  nombre: e.target.value.toString(),
+                } as Ingrediente)
+              }
+            />
+          </div>
         </div>
         <div className="w-full mt-1">
           <p className="text-white">Descripción:</p>

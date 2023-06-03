@@ -76,7 +76,7 @@ const PlatoFormulario = ({
               onChange={(e) => {
                 setPlato({ ...plato, nombre: e.target.value });
               }}
-              className="px-6 border-[1px] rounded-md"
+              className="px-6 border-[1px] rounded-md border-primaryGreen"
             />
             <MensajeError texto={errorNombre} />
           </div>
@@ -86,6 +86,7 @@ const PlatoFormulario = ({
             <select
               id="categoria"
               value={plato.categoria}
+              className="border-[1px] rounded-md border-primaryGreen"
               onChange={(e) => {
                 setPlato({ ...plato, categoria: e.target.value });
               }}
@@ -118,7 +119,7 @@ const PlatoFormulario = ({
               onChange={(e) => {
                 setPlato({ ...plato, precio: parseFloat(e.target.value) });
               }}
-              className="px-6 border-[1px] rounded-md"
+              className="px-6 border-[1px] rounded-md  border-primaryGreen"
             />
             <MensajeError texto={errorPrecio} />
           </div>
@@ -129,7 +130,7 @@ const PlatoFormulario = ({
               id="descripcion"
               defaultValue={platoEditar?.descripcion}
               rows={3}
-              className="px-6 border-[1px] h-auto w-full rounded-md resize-none "
+              className="px-6 border-[1px] h-auto w-full rounded-md resize-none border-primaryGreen"
               onChange={(e) => {
                 setPlato({ ...plato, descripcion: e.target.value });
               }}
@@ -153,7 +154,7 @@ const PlatoFormulario = ({
             />
           </div>
           <div className="flex flex-col pt-2 relative">
-            <h1 className=" w-full text-center border-b-[1px] border-secondaryGreen">
+            <h1 className=" w-full text-center border-b-[1px] border-secondaryGreen font-bold">
               Mis ingredientes:
             </h1>
             {plato.ingredientes?.map((ingrediente, index) => (
