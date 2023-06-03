@@ -11,6 +11,7 @@ import {
   esVacio,
   esWebValida,
 } from "@/validations/validation";
+import MensajeError from "../ui/MensajeError";
 
 const EstablecimientoFormulario = ({
   establecimientoProp,
@@ -127,9 +128,7 @@ const EstablecimientoFormulario = ({
                     })
                   }
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorNombre}
-                </p>
+                <MensajeError texto={errorNombre} />
               </div>
               <div className="flex flex-col  w-full pt-2">
                 <p className="">
@@ -147,9 +146,7 @@ const EstablecimientoFormulario = ({
                     })
                   }
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorCIF}
-                </p>
+                <MensajeError texto={errorCIF} />
               </div>
             </div>
           </div>
@@ -192,9 +189,7 @@ const EstablecimientoFormulario = ({
                     })
                   }
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorTelefono}
-                </p>
+                <MensajeError texto={errorTelefono} />
               </div>
               <div className="flex flex-col  w-full pt-2">
                 <p className="">
@@ -212,9 +207,7 @@ const EstablecimientoFormulario = ({
                     })
                   }
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorCorreo}
-                </p>
+                <MensajeError texto={errorCorreo} />
               </div>
             </div>
             <div className="flex flex-col  w-full ">
@@ -231,7 +224,7 @@ const EstablecimientoFormulario = ({
                   })
                 }
               />
-              <p className="text-red-600 min-h-[22px] font-thin">{errorWeb}</p>
+              <MensajeError texto={errorWeb} />
             </div>
 
             {/* UBICACIÓN */}
@@ -255,9 +248,7 @@ const EstablecimientoFormulario = ({
                     })
                   }
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorLocalidad}
-                </p>
+                <MensajeError texto={errorLocalidad} />
               </div>
               <div className="flex flex-col w-full pt-2">
                 <p className="">
@@ -275,9 +266,7 @@ const EstablecimientoFormulario = ({
                     })
                   }
                 />
-                <p className="text-red-600 min-h-[22px] font-thin">
-                  {errorDireccion}
-                </p>
+                <MensajeError texto={errorDireccion} />
               </div>
             </div>
           </div>
