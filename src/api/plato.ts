@@ -2,6 +2,8 @@ import supabase from "@/server/client";
 import { Plato } from "@/types/Plato";
 import { getIngredientesByPlato } from "./ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
+import router from "next/router";
+import { getCategoriaById } from "./categoria";
 
 export const crearPlato = async (plato: Plato) => {
   try {
@@ -25,10 +27,12 @@ export const crearPlato = async (plato: Plato) => {
     console.error(error);
     throw error;
   }
+
+  router.back();
 };
 
 export const editarPlato = async (plato: Plato) => {
-  eliminarIngredientes(plato.id);
+  await eliminarIngredientes(plato.id);
   try {
     const { error } = await supabase
       .from("Articulo")
@@ -50,6 +54,8 @@ export const editarPlato = async (plato: Plato) => {
     throw error;
   }
   insertarIngredientes(plato.ingredientes, plato.id);
+
+  router.back();
 };
 
 export const eliminarPlato = async (id: string) => {
@@ -58,6 +64,8 @@ export const eliminarPlato = async (id: string) => {
     const { error } = await supabase.from("Articulo").delete().eq("id", id);
     if (error) {
       throw new Error("Error al eliminar el plato");
+    } else {
+      router.replace(router.asPath);
     }
   } catch (error) {
     console.error(error);
@@ -73,7 +81,7 @@ export const getAllPlatos = async () => {
       .order("nombre");
 
     if (error) {
-      throw new Error("Error al obtener todas lps platos");
+      throw new Error("Error al obtener todas los platos");
     }
     return data;
   } catch (error) {
@@ -88,9 +96,6 @@ export const getPlatosByCategoria = async (id: string) => {
       .from("Articulo")
       .select("*")
       .eq("categoria_id", id);
-    for (let plato of platos as Plato[]) {
-      plato.ingredientes = await getIngredientesByPlato(plato.id);
-    }
 
     if (error) {
       throw new Error("Error al los platos a partir de la categoria");
@@ -110,6 +115,7 @@ export const getPlatoById = async (id: string) => {
       .eq("id", id)
       .single();
 
+    plato.categoria = plato.categoria_id;
     plato.ingredientes = await getIngredientesByPlato(plato.id);
 
     if (error) {

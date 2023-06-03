@@ -5,23 +5,7 @@ import Link from "next/link";
 import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 
-export default function CategoriaCard({
-  plato,
-  abrirPopUp,
-  setPlatoEditar,
-}: {
-  plato: Plato;
-  abrirPopUp: Function;
-  setPlatoEditar: Function;
-}) {
-  async function eliminar() {
-    try {
-      eliminarPlato(plato.id);
-    } catch (error) {
-      console.log("Error al eliminar el plato");
-    }
-    router.replace(router.asPath);
-  }
+export default function CategoriaCard({ plato }: { plato: Plato }) {
   return (
     <div
       className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
@@ -60,13 +44,12 @@ export default function CategoriaCard({
         <BsFillPencilFill
           className="group fill-white hover:fill-secondaryOrange transition duration-150"
           onClick={() => {
-            setPlatoEditar(plato);
-            abrirPopUp();
+            router.push("/admin/plato/editar/" + plato.id);
           }}
         />
         <BsTrashFill
           className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => eliminar()}
+          onClick={() => eliminarPlato(plato.id)}
         />
       </div>
     </div>

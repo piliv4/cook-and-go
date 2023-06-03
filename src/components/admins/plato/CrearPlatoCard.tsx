@@ -1,10 +1,11 @@
+import router from "next/router";
 import { BsPlusCircleFill } from "react-icons/bs";
 
-const CrearPlatoCard = ({ abrirPopUp }: { abrirPopUp: Function }) => {
+const CrearPlatoCard = () => {
   return (
     <div
       className="min-h-[200px] bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
-      onClick={() => abrirPopUp()}
+      onClick={() => router.push("/admin/plato/crearPlato")}
     >
       <div className="h-full flex justify-center items-center ">
         <BsPlusCircleFill

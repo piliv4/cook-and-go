@@ -10,6 +10,7 @@ import { Ingrediente } from "@/types/Ingrediente";
 import { getAllCategorias } from "@/api/categoria";
 import { crearPlato, editarPlato } from "@/api/plato";
 import MensajeError from "../ui/MensajeError";
+import { esNumerico, esVacio } from "@/validations/validation";
 
 const CrearPlatoPopUp = ({
   platoEditar,
@@ -26,7 +27,7 @@ const CrearPlatoPopUp = ({
   const [errorNombre, setErrorNombre] = useState("");
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorIngredientes, setErrorIngredientes] = useState("");
-
+  console.log(platoEditar);
   useEffect(() => {
     setPlato(platoEditar);
   }, [platoEditar]);
@@ -58,32 +59,22 @@ const CrearPlatoPopUp = ({
   }
 
   function validarCampos() {
-    if (plato.nombre == "") {
-      setErrorNombre("Introduzca un nombre por favor.");
-    } else {
-      setErrorNombre("");
-    }
-    if (plato.ingredientes.length <= 0) {
-      setErrorIngredientes("Introduzca al menos un ingrediente.");
-    } else {
-      setErrorIngredientes("");
-    }
-    if (plato.precio <= 0) {
-      setErrorPrecio("El precio debe ser mayor a 0");
-    } else {
-      setErrorPrecio("");
-    }
-    if (errorNombre == "" && errorPrecio == "" && errorIngredientes == "") {
-      return true;
-    }
+    let ePlato = esVacio(plato.nombre, "nombre");
+    setErrorNombre(ePlato ? ePlato : "");
+
+    let ePrecio = esNumerico(plato.precio.toString(), "precio");
+    setErrorPrecio(ePrecio ? ePrecio : "");
+
+    if (ePlato == null && ePrecio == null) return true;
+
     return false;
   }
 
   function aceptar() {
     if (open && validarCampos()) {
-      console.log(plato);
-      plato.id ? editar() : crear();
-      cerrarPopUp();
+      console.log("culo");
+      // plato.id ? editarPlato(plato) : crearPlato(plato);
+      // cerrarPopUp();
     }
   }
 

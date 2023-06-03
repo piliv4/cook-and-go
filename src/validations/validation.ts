@@ -12,6 +12,12 @@ export const esNumerico = (cadena: string, campo: string) => {
   }
 };
 
+export const alMenosUnElemento = (lista: any[], campo: string) => {
+  if (lista.length <= 0) {
+    return `La lista de  ${campo} debe contener al menos un ingredientes`;
+  }
+};
+
 export const esDNIoNIE = (cadena: string) => {
   const dniVacio = esVacio(cadena, "DNI/NIE");
   if (dniVacio) return dniVacio;
