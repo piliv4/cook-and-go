@@ -4,11 +4,19 @@ export const esVacio = (cadena: string, campo: string) => {
   }
 };
 
-export const esNumerico = (cadena: string, campo: string) => {
+export const esMayorQueCero = (cadena: string, campo: string) => {
   const numero = parseFloat(cadena);
 
   if (isNaN(numero) || numero <= 0) {
-    return `El campo ${campo} debe ser un número válido`;
+    return `El campo ${campo} debe ser un número mayor que cero`;
+  }
+};
+
+export const esNumeroPositivo = (cadena: string, campo: string) => {
+  const numero = parseFloat(cadena);
+
+  if (isNaN(numero) || numero < 0) {
+    return `El campo ${campo} debe ser un número mayor o igual que cero`;
   }
 };
 

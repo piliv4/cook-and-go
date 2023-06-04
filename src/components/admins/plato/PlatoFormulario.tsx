@@ -8,7 +8,7 @@ import { Categoria } from "@/types/Categoria";
 import { Ingrediente } from "@/types/Ingrediente";
 import { crearPlato, editarPlato } from "@/api/plato";
 import MensajeError from "../ui/MensajeError";
-import { esNumerico, esVacio } from "@/validations/validation";
+import { esMayorQueCero, esVacio } from "@/validations/validation";
 import CabeceraPagina from "../ui/CabeceraPagina";
 
 const PlatoFormulario = ({
@@ -30,7 +30,7 @@ const PlatoFormulario = ({
     let ePlato = esVacio(plato.nombre, "nombre");
     setErrorNombre(ePlato ? ePlato : "");
 
-    let ePrecio = esNumerico(plato.precio.toString(), "precio");
+    let ePrecio = esMayorQueCero(plato.precio.toString(), "precio");
     setErrorPrecio(ePrecio ? ePrecio : "");
 
     let eCategoria = esVacio(plato.categoria, "categoria");

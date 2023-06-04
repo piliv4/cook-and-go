@@ -5,10 +5,10 @@ import { useState } from "react";
 const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
   const [editarIndex, setEditarIndex] = useState(-1);
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <table className="w-full mt-2 border-collapse ">
         <thead>
-          <tr className=" bg-secondaryGreen text-white  rounded-t-full ">
+          <tr className=" bg-primaryGreen text-white  rounded-t-full ">
             <th className=" py-1 rounded-tl-full ">Nombre</th>
             <th className="border border-background">Descripción</th>
             <th className="border border-background">Precio suplemento</th>
@@ -20,7 +20,7 @@ const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="">
           {ingrediente.map((ingrediente, index) => (
             <IngredienteRow
               key={ingrediente.id}

@@ -5,6 +5,8 @@ import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { Ingrediente } from "@/types/Ingrediente";
 import { editarIngrediente, eliminarIngrediente } from "@/api/ingrediente";
+import { esNumeroPositivo, esVacio } from "@/validations/validation";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const IngredienteRow = ({
   ingrediente,
@@ -21,84 +23,107 @@ const IngredienteRow = ({
   const [ingredienteEditar, setIngredienteEditar] =
     useState<Ingrediente>(ingrediente);
 
-  async function eliminar() {
-    try {
-      await eliminarIngrediente(ingrediente.id);
-    } catch (error) {
-      console.log("Error al eliminar el ingrediente");
+  const [errorNombre, setErrorNombre] = useState("");
+  const [errorPrecioSuplemento, setErrorPrecioSuplemento] = useState("");
+  const [errorStock, setErrorStock] = useState("");
+
+  function validarCampos() {
+    let eNombre = esVacio(ingredienteEditar.nombre, "nombre");
+    setErrorNombre(eNombre ? eNombre : "");
+
+    let ePrecio = esNumeroPositivo(
+      ingredienteEditar.precioSuplemento + "",
+      "precio suplemento"
+    );
+    setErrorPrecioSuplemento(ePrecio ? ePrecio : "");
+
+    // let eStock = esNumeroPositivo(ingredienteEditar.stock + "", "precio suplemento");
+    // setErrorStock(eStock ? eStock : "");
+
+    if (
+      eNombre ||
+      ePrecio
+      // || eStock
+    ) {
+      return false;
     }
-    router.replace(router.asPath);
+    return true;
   }
-  async function editar() {
-    try {
-      await editarIngrediente(ingredienteEditar);
-    } catch (error) {
-      console.log("Error al editar el ingrediente");
+
+  function editar() {
+    if (validarCampos()) {
+      console.log("culo");
+      editarIngrediente(ingredienteEditar);
+      setIndexGlobal(-1);
     }
-    router.replace(router.asPath);
-    setIndexGlobal(-1);
   }
 
   return (
-    <tr
-      key={ingrediente.id}
-      className="font-light hover:bg-secondaryOrange bg-white"
-    >
-      <td className="border border-secondaryGreen pl-2">
+    <tr key={ingrediente.id} className=" hover:bg-secondaryOrange bg-white">
+      <td className="border border-primaryGreen pl-2">
         {indexGlobal != index ? (
           <p>{ingrediente.nombre}</p>
         ) : (
-          <input
-            type={"text"}
-            defaultValue={ingrediente.nombre}
-            onChange={(e) =>
-              setIngredienteEditar({
-                ...ingredienteEditar,
-                nombre: e.target.value.toString(),
-              } as Ingrediente)
-            }
-          ></input>
+          <InputErrorEnvoltorio error={errorNombre}>
+            <input
+              type={"text"}
+              defaultValue={ingrediente.nombre}
+              className="w-full"
+              onChange={(e) =>
+                setIngredienteEditar({
+                  ...ingredienteEditar,
+                  nombre: e.target.value.toString(),
+                } as Ingrediente)
+              }
+            ></input>
+          </InputErrorEnvoltorio>
         )}
       </td>
-      <td className="border border-secondaryGreen pl-2">
+      <td className="border border-primaryGreen pl-2">
         {indexGlobal != index ? (
           <p>{ingrediente.descripcion}</p>
         ) : (
-          <input
-            type={"text"}
-            defaultValue={ingrediente.descripcion}
-            onChange={(e) =>
-              setIngredienteEditar({
-                ...ingredienteEditar,
-                descripcion: e.target.value.toString(),
-              } as Ingrediente)
-            }
-          ></input>
+          <InputErrorEnvoltorio error="">
+            <input
+              type={"text"}
+              defaultValue={ingrediente.descripcion}
+              className="w-full"
+              onChange={(e) =>
+                setIngredienteEditar({
+                  ...ingredienteEditar,
+                  descripcion: e.target.value.toString(),
+                } as Ingrediente)
+              }
+            ></input>
+          </InputErrorEnvoltorio>
         )}
       </td>
 
-      <td className="border border-secondaryGreen pl-2">
+      <td className="border border-primaryGreen pl-2">
         {indexGlobal != index ? (
           <p>{ingrediente.precioSuplemento}</p>
         ) : (
-          <input
-            type={"number"}
-            defaultValue={ingrediente.precioSuplemento}
-            onChange={(e) =>
-              setIngredienteEditar({
-                ...ingredienteEditar,
-                precioSuplemento: parseInt(e.target.value),
-              } as Ingrediente)
-            }
-          ></input>
+          <InputErrorEnvoltorio error={errorPrecioSuplemento}>
+            <input
+              type={"number"}
+              defaultValue={ingrediente.precioSuplemento}
+              className="w-full"
+              onChange={(e) =>
+                setIngredienteEditar({
+                  ...ingredienteEditar,
+                  precioSuplemento: parseInt(e.target.value),
+                } as Ingrediente)
+              }
+            ></input>
+          </InputErrorEnvoltorio>
         )}
       </td>
 
-      <td className="border border-secondaryGreen pl-2">200</td>
+      <td className="border border-primaryGreen pl-2">200</td>
 
-      <td className="border border-secondaryGreen pl-2">kg</td>
+      <td className="border border-primaryGreen pl-2">kg</td>
 
-      <td className="border border-secondaryGreen ">
+      <td className="border border-primaryGreen ">
         <div className="flex justify-center items-center">
           {indexGlobal != index ? (
             <BsFillPencilFill
@@ -117,12 +142,12 @@ const IngredienteRow = ({
           )}
         </div>
       </td>
-      <td className="border border-secondaryGreen">
+      <td className="border border-primaryGreen">
         <div className="flex justify-center items-center h-full">
           {indexGlobal != index ? (
             <BsTrashFill
               className="fill-primaryOrange hover:fill-white transition duration-150"
-              onClick={() => eliminar()}
+              onClick={() => eliminarIngrediente(ingrediente.id)}
             />
           ) : (
             <AiOutlineClose

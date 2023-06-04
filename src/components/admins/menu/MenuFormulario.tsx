@@ -4,7 +4,7 @@ import SeleccionarPlatos from "./SeleccionarPlatos";
 import router from "next/router";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
-import { esNumerico, esVacio } from "@/validations/validation";
+import { esMayorQueCero, esVacio } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
 
 const MenuFormulario = ({
@@ -69,9 +69,9 @@ const MenuFormulario = ({
   function validacionCampos() {
     let eNombre = esVacio(menu.nombre, "nombre");
     setErrorNombre(eNombre ? eNombre : "");
-    let ePrecio = esNumerico(menu.precio + "", "precio");
+    let ePrecio = esMayorQueCero(menu.precio + "", "precio");
     setErrorPrecio(ePrecio ? ePrecio : "");
-    let eComensales = esNumerico(menu.comensales + "", "comensales");
+    let eComensales = esMayorQueCero(menu.comensales + "", "comensales");
     setErrorComensales(eComensales ? eComensales : "");
 
     if (

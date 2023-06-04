@@ -1,9 +1,8 @@
 import { Ingrediente } from "@/types/Ingrediente";
 import { useState } from "react";
 import { crearIngrediente } from "@/api/ingrediente";
-import router from "next/router";
-import { esNumerico, esVacio } from "@/validations/validation";
-import { BsFillExclamationCircleFill } from "react-icons/bs";
+import { esNumeroPositivo, esVacio } from "@/validations/validation";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const CrearIngrediente = () => {
   //CAMBIAR CUANDO PUEDAS POR EL ENUMERADO CORRECTO
@@ -16,6 +15,8 @@ const CrearIngrediente = () => {
     nombre: "",
     descripcion: "",
     precioSuplemento: 0,
+    stock: 0,
+    unidad: "kg",
   };
   const [ingrediente, setIngrediente] = useState<Ingrediente>(ingredienteVacio);
   const [errorNombre, setErrorNombre] = useState("");
@@ -25,28 +26,27 @@ const CrearIngrediente = () => {
   function validarCampos() {
     let eNombre = esVacio(ingrediente.nombre, "nombre");
     setErrorNombre(eNombre ? eNombre : "");
-    let ePrecio = esNumerico(
+
+    let ePrecio = esNumeroPositivo(
       ingrediente.precioSuplemento + "",
       "precio suplemento"
     );
     setErrorPrecioSuplemento(ePrecio ? ePrecio : "");
 
-    // let eStock = noEsNegativo(ingrediente.stock + "", "comensales");
-    // setErrorStock(eStock ? eStock : "");
+    let eStock = esNumeroPositivo(ingrediente.stock + "", "precio suplemento");
+    setErrorStock(eStock ? eStock : "");
 
+    if (eNombre || ePrecio || eStock) {
+      return false;
+    }
     return true;
   }
 
   //CREAR INGREDIENTE
   async function crear() {
     if (validarCampos()) {
-      // try {
-      //   await crearIngrediente(ingrediente);
-      // } catch (error) {
-      //   console.log("error al crear un ingrediente");
-      // }
-      // router.replace(router.asPath);
-      // setIngrediente(ingredienteVacio);
+      crearIngrediente(ingrediente);
+      setIngrediente(ingredienteVacio);
     }
   }
 
@@ -56,12 +56,7 @@ const CrearIngrediente = () => {
       <div className="flex flex-row gap-x-4 font-light pl-6 w-full bg-primaryGreen  border-[1px] border-pr rounded-full border-primaryGreen ">
         <div className="w-full mt-1">
           <p className="text-white">Nombre:</p>
-          <div className="flex flex-row pl-1 gap-1 items-center border-[1px] bg-white rounded-md overflow-hidden">
-            {errorNombre && (
-              <abbr title={errorNombre}>
-                <BsFillExclamationCircleFill className="fill-red-500 pl" />
-              </abbr>
-            )}
+          <InputErrorEnvoltorio error={errorNombre}>
             <input
               type="text"
               placeholder="Introduce un nombre"
@@ -73,7 +68,7 @@ const CrearIngrediente = () => {
                 } as Ingrediente)
               }
             />
-          </div>
+          </InputErrorEnvoltorio>
         </div>
         <div className="w-full mt-1">
           <p className="text-white">Descripción:</p>
@@ -92,31 +87,46 @@ const CrearIngrediente = () => {
         </div>
         <div className="w-full mt-1">
           <p className="text-white">Precio suplemento:</p>
-          <input
-            type="number"
-            className="pl-2 pr-8 border-[1px] rounded-md"
-            placeholder="Introduce el pps"
-            value={ingrediente.precioSuplemento}
-            onChange={(e) =>
-              setIngrediente({
-                ...ingrediente,
-                precioSuplemento: parseFloat(e.target.value),
-              } as Ingrediente)
-            }
-          />
+          <InputErrorEnvoltorio error={errorPrecioSuplemento}>
+            <input
+              type="number"
+              placeholder="Introduce el pps"
+              value={ingrediente.precioSuplemento}
+              onChange={(e) =>
+                setIngrediente({
+                  ...ingrediente,
+                  precioSuplemento: parseFloat(e.target.value),
+                } as Ingrediente)
+              }
+            />
+          </InputErrorEnvoltorio>
         </div>
         <div className="w-full mt-1">
           <p className="text-white">Stock:</p>
-          <input
-            type="number"
-            className="pr-2 text-right border-[1px] rounded-md"
-            placeholder="Introduce el stock actual"
-            //FALTA AÑADIR EL STOCK
-          />
+          <InputErrorEnvoltorio error={errorStock}>
+            <input
+              type="number"
+              placeholder="Introduce el stock actual"
+              onChange={(e) =>
+                setIngrediente({
+                  ...ingrediente,
+                  stock: parseFloat(e.target.value),
+                } as Ingrediente)
+              }
+            />
+          </InputErrorEnvoltorio>
         </div>
         <div className="w-full mt-1">
           <p className="text-white">Unidad de medida:</p>
-          <select className="pl-10 pr-2  border-[1px] rounded-md text-right ">
+          <select
+            className="pl-10 pr-2  border-[1px] rounded-md text-right "
+            onChange={(e) =>
+              setIngrediente({
+                ...ingrediente,
+                unidad: e.target.value,
+              } as Ingrediente)
+            }
+          >
             {unidadMedida.map((unidad, index) => (
               <option key={index} value={unidad}>
                 {unidad}

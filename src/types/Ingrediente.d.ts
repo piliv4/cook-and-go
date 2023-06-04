@@ -3,4 +3,6 @@ export interface Ingrediente {
   nombre: string;
   descripcion: string;
   precioSuplemento: number;
+  stock: number;
+  unidad: string;
 }

@@ -1,5 +1,6 @@
 import supabase from "@/server/client";
 import { Ingrediente } from "@/types/Ingrediente";
+import router from "next/router";
 
 export const crearIngrediente = async (ingrediente: Ingrediente) => {
   try {
@@ -8,12 +9,14 @@ export const crearIngrediente = async (ingrediente: Ingrediente) => {
       {
         nombre: ingrediente.nombre,
         descripcion: ingrediente.descripcion,
-        precio_suplemento: ingrediente.precioSuplemento,
+        precioSuplemento: ingrediente.precioSuplemento,
       },
     ]);
 
     if (error) {
       throw new Error("Error al crear el Ingrediente");
+    } else {
+      router.push(router.asPath);
     }
   } catch (error) {
     console.error(error);
@@ -29,13 +32,15 @@ export const editarIngrediente = async (ingrediente: Ingrediente) => {
         {
           nombre: ingrediente.nombre,
           descripcion: ingrediente.descripcion,
-          precio_suplemento: ingrediente.precioSuplemento,
+          precioSuplemento: ingrediente.precioSuplemento,
         },
       ])
       .eq("id", ingrediente.id);
 
     if (error) {
       throw new Error("Error al modificar el Ingrediente");
+    } else {
+      router.push(router.asPath);
     }
   } catch (error) {
     console.error(error);
@@ -61,6 +66,8 @@ export const eliminarIngrediente = async (id: string) => {
         .eq("id", id);
       if (error2) {
         throw new Error("Error al eliminar el ingrediente");
+      } else {
+        router.push(router.asPath);
       }
     }
   } catch (error) {
@@ -74,7 +81,8 @@ export const getAllIngredientes = async () => {
     const { data, error } = await supabase
       .from("Ingrediente")
       .select("*")
-      .order("nombre");
+      .order("nombre")
+      .returns<Ingrediente[]>();
 
     if (error) {
       throw new Error("Error al obtener todos los ingredientes");
