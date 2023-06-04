@@ -27,7 +27,7 @@ const SeleccionarPlatos = ({
   }
 
   return (
-    <div className="flex justify-center flex-col">
+    <div className="flex justify-center flex-col ">
       <div className="font-black pt-4  border-b-[1px] border-primaryGreen flex flex-row">
         <h1 className="w-full capitalize">{titulo}</h1>
         <label className="font-light pr-1">Incluir</label>
@@ -59,7 +59,7 @@ const SeleccionarPlatos = ({
           </div>
 
           {/* SELECTOR DE PLATOS */}
-          <div className=" flex flex-col  group mt-2 ">
+          <div className=" flex flex-col  mt-2 ">
             <div className="bg-white  flex flex-row rounded-[30px] border-neutral  border-[1px] overflow-hidden">
               <div className="px-2 py-1 w-full">
                 <input
@@ -79,7 +79,7 @@ const SeleccionarPlatos = ({
               </div>
             </div>
 
-            <div className="hidden group-hover:flex hover:flex z-10 flex-col border-x-[1px] border-b-[1px]  mx-3 rounded-b-md bg-white ">
+            <div className=" z-10 flex-col border-x-[1px] border-b-[1px]  mx-3 rounded-b-md bg-white ">
               {Object.values(platos)
                 .filter((plato) => {
                   return (
@@ -93,7 +93,7 @@ const SeleccionarPlatos = ({
                     plato.nombre.toLowerCase() !== value.toLowerCase()
                   );
                 })
-                .slice(0, 10)
+                .slice(0, 3)
                 .map((plato) => (
                   <div
                     className="flex flex-row cursor-pointer pl-4  text-sm hover:bg-terciaryIntermediate"
@@ -104,7 +104,7 @@ const SeleccionarPlatos = ({
                         plato.nombre.slice(1)}
                     </p>
                     <p
-                      className="px-4"
+                      className="rounded-full border font-bold text-sm px-4 bg-primaryOrange text-white hover:scale-105 transition duration-100 "
                       onClick={() => {
                         setValue("");
                         anyadirPlato(plato, titulo);

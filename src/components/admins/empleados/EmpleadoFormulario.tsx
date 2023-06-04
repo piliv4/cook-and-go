@@ -5,6 +5,7 @@ import { Empleado } from "@/types/Empleado";
 import SubirImagenCircular from "../ui/SubirImagenCircular";
 import { esCorreoValido, esDNIoNIE, esVacio } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const EmpleadoFormulario = ({
   empleadoProp,
@@ -71,36 +72,42 @@ const EmpleadoFormulario = ({
             <p className="">
               Nombre y Apellidos<span className="font-thin">*</span>
             </p>
-            <input
-              type={"text"}
-              className="px-6  border-[1px] rounded-md border-primaryGreen "
-              placeholder="Nombre y Apellidos"
-              defaultValue={empleado.nombre}
-              onChange={(e) =>
-                setEmpleado({
-                  ...empleado,
-                  nombre: e.target.value,
-                })
-              }
-            />
+
+            <InputErrorEnvoltorio error={errorNombre}>
+              <input
+                type={"text"}
+                className="w-full "
+                placeholder="Nombre y Apellidos"
+                defaultValue={empleado.nombre}
+                onChange={(e) =>
+                  setEmpleado({
+                    ...empleado,
+                    nombre: e.target.value,
+                  })
+                }
+              />
+            </InputErrorEnvoltorio>
             <MensajeError texto={errorNombre} />
           </div>
           <div className="flex flex-col gap-y-[1px] w-full pt-2">
             <p className="">
               DNI/NIE<span className="font-thin">*</span>
             </p>
-            <input
-              type={"text"}
-              className="px-6  border-[1px] rounded-md border-primaryGreen"
-              placeholder="Documento de identificación"
-              defaultValue={empleado.dni}
-              onChange={(e) =>
-                setEmpleado({
-                  ...empleado,
-                  dni: e.target.value,
-                })
-              }
-            />
+
+            <InputErrorEnvoltorio error={errorDNINIE}>
+              <input
+                type={"text"}
+                className="w-full"
+                placeholder="Documento de identificación"
+                defaultValue={empleado.dni}
+                onChange={(e) =>
+                  setEmpleado({
+                    ...empleado,
+                    dni: e.target.value,
+                  })
+                }
+              />
+            </InputErrorEnvoltorio>
             <MensajeError texto={errorDNINIE} />
           </div>
         </div>
@@ -108,36 +115,42 @@ const EmpleadoFormulario = ({
           <p className="">
             Correo<span className="font-thin">*</span>
           </p>
-          <input
-            type={"email"}
-            className="px-6  border-[1px] rounded-md border-primaryGreen"
-            placeholder="Correo electrónico"
-            defaultValue={empleado.correo}
-            onChange={(e) =>
-              setEmpleado({
-                ...empleado,
-                correo: e.target.value,
-              })
-            }
-          />
+
+          <InputErrorEnvoltorio error={errorCorreo}>
+            <input
+              type={"email"}
+              className="w-full"
+              placeholder="Correo electrónico"
+              defaultValue={empleado.correo}
+              onChange={(e) =>
+                setEmpleado({
+                  ...empleado,
+                  correo: e.target.value,
+                })
+              }
+            />
+          </InputErrorEnvoltorio>
           <MensajeError texto={errorCorreo} />
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">
           <p className="">
             Contraseña<span className="font-thin">*</span>
           </p>
-          <input
-            type={"password"}
-            className="px-6  border-[1px] rounded-md border-primaryGreen"
-            placeholder="Contraseña"
-            defaultValue={empleado.contraseña}
-            onChange={(e) =>
-              setEmpleado({
-                ...empleado,
-                contraseña: e.target.value,
-              })
-            }
-          />
+
+          <InputErrorEnvoltorio error={errorContrasenya}>
+            <input
+              type={"password"}
+              className="w-full"
+              placeholder="Contraseña"
+              defaultValue={empleado.contraseña}
+              onChange={(e) =>
+                setEmpleado({
+                  ...empleado,
+                  contraseña: e.target.value,
+                })
+              }
+            />
+          </InputErrorEnvoltorio>
           <MensajeError texto={errorContrasenya} />
         </div>
         <div className="flex flex-col gap-y-[1px] w-full pt-2">

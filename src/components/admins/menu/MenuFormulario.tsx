@@ -6,6 +6,7 @@ import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const MenuFormulario = ({
   menuProp,
@@ -103,37 +104,44 @@ const MenuFormulario = ({
         <div>
           <div className="flex flex-col gap-y-[1px] w-full pt-2">
             <p className="">Nombre</p>
-            <input
-              type={"text"}
-              className="px-6  border-[1px] rounded-md"
-              defaultValue={menu.nombre}
-              onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
-            />
+            <InputErrorEnvoltorio error={errorNombre}>
+              <input
+                type={"text"}
+                className="w-full"
+                defaultValue={menu.nombre}
+                onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
+              />
+            </InputErrorEnvoltorio>
             <MensajeError texto={errorNombre} />
           </div>
           <div className="flex pt-2 flex-row gap-x-4">
             <div className="flex flex-col gap-y-[1px] w-full">
               <p className="">Precio</p>
-              <input
-                type={"tel"}
-                className="px-6 border-[1px] rounded-md"
-                defaultValue={menu.precio}
-                onChange={(e) =>
-                  setMenu({ ...menu, precio: parseFloat(e.target.value) })
-                }
-              />
+              <InputErrorEnvoltorio error={errorPrecio}>
+                <input
+                  type={"tel"}
+                  className="w-full"
+                  defaultValue={menu.precio}
+                  onChange={(e) =>
+                    setMenu({ ...menu, precio: parseFloat(e.target.value) })
+                  }
+                />
+              </InputErrorEnvoltorio>
               <MensajeError texto={errorPrecio} />
             </div>
             <div className="flex flex-col gap-y-[1px] w-full">
               <p className="">Número de comensales</p>
-              <input
-                type="number"
-                className="px-6 border-[1px] rounded-md"
-                defaultValue={menu.comensales}
-                onChange={(e) =>
-                  setMenu({ ...menu, comensales: parseInt(e.target.value) })
-                }
-              />
+
+              <InputErrorEnvoltorio error={errorComensales}>
+                <input
+                  type="number"
+                  className="w-full"
+                  defaultValue={menu.comensales}
+                  onChange={(e) =>
+                    setMenu({ ...menu, comensales: parseInt(e.target.value) })
+                  }
+                />
+              </InputErrorEnvoltorio>
               <MensajeError texto={errorComensales} />
             </div>
           </div>

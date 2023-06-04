@@ -10,6 +10,7 @@ import { crearPlato, editarPlato } from "@/api/plato";
 import MensajeError from "../ui/MensajeError";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 import CabeceraPagina from "../ui/CabeceraPagina";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const PlatoFormulario = ({
   platoEditar,
@@ -68,42 +69,49 @@ const PlatoFormulario = ({
             Datos genéricos del plato
           </h1>
           <div className="flex flex-col gap-y-[1px] w-full">
-            <p className="">Nombre*</p>
-            <input
-              type={"text"}
-              id="nombre"
-              defaultValue={plato.nombre}
-              onChange={(e) => {
-                setPlato({ ...plato, nombre: e.target.value });
-              }}
-              className="px-6 border-[1px] rounded-md border-primaryGreen"
-            />
+            <p className="">
+              Nombre<span className="font-light">*</span>
+            </p>
+            <InputErrorEnvoltorio error={errorNombre}>
+              <input
+                type={"text"}
+                id="nombre"
+                defaultValue={plato.nombre}
+                onChange={(e) => {
+                  setPlato({ ...plato, nombre: e.target.value });
+                }}
+                className="w-full"
+              />
+            </InputErrorEnvoltorio>
             <MensajeError texto={errorNombre} />
           </div>
 
           <div className="flex flex-col gap-y-[1px] w-full">
             <p className="">Categoría</p>
-            <select
-              id="categoria"
-              value={plato.categoria}
-              className="border-[1px] rounded-md border-primaryGreen"
-              onChange={(e) => {
-                setPlato({ ...plato, categoria: e.target.value });
-              }}
-            >
-              <option key={-1} value="">
-                Seleccione una categoría
-              </option>
-              {categorias?.map((categoria) => (
-                <option
-                  key={categoria.id}
-                  value={categoria.id}
-                  selected={plato.categoria === categoria.id}
-                >
-                  {categoria.nombre}
+
+            <InputErrorEnvoltorio error={errorCategoria}>
+              <select
+                id="categoria"
+                value={plato.categoria}
+                className="w-full"
+                onChange={(e) => {
+                  setPlato({ ...plato, categoria: e.target.value });
+                }}
+              >
+                <option key={-1} value="">
+                  Seleccione una categoría
                 </option>
-              ))}
-            </select>
+                {categorias?.map((categoria) => (
+                  <option
+                    key={categoria.id}
+                    value={categoria.id}
+                    selected={plato.categoria === categoria.id}
+                  >
+                    {categoria.nombre}
+                  </option>
+                ))}
+              </select>
+            </InputErrorEnvoltorio>
 
             <MensajeError texto={errorCategoria} />
           </div>
@@ -112,15 +120,18 @@ const PlatoFormulario = ({
             <div>
               <p className=" flex w-full ">Precio</p>
             </div>
-            <input
-              type={"number"}
-              id="precio"
-              defaultValue={plato.precio}
-              onChange={(e) => {
-                setPlato({ ...plato, precio: parseFloat(e.target.value) });
-              }}
-              className="px-6 border-[1px] rounded-md  border-primaryGreen"
-            />
+
+            <InputErrorEnvoltorio error={errorPrecio}>
+              <input
+                type={"number"}
+                id="precio"
+                defaultValue={plato.precio}
+                onChange={(e) => {
+                  setPlato({ ...plato, precio: parseFloat(e.target.value) });
+                }}
+                className="w-full"
+              />
+            </InputErrorEnvoltorio>
             <MensajeError texto={errorPrecio} />
           </div>
 
@@ -153,33 +164,35 @@ const PlatoFormulario = ({
               }
             />
           </div>
-          <div className="flex flex-col pt-2 relative">
+          <div className="flex flex-col pt-2 relative ">
             <h1 className=" w-full text-center border-b-[1px] border-secondaryGreen font-bold">
               Mis ingredientes:
             </h1>
-            {plato.ingredientes?.map((ingrediente, index) => (
-              <div
-                key={ingrediente.id}
-                className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"
-              >
-                <p className="w-full font-thin">
-                  {index + 1}. {ingrediente.nombre}
-                </p>
-                <button
-                  className="px-1"
-                  onClick={() =>
-                    setPlato({
-                      ...plato,
-                      ingredientes: plato.ingredientes.filter(
-                        (value, i) => i !== index
-                      ),
-                    })
-                  }
+            <div className="overflow-y-auto max-h-[180px]">
+              {plato.ingredientes?.map((ingrediente, index) => (
+                <div
+                  key={ingrediente.id}
+                  className="flex flex-row border-b-[2px] border-primaryOrange border-dotted"
                 >
-                  <BsTrashFill className="fill-primaryOrange" />
-                </button>
-              </div>
-            ))}
+                  <p className="w-full font-thin">
+                    {index + 1}. {ingrediente.nombre}
+                  </p>
+                  <button
+                    className="px-1"
+                    onClick={() =>
+                      setPlato({
+                        ...plato,
+                        ingredientes: plato.ingredientes.filter(
+                          (value, i) => i !== index
+                        ),
+                      })
+                    }
+                  >
+                    <BsTrashFill className="fill-primaryOrange" />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

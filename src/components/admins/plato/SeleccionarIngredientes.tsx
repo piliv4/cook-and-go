@@ -20,7 +20,7 @@ const SeleccionarIngredientes = ({
   }, []);
 
   return (
-    <div className=" flex flex-col group  ">
+    <div className=" flex flex-col group min-h-[100px] ">
       <div className="bg-white grid grid-cols-[90%_10%] rounded-[30px] border-neutral  border-[1px] overflow-hidden">
         <div className="px-2 py-1">
           <input
@@ -54,7 +54,7 @@ const SeleccionarIngredientes = ({
               ingrediente.nombre.toLowerCase() !== value.toLowerCase()
             );
           })
-          .slice(0, 10)
+          .slice(0, 3)
           .map((ingrediente) => (
             <div
               className="grid grid-cols-[80%_20%] cursor-pointer pl-4  text-sm hover:bg-terciaryIntermediate"
@@ -71,6 +71,7 @@ const SeleccionarIngredientes = ({
                   ingrediente.nombre.slice(1)}
               </p>
               <p
+                className="rounded-full border font-bold text-sm px-4 bg-primaryOrange text-white hover:scale-105 transition duration-100 "
                 onClick={() => {
                   anyadirIngrediente(ingrediente);
                 }}

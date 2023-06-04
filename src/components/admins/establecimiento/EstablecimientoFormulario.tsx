@@ -12,6 +12,7 @@ import {
   esWebValida,
 } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const EstablecimientoFormulario = ({
   establecimientoProp,
@@ -78,7 +79,7 @@ const EstablecimientoFormulario = ({
   return (
     <div className="px-20 ">
       <CabeceraPagina>
-        <h1 className="text-2xl font-black  uppercase ">
+        <h1 className="text-2xl font-black  uppercase  ">
           {establecimientoProp
             ? "Editar establecimiento"
             : "Crear un establecimiento"}
@@ -116,42 +117,49 @@ const EstablecimientoFormulario = ({
                 <p className="">
                   Nombre<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"text"}
-                  className="px-6  border-[1px] rounded-md border-primaryGreen"
-                  placeholder="Nombre del establecimiento"
-                  defaultValue={establecimiento.nombre}
-                  onChange={(e) =>
-                    setEstablecimiento({
-                      ...establecimiento,
-                      nombre: e.target.value,
-                    })
-                  }
-                />
+
+                <InputErrorEnvoltorio error={errorNombre}>
+                  <input
+                    type={"text"}
+                    className="w-full"
+                    placeholder="Nombre del establecimiento"
+                    defaultValue={establecimiento.nombre}
+                    onChange={(e) =>
+                      setEstablecimiento({
+                        ...establecimiento,
+                        nombre: e.target.value,
+                      })
+                    }
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorNombre} />
               </div>
               <div className="flex flex-col  w-full pt-2">
                 <p className="">
                   CIF<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"text"}
-                  className="px-6  border-[1px] rounded-md border-primaryGreen"
-                  placeholder="Código de identificación fiscal"
-                  defaultValue={establecimiento.cif}
-                  onChange={(e) =>
-                    setEstablecimiento({
-                      ...establecimiento,
-                      cif: e.target.value,
-                    })
-                  }
-                />
+
+                <InputErrorEnvoltorio error={errorCIF}>
+                  <input
+                    type={"text"}
+                    className="w-full"
+                    placeholder="Código de identificación fiscal"
+                    defaultValue={establecimiento.cif}
+                    onChange={(e) =>
+                      setEstablecimiento({
+                        ...establecimiento,
+                        cif: e.target.value,
+                      })
+                    }
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorCIF} />
               </div>
             </div>
           </div>
           <div className="flex flex-col w-full">
             <p className="">Detalles</p>
+
             <input
               type={"text"}
               className="px-6  border-[1px] rounded-md border-primaryGreen"
@@ -175,55 +183,65 @@ const EstablecimientoFormulario = ({
                 <p className="">
                   Número de teléfono<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"tel"}
-                  className="px-6  border-[1px] rounded-md border-primaryGreen"
-                  placeholder="Número de teléfono del establecimiento"
-                  defaultValue={
-                    (establecimiento.telefono = !0 && establecimiento.telefono)
-                  }
-                  onChange={(e) =>
-                    setEstablecimiento({
-                      ...establecimiento,
-                      telefono: e.target.value,
-                    })
-                  }
-                />
+
+                <InputErrorEnvoltorio error={errorTelefono}>
+                  <input
+                    type={"tel"}
+                    className="w-full"
+                    placeholder="Número de teléfono"
+                    defaultValue={
+                      (establecimiento.telefono =
+                        !0 && establecimiento.telefono)
+                    }
+                    onChange={(e) =>
+                      setEstablecimiento({
+                        ...establecimiento,
+                        telefono: e.target.value,
+                      })
+                    }
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorTelefono} />
               </div>
               <div className="flex flex-col  w-full pt-2">
                 <p className="">
                   Correo electronico<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"email"}
-                  className="px-6  border-[1px] rounded-md border-primaryGreen"
-                  placeholder="Dirección de correo electrónico"
-                  defaultValue={establecimiento.correo}
-                  onChange={(e) =>
-                    setEstablecimiento({
-                      ...establecimiento,
-                      correo: e.target.value,
-                    })
-                  }
-                />
+
+                <InputErrorEnvoltorio error={errorCorreo}>
+                  <input
+                    type={"email"}
+                    className="w-full"
+                    placeholder="Dirección de correo electrónico"
+                    defaultValue={establecimiento.correo}
+                    onChange={(e) =>
+                      setEstablecimiento({
+                        ...establecimiento,
+                        correo: e.target.value,
+                      })
+                    }
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorCorreo} />
               </div>
             </div>
             <div className="flex flex-col  w-full ">
               <p className="">Web</p>
-              <input
-                type={"url"}
-                className="px-6  border-[1px] rounded-md border-primaryGreen"
-                placeholder="Dirección de la página web"
-                defaultValue={establecimiento.web}
-                onChange={(e) =>
-                  setEstablecimiento({
-                    ...establecimiento,
-                    web: e.target.value,
-                  })
-                }
-              />
+
+              <InputErrorEnvoltorio error={errorWeb}>
+                <input
+                  type={"url"}
+                  className="w-full"
+                  placeholder="Dirección de la página web"
+                  defaultValue={establecimiento.web}
+                  onChange={(e) =>
+                    setEstablecimiento({
+                      ...establecimiento,
+                      web: e.target.value,
+                    })
+                  }
+                />
+              </InputErrorEnvoltorio>
               <MensajeError texto={errorWeb} />
             </div>
 
@@ -236,36 +254,40 @@ const EstablecimientoFormulario = ({
                 <p className="">
                   Localidad<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"text"}
-                  className="px-6  border-[1px] rounded-md border-primaryGreen"
-                  placeholder="Localidad"
-                  defaultValue={establecimiento.ciudad}
-                  onChange={(e) =>
-                    setEstablecimiento({
-                      ...establecimiento,
-                      ciudad: e.target.value,
-                    })
-                  }
-                />
+                <InputErrorEnvoltorio error={errorLocalidad}>
+                  <input
+                    type={"text"}
+                    className="w-full"
+                    placeholder="Localidad"
+                    defaultValue={establecimiento.ciudad}
+                    onChange={(e) =>
+                      setEstablecimiento({
+                        ...establecimiento,
+                        ciudad: e.target.value,
+                      })
+                    }
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorLocalidad} />
               </div>
               <div className="flex flex-col w-full pt-2">
                 <p className="">
                   Direccion<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"text"}
-                  className="px-6  border-[1px] rounded-md border-primaryGreen"
-                  placeholder="Dirección del establecimiento"
-                  defaultValue={establecimiento.direccion}
-                  onChange={(e) =>
-                    setEstablecimiento({
-                      ...establecimiento,
-                      direccion: e.target.value,
-                    })
-                  }
-                />
+                <InputErrorEnvoltorio error={errorDireccion}>
+                  <input
+                    type={"text"}
+                    className="w-full"
+                    placeholder="Dirección del establecimiento"
+                    defaultValue={establecimiento.direccion}
+                    onChange={(e) =>
+                      setEstablecimiento({
+                        ...establecimiento,
+                        direccion: e.target.value,
+                      })
+                    }
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorDireccion} />
               </div>
             </div>

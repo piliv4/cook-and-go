@@ -7,6 +7,7 @@ import { Categoria } from "@/types/Categoria";
 import { crearCategoria, editarCategoria } from "@/api/categoria";
 import { esVacio } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
+import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,
@@ -68,24 +69,28 @@ const CrearCategoriaPopup = ({
                 <p>
                   Nombre<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"text"}
-                  defaultValue={categoriaEditar?.nombre}
-                  className="px-6 border-[1px] rounded-md border-primaryGreen"
-                  id="nombre"
-                />
+                <InputErrorEnvoltorio error={errorNombre}>
+                  <input
+                    type={"text"}
+                    defaultValue={categoriaEditar?.nombre}
+                    className="w-full"
+                    id="nombre"
+                  />
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorNombre} />
               </div>
               <div className="flex flex-col gap-y-[2px] w-full">
                 <p>
                   Descripción<span className="font-thin">*</span>
                 </p>
-                <input
-                  type={"text"}
-                  defaultValue={categoriaEditar?.descripcion}
-                  className="px-6 border-[1px] rounded-md border-primaryGreen"
-                  id="descripcion"
-                ></input>
+                <InputErrorEnvoltorio error={errorDescripcion}>
+                  <input
+                    type={"text"}
+                    defaultValue={categoriaEditar?.descripcion}
+                    className="w-full"
+                    id="descripcion"
+                  ></input>
+                </InputErrorEnvoltorio>
                 <MensajeError texto={errorDescripcion} />
               </div>
             </div>
