@@ -49,7 +49,7 @@ export default function BebidaCard({ bebida }: { bebida: Bebida }) {
         />
         <BsTrashFill
           className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => eliminarBebida(bebida.id)}
+          onClick={async () => eliminarBebida(bebida.id)}
         />
       </div>
     </div>

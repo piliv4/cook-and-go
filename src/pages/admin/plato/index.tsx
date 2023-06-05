@@ -33,13 +33,18 @@ export default function PlatoPage({
         <select
           className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
           onChange={(e) => {
-            const platosFiltradosAux = platos.filter(
-              // @ts-ignore
-              (plato) => plato.categoria_id === e.target.value
-            );
-            setPlatosFiltrados(platosFiltradosAux);
+            if (e.target.value !== "-1") {
+              const platosFiltradosAux = platos.filter(
+                // @ts-ignore
+                (plato) => plato.categoria_id === e.target.value
+              );
+              setPlatosFiltrados(platosFiltradosAux);
+            } else {
+              setPlatosFiltrados(platos);
+            }
           }}
         >
+          <option value={"-1"}>Todas mis categorias</option>
           {categorias.map((categoria) => (
             <option key={categoria.id} value={categoria.id}>
               {categoria.nombre}

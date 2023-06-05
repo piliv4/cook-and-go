@@ -45,7 +45,7 @@ const CrearCategoriaPopup = ({
           id: categoriaEditar?.id || "",
           nombre: nombre.value,
           descripcion: descripcion.value,
-          esDeBebidas: tipo.value == 1,
+          esDeBebidas: tipo?.value == 1,
           imagenURL: imagen,
         };
         categoriaEditar
@@ -100,8 +100,10 @@ const CrearCategoriaPopup = ({
                   <p>
                     Tipo<span className="font-thin">*</span>
                   </p>
-                  <select id="tipo">
-                    <option value={0}>Platos</option>
+                  <select id="tipo" defaultValue={0}>
+                    <option value={0} defaultChecked={true}>
+                      Platos
+                    </option>
                     <option value={1}>Bebidas</option>
                   </select>
                 </div>

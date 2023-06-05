@@ -1,7 +1,6 @@
 import Buscador from "@/components/admins/ui/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
-import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
 import { getAllCategorias } from "@/api/categoria";
 
@@ -26,10 +25,10 @@ export default function CategoriaHomePage({
         <Buscador />
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+        <CrearCategoriaCard />
         {categorias.map((categoria) => (
           <CategoriaCard categoria={categoria} key={categoria.id} />
         ))}
-        <CrearCategoriaCard />
       </div>
     </div>
   );

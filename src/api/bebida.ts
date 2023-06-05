@@ -56,13 +56,12 @@ export const eliminarBebida = async (id: string) => {
     const { error } = await supabase.from("Articulo").delete().eq("id", id);
     if (error) {
       throw new Error("Error al eliminar la bebida");
-    } else {
     }
   } catch (error) {
     console.error(error);
     throw error;
   }
-  if (router.asPath) router.push("/admin/bebida");
+  router.push("/admin/bebida");
   router.replace(router.asPath);
 };
 
