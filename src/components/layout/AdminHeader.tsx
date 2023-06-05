@@ -17,13 +17,13 @@ export default function AdminHeader() {
   const { nombre: nombreEstablecimiento } = establecimientoGlobal;
 
   return (
-    <div className="flex justify-center bg-background">
-      <div className="bg-primaryGreen py-2 px-8 flex flex-row mb-4 gap-x-3 rounded-b-full w-[95%]  text-white ">
+    <div className="flex flex-row justify-center bg-background">
+      <div className="bg-primaryGreen py-2 px-8 flex flex-row mb-4 gap-x-3 rounded-b-full w-full  text-white ">
         <h1 className="font-bold text-lg px-2 text-white">
           <Link href={"/"}>Cook&Go</Link>
         </h1>
         {establecimientoGlobal.id != undefined ? (
-          <div className="mt-[3px] gap-x-3 flex flex-row w-full">
+          <div className="mt-[3px] gap-x-3 flex flex-row w-[70%] lg:w-[80%]">
             <Link
               href={"/admin/categoria"}
               className={` px-2 pt-[1px] font-light text-sm transition duration-200 hover:underline underline-offset-[5px]  ${
@@ -49,6 +49,14 @@ export default function AdminHeader() {
               Mis platos
             </Link>
             <Link
+              href={"/admin/bebida"}
+              className={` px-2 pt-[1px] font-light text-sm transition duration-200 hover:underline underline-offset-[5px] ${
+                seccion == "bebida" && "underline "
+              }`}
+            >
+              Mis bebidas
+            </Link>
+            <Link
               href={"/admin/ingrediente"}
               className={`px-2 pt-[1px] font-light text-sm transition duration-200 hover:underline underline-offset-[5px] ${
                 seccion == "ingrediente" && "underline "
@@ -68,9 +76,10 @@ export default function AdminHeader() {
         ) : (
           <p>¡Seleccione un establecimiento para empezar a gestionarlo!</p>
         )}
-        <div className="mt-[3px] flex flex-row w-full justify-end ">
+
+        <div className="mt-[3px] flex flex-row w-fit  justify-end ">
           <Link
-            className="pr-2 font-light"
+            className="pr-2 font-light w-full"
             href={"/admin/establecimiento/" + establecimientoGlobal.id}
           >
             {nombreEstablecimiento}

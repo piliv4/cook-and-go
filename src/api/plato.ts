@@ -53,24 +53,23 @@ export const editarPlato = async (plato: Plato) => {
     console.error(error);
     throw error;
   }
-  insertarIngredientes(plato.ingredientes, plato.id);
+  await insertarIngredientes(plato.ingredientes, plato.id);
 
   router.back();
 };
 
 export const eliminarPlato = async (id: string) => {
-  eliminarIngredientes(id);
+  await eliminarIngredientes(id);
   try {
     const { error } = await supabase.from("Articulo").delete().eq("id", id);
     if (error) {
       throw new Error("Error al eliminar el plato");
-    } else {
-      router.replace(router.asPath);
     }
   } catch (error) {
     console.error(error);
     throw error;
   }
+  router.push("/admin/plato");
 };
 
 export const getAllPlatos = async () => {

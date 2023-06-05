@@ -1,43 +1,45 @@
-import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { getAllPlatos } from "@/api/plato";
+import { getAllBebidas } from "@/api/bebida";
 import { Categoria } from "@/types/Categoria";
 import { getAllCategorias } from "@/api/categoria";
 import { useState } from "react";
+import BebidaCard from "@/components/admins/bebida/BebidaCard";
+import { Bebida } from "@/types/Bebida";
+import CrearBebidaCard from "@/components/admins/bebida/CrearBebidaCard";
 
 export async function getServerSideProps() {
   let categorias = await getAllCategorias();
-  let platos = await getAllPlatos();
+  let bebidas = await getAllBebidas();
   return {
     props: {
       categorias: categorias,
-      platos: platos as Plato[],
+      bebidas: bebidas as Bebida[],
     },
   };
 }
 
-export default function PlatoPage({
-  platos,
+export default function BebidaPage({
+  bebidas,
   categorias,
 }: {
-  platos: Plato[];
+  bebidas: Plato[];
   categorias: Categoria[];
 }) {
-  const [platosFiltrados, setPlatosFiltrados] = useState(platos);
+  const [bebidasFiltradas, setBebidasFiltradas] = useState(bebidas);
   return (
     <div className="flex flex-col gap-4">
       <CabeceraPagina>
-        <h1 className="text-2xl font-black ">Todos mis platos</h1>
+        <h1 className="text-2xl font-black ">Todos mis bebidas</h1>
         <select
           className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
           onChange={(e) => {
-            const platosFiltradosAux = platos.filter(
+            const bebidasFiltradasAux = bebidas.filter(
               // @ts-ignore
-              (plato) => plato.categoria_id === e.target.value
+              (bebida) => bebida.categoria_id === e.target.value
             );
-            setPlatosFiltrados(platosFiltradosAux);
+            setBebidasFiltradas(bebidasFiltradasAux);
           }}
         >
           {categorias.map((categoria) => (
@@ -48,7 +50,12 @@ export default function PlatoPage({
         </select>
         <Buscador />
       </CabeceraPagina>
-      <DisplayerPlato platos={platosFiltrados} />
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+        <CrearBebidaCard />
+        {bebidasFiltradas.map((bebida) => (
+          <BebidaCard bebida={bebida} key={bebida.id} />
+        ))}
+      </div>
     </div>
   );
 }
