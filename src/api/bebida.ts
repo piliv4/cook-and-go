@@ -57,12 +57,13 @@ export const eliminarBebida = async (id: string) => {
     if (error) {
       throw new Error("Error al eliminar la bebida");
     } else {
-      router.replace(router.asPath);
     }
   } catch (error) {
     console.error(error);
     throw error;
   }
+  if (router.asPath) router.push("/admin/bebida");
+  router.replace(router.asPath);
 };
 
 export const getAllBebidas = async () => {
