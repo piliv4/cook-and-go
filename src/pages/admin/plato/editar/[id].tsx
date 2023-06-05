@@ -1,5 +1,5 @@
 import { getAllCategorias } from "@/api/categoria";
-import { getPlatoById } from "@/api/articulo";
+import { getPlatoById } from "@/api/plato";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";

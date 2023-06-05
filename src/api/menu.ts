@@ -1,5 +1,5 @@
 import supabase from "@/server/client";
-import { getPlatoById } from "./articulo";
+import { getPlatoById } from "./plato";
 import { Plato } from "@/types/Plato";
 import { Menu } from "@/types/Menu";
 

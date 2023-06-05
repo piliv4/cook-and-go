@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import router from "next/router";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";
-import { eliminarPlato, getPlatoById } from "@/api/articulo";
+import { eliminarPlato, getPlatoById } from "@/api/plato";
 import { getCategoriaById, getCategoriaTitulo } from "@/api/categoria";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
