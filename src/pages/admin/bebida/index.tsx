@@ -1,15 +1,16 @@
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { getAllBebidas } from "@/api/bebida";
+import { getAllBebidas, getBebidaByCategoria } from "@/api/bebida";
 import { Categoria } from "@/types/Categoria";
 import { getAllCategoriasBebidas } from "@/api/categoria";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BebidaCard from "@/components/admins/bebida/BebidaCard";
 import { Bebida } from "@/types/Bebida";
 import CrearBebidaCard from "@/components/admins/bebida/CrearBebidaCard";
+import { useRouter } from "next/router";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   let categorias = await getAllCategoriasBebidas();
   let bebidas = await getAllBebidas();
   return {
@@ -27,7 +28,43 @@ export default function BebidaPage({
   bebidas: Plato[];
   categorias: Categoria[];
 }) {
-  const [bebidasFiltradas, setBebidasFiltradas] = useState(bebidas);
+  const router = useRouter();
+  const [bebidasFiltradas, setBebidasFiltradas] = useState<Bebida[]>(bebidas);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
+
+  useEffect(() => {
+    async function fetchBebidasFiltradas() {
+      if (categoriaSeleccionada !== "-1") {
+        try {
+          const bebidasFiltradasAux = await getBebidaByCategoria(
+            categoriaSeleccionada
+          );
+          setBebidasFiltradas(bebidasFiltradasAux);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        setBebidasFiltradas(bebidas);
+      }
+    }
+
+    fetchBebidasFiltradas();
+  }, [categoriaSeleccionada]);
+
+  useEffect(() => {
+    async function fetchData() {
+      // Realiza la llamada a getServerSideProps para obtener los datos actualizados
+      const bebidas = (await getAllBebidas()) as Plato[];
+
+      // Actualiza los bebidas filtrados con los datos actualizados
+      setBebidasFiltradas(bebidas);
+    }
+
+    // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
+    if (router.asPath === router.route) {
+      fetchData();
+    }
+  }, [router]);
   return (
     <div className="flex flex-col gap-4">
       <CabeceraPagina>
