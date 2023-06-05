@@ -3,7 +3,7 @@ import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { getAllPlatos } from "@/api/plato";
+import { getAllPlatos } from "@/api/articulo";
 
 export async function getServerSideProps() {
   let platos = await getAllPlatos();

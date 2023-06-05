@@ -1,7 +1,7 @@
 import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
 import router from "next/router";
-import { eliminarPlatosByCategoriaId } from "./plato";
+import { eliminarPlatosByCategoriaId } from "./articulo";
 
 export const crearCategoria = async (categoria: Categoria) => {
   try {

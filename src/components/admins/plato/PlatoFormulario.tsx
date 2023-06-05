@@ -6,7 +6,7 @@ import SeleccionarIngredientes from "./SeleccionarIngredientes";
 import { Plato } from "@/types/Plato";
 import { Categoria } from "@/types/Categoria";
 import { Ingrediente } from "@/types/Ingrediente";
-import { crearPlato, editarPlato } from "@/api/plato";
+import { crearPlato, editarPlato } from "@/api/articulo";
 import MensajeError from "../ui/MensajeError";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 import CabeceraPagina from "../ui/CabeceraPagina";

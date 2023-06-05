@@ -6,7 +6,7 @@ import Link from "next/link";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
 import { getCategoriaTitulo } from "@/api/categoria";
-import { getPlatosByCategoria } from "@/api/plato";
+import { getPlatosByCategoria } from "@/api/articulo";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

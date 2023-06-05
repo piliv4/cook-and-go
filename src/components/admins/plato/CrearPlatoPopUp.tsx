@@ -8,7 +8,7 @@ import { Plato } from "@/types/Plato";
 import { Categoria } from "@/types/Categoria";
 import { Ingrediente } from "@/types/Ingrediente";
 import { getAllCategorias } from "@/api/categoria";
-import { crearPlato, editarPlato } from "@/api/plato";
+import { crearPlato, editarPlato } from "@/api/articulo";
 import MensajeError from "../ui/MensajeError";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 

@@ -1,5 +1,5 @@
 import { getMenuById, modificarMenu } from "@/api/menu";
-import { getAllPlatos } from "@/api/plato";
+import { getAllPlatos } from "@/api/articulo";
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
