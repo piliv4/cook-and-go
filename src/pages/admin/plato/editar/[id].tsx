@@ -1,4 +1,4 @@
-import { getAllCategorias } from "@/api/categoria";
+import { getAllCategoriasPlatos } from "@/api/categoria";
 import { getPlatoById } from "@/api/plato";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
 import { Categoria } from "@/types/Categoria";
@@ -18,7 +18,7 @@ export default function CrearMenu({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   let plato = await getPlatoById(id as string);
-  let categorias = await getAllCategorias();
+  let categorias = await getAllCategoriasPlatos();
   return {
     props: {
       plato: plato as Plato,

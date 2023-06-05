@@ -3,14 +3,14 @@ import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
 import { getAllBebidas } from "@/api/bebida";
 import { Categoria } from "@/types/Categoria";
-import { getAllCategorias } from "@/api/categoria";
+import { getAllCategoriasBebidas } from "@/api/categoria";
 import { useState } from "react";
 import BebidaCard from "@/components/admins/bebida/BebidaCard";
 import { Bebida } from "@/types/Bebida";
 import CrearBebidaCard from "@/components/admins/bebida/CrearBebidaCard";
 
 export async function getServerSideProps() {
-  let categorias = await getAllCategorias();
+  let categorias = await getAllCategoriasBebidas();
   let bebidas = await getAllBebidas();
   return {
     props: {

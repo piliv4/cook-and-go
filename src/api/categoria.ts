@@ -10,6 +10,7 @@ export const crearCategoria = async (categoria: Categoria) => {
         nombre: categoria.nombre,
         descripcion: categoria.descripcion,
         imagenURL: categoria.imagenURL,
+        esDeBebidas: categoria.esDeBebidas,
       },
     ]);
 
@@ -70,6 +71,42 @@ export const getAllCategorias = async () => {
       .from("Categoria")
       .select("*")
       .order("nombre");
+
+    if (error) {
+      throw new Error("Error al obtener todas las categorias");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getAllCategoriasBebidas = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .select("*")
+      .order("nombre")
+      .eq("esDeBebidas", true);
+
+    if (error) {
+      throw new Error("Error al obtener todas las categorias");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getAllCategoriasPlatos = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Categoria")
+      .select("*")
+      .order("nombre")
+      .eq("esDeBebidas", false);
 
     if (error) {
       throw new Error("Error al obtener todas las categorias");

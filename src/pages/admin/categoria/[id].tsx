@@ -1,33 +1,36 @@
 import Buscador from "@/components/admins/ui/Buscador";
 import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
-import supabase from "@/server/client";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
-import { Plato } from "@/types/Plato";
-import { getCategoriaTitulo } from "@/api/categoria";
+import { getCategoriaById } from "@/api/categoria";
 import { getPlatosByCategoria } from "@/api/plato";
+import { Categoria } from "@/types/Categoria";
+import { getBebidaByCategoria } from "@/api/bebida";
+import DisplayerBebida from "@/components/admins/bebida/DisplayerBebida";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
-  let titulo = await getCategoriaTitulo(id as string);
-  let platos = await getPlatosByCategoria(id as string);
+  let categoria = await getCategoriaById(id as string);
+  let res;
+  (categoria as Categoria).esDeBebidas
+    ? (res = await getBebidaByCategoria(id as string))
+    : (res = await getPlatosByCategoria(id as string));
   return {
     props: {
-      platos: platos as Plato[],
-      titulo: titulo && titulo[0].nombre,
+      detalles: res as any[],
+      categoria: categoria,
     },
   };
 };
 
 const DetallesCategoria = ({
-  platos,
-  titulo,
+  detalles,
+  categoria,
 }: {
-  platos: Plato[];
-  titulo: String;
+  detalles: any[];
+  categoria: Categoria;
 }) => {
-  console.log(platos);
   return (
     <div className="flex flex-col gap-4 ">
       <CabeceraPagina>
@@ -35,11 +38,15 @@ const DetallesCategoria = ({
           <Link className="hover:text-primaryOrange" href={"/admin/categoria"}>
             Todas mis categorias
           </Link>
-          / Platos de {titulo}
+          / {categoria.nombre}
         </h1>
         <Buscador />
       </CabeceraPagina>
-      <DisplayerPlato platos={platos} />
+      {categoria.esDeBebidas ? (
+        <DisplayerBebida bebidas={detalles} />
+      ) : (
+        <DisplayerPlato platos={detalles} />
+      )}
     </div>
   );
 };

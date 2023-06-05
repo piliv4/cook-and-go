@@ -1,12 +1,9 @@
-import { getAllCategorias } from "@/api/categoria";
-import { getAllIngredientes } from "@/api/ingrediente";
+import { getAllCategoriasPlatos } from "@/api/categoria";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
 import { Categoria } from "@/types/Categoria";
-import { Ingrediente } from "@/types/Ingrediente";
-import { Plato } from "@/types/Plato";
 
 export async function getStaticProps() {
-  let categorias = await getAllCategorias();
+  let categorias = await getAllCategoriasPlatos();
   return {
     props: {
       categorias: categorias as Categoria[],

@@ -28,9 +28,10 @@ const CrearCategoriaPopup = ({
   const aceptar = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (open) {
-      const { nombre, descripcion } = e.target as typeof e.target & {
+      const { nombre, descripcion, tipo } = e.target as typeof e.target & {
         nombre: { value: string };
         descripcion: { value: string };
+        tipo: { value: number };
       };
 
       let eNombre = esVacio(nombre.value, "nombre");
@@ -44,6 +45,7 @@ const CrearCategoriaPopup = ({
           id: categoriaEditar?.id || "",
           nombre: nombre.value,
           descripcion: descripcion.value,
+          esDeBebidas: tipo.value == 1,
           imagenURL: imagen,
         };
         categoriaEditar
@@ -93,6 +95,17 @@ const CrearCategoriaPopup = ({
                 </InputErrorEnvoltorio>
                 <MensajeError texto={errorDescripcion} />
               </div>
+              {!categoriaEditar && (
+                <div className="flex flex-col gap-y-[2px] w-full">
+                  <p>
+                    Tipo<span className="font-thin">*</span>
+                  </p>
+                  <select id="tipo">
+                    <option value={0}>Platos</option>
+                    <option value={1}>Bebidas</option>
+                  </select>
+                </div>
+              )}
             </div>
             <div className="mb-3 mr-3 flex justify-end gap-2 font-">
               <button

@@ -1,4 +1,4 @@
-import { getAllCategorias } from "@/api/categoria";
+import { getAllCategoriasBebidas } from "@/api/categoria";
 import { getBebidaById } from "@/api/bebida";
 import BebidaFormulario from "@/components/admins/bebida/BebidaFormulario";
 import { Categoria } from "@/types/Categoria";
@@ -18,7 +18,7 @@ export default function CrearMenu({
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   let bebida = await getBebidaById(id as string);
-  let categorias = await getAllCategorias();
+  let categorias = await getAllCategoriasBebidas();
   return {
     props: {
       bebida: bebida as Bebida,
