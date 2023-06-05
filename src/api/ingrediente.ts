@@ -94,6 +94,25 @@ export const getAllIngredientes = async () => {
   }
 };
 
+export const getIngredientesPaginados = async (ini: number, fin: number) => {
+  try {
+    const { data, error } = await supabase
+      .from("Ingrediente")
+      .select("*")
+      .order("nombre")
+      .returns<Ingrediente[]>()
+      .range(ini, fin);
+
+    if (error) {
+      throw new Error("Error al obtener todos los ingredientes");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 export const getIngredientesByPlato = async (id: string) => {
   try {
     const ingredientes = [];

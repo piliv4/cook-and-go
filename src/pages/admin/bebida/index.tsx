@@ -49,6 +49,7 @@ export default function BebidaPage({
     }
 
     fetchBebidasFiltradas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoriaSeleccionada]);
 
   useEffect(() => {
@@ -79,6 +80,7 @@ export default function BebidaPage({
             setBebidasFiltradas(bebidasFiltradasAux);
           }}
         >
+          <option value="-1">Todas mis bebidas</option>
           {categorias.map((categoria) => (
             <option key={categoria.id} value={categoria.id}>
               {categoria.nombre}

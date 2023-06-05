@@ -1,11 +1,15 @@
 import { Ingrediente } from "@/types/Ingrediente";
-import { getAllIngredientes } from "@/api/ingrediente";
+import {
+  getAllIngredientes,
+  getIngredientesPaginados,
+} from "@/api/ingrediente";
 import CrearIngrediente from "@/components/admins/ingrediente/CrearIngrediente";
 import Buscador from "@/components/admins/ui/Buscador";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const ingredientes = await getAllIngredientes();
   return {
     props: {
@@ -19,10 +23,60 @@ export default function IngredientesPagina({
 }: {
   ingredientes: Ingrediente[];
 }) {
+  const router = useRouter();
   const [index, setIndex] = useState(0);
-  const [ingredientesMostrar, setIngredientesMostrar] = useState(
-    ingredientes.slice(0, 11)
+  const [ingredientesMostrar, setIngredientesMostrar] = useState<Ingrediente[]>(
+    []
   );
+
+  const itemsPerPage = 11;
+
+  useEffect(() => {
+    const fetchIngredientes = async () => {
+      const startIndex = index;
+      const endIndex = index + itemsPerPage;
+
+      // Aquí debes realizar la llamada a la base de datos para obtener los ingredientes
+      // con los parámetros de offset y limit
+      const ingredientesPaginados = await getIngredientesPaginados(
+        startIndex,
+        endIndex
+      );
+
+      setIngredientesMostrar(ingredientesPaginados);
+    };
+
+    fetchIngredientes();
+  }, [index]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     // Realiza la llamada a getServerSideProps para obtener los datos actualizados
+  //     const ingredientes = (await getIngredientesPaginados(
+  //       index,
+  //       index + itemsPerPage
+  //     )) as Ingrediente[];
+
+  //     // Actualiza los bebidas filtrados con los datos actualizados
+  //     setIngredientesMostrar(ingredientes);
+  //   }
+
+  //   // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
+  //   if (router.asPath === router.route) {
+  //     fetchData();
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [router]);
+
+  const AnteriorClick = () => {
+    const nextIndex = Math.max(index - itemsPerPage, 0);
+    setIndex(nextIndex);
+  };
+
+  const SiguienteClick = () => {
+    const nextIndex = index + itemsPerPage;
+    setIndex(nextIndex);
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -37,35 +91,17 @@ export default function IngredientesPagina({
           <div className="w-full flex ">
             <button
               className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"
-              onClick={() => {
-                let nextIndex;
-                index - 11 < 0 ? (nextIndex = 0) : (nextIndex = index - 11);
-                setIndex(nextIndex);
-                setIngredientesMostrar(
-                  ingredientes.slice(nextIndex, nextIndex + 11)
-                );
-              }}
+              onClick={() => AnteriorClick()}
             >
               Anterior
             </button>
           </div>
         )}
-        {index < ingredientes.length && (
+        {index + 11 < ingredientes.length && (
           <div className="w-full flex justify-end">
             <button
               className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"
-              onClick={() => {
-                let nextIndex;
-                index + 11 > ingredientes.length
-                  ? (nextIndex = ingredientes.length)
-                  : (nextIndex = index + 11);
-                setIndex(nextIndex);
-                console.log(index + " hasta " + index + 11);
-
-                setIngredientesMostrar(
-                  ingredientes.slice(nextIndex, nextIndex + 11)
-                );
-              }}
+              onClick={() => SiguienteClick()}
             >
               Siguiente
             </button>
