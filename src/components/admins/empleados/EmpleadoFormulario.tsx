@@ -173,16 +173,16 @@ const EmpleadoFormulario = ({
       </div>
       <div className=" flex flex-row justify-end gap-x-2 font-black py-4">
         <button
-          className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-          onClick={() => guardar()}
-        >
-          Guardar
-        </button>
-        <button
           className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
           onClick={() => router.push("/admin/empleado")}
         >
           Cancelar
+        </button>
+        <button
+          className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          onClick={() => guardar()}
+        >
+          Guardar
         </button>
       </div>
     </div>

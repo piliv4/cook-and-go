@@ -3,7 +3,7 @@ import EmpleadoFormulario from "@/components/admins/empleados/EmpleadoFormulario
 import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 
-export default function CrearEstablecimiento() {
+export default function CrearEmpleado() {
   async function crear(empleado: Empleado) {
     try {
       await crearEmpleado(empleado);

@@ -16,6 +16,8 @@ export const crearEmpleado = async (empleado: Empleado) => {
     ]);
     if (error) {
       throw new Error("Error al crear el empleado");
+    } else {
+      registrarEmpleadoEnSupabase(empleado);
     }
   } catch (error) {
     console.error(error);
@@ -69,6 +71,22 @@ export const eliminarEmpleado = async (id: string) => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+const registrarEmpleadoEnSupabase = async (empleado: Empleado) => {
+  const { data, error } = await supabase.auth.signUp({
+    email: empleado.correo,
+    password: empleado.contraseña,
+    options: {
+      data: {
+        rol: empleado.rol,
+      },
+    },
+  });
+
+  if (error) {
+    throw new Error(error.message);
   }
 };
 
