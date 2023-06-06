@@ -49,24 +49,21 @@ export default function IngredientesPagina({
     fetchIngredientes();
   }, [index]);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     // Realiza la llamada a getServerSideProps para obtener los datos actualizados
-  //     const ingredientes = (await getIngredientesPaginados(
-  //       index,
-  //       index + itemsPerPage
-  //     )) as Ingrediente[];
+  useEffect(() => {
+    // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
+    const fetchIngredientes = async () => {
+      const ingredientes = await getIngredientesPaginados(
+        index,
+        index + itemsPerPage
+      );
+      setIngredientesMostrar(ingredientes);
+    };
 
-  //     // Actualiza los bebidas filtrados con los datos actualizados
-  //     setIngredientesMostrar(ingredientes);
-  //   }
-
-  //   // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
-  //   if (router.asPath === router.route) {
-  //     fetchData();
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [router]);
+    // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
+    if (router.asPath === router.route) {
+      fetchIngredientes();
+    }
+  }, [index, router]);
 
   const AnteriorClick = () => {
     const nextIndex = Math.max(index - itemsPerPage, 0);
