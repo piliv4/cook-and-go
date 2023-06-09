@@ -1,5 +1,6 @@
 import { getAllCategoriasPlatos } from "@/api/categoria";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Categoria } from "@/types/Categoria";
 
 export async function getStaticProps() {
@@ -26,6 +27,8 @@ export default function CrearPlato({
     ingredientes: [],
   };
   return (
-    <PlatoFormulario platoEditar={DEFAULT_PLATO} categorias={categorias} />
+    <UsuarioAutorizado>
+      <PlatoFormulario platoEditar={DEFAULT_PLATO} categorias={categorias} />
+    </UsuarioAutorizado>
   );
 }

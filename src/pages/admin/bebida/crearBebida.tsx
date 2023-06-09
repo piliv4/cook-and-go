@@ -1,5 +1,6 @@
 import { getAllCategoriasBebidas } from "@/api/categoria";
 import BebidaFormulario from "@/components/admins/bebida/BebidaFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Categoria } from "@/types/Categoria";
 
 export async function getStaticProps() {
@@ -25,6 +26,8 @@ export default function CrearPlato({
     imagenURL: "",
   };
   return (
-    <BebidaFormulario bebidaEditar={DEFAULT_BEBIDA} categorias={categorias} />
+    <UsuarioAutorizado>
+      <BebidaFormulario bebidaEditar={DEFAULT_BEBIDA} categorias={categorias} />
+    </UsuarioAutorizado>
   );
 }

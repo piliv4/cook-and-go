@@ -7,6 +7,7 @@ import { Categoria } from "@/types/Categoria";
 import { getAllCategorias } from "@/api/categoria";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 
 export async function getStaticProps() {
   let categorias = await getAllCategorias();
@@ -67,23 +68,25 @@ export default function PlatoPage({
   }, [router]);
 
   return (
-    <div className="flex flex-col gap-4">
-      <CabeceraPagina>
-        <h1 className="text-2xl font-black ">Todos mis platos</h1>
-        <select
-          className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
-          onChange={(e) => setCategoriaSeleccionada(e.target.value)}
-        >
-          <option value={"-1"}>Todas mis categorias</option>
-          {categorias.map((categoria) => (
-            <option key={categoria.id} value={categoria.id}>
-              {categoria.nombre}
-            </option>
-          ))}
-        </select>
-        <Buscador />
-      </CabeceraPagina>
-      <DisplayerPlato platos={platosFiltrados} />
-    </div>
+    <UsuarioAutorizado>
+      <div className="flex flex-col gap-4">
+        <CabeceraPagina>
+          <h1 className="text-2xl font-black ">Todos mis platos</h1>
+          <select
+            className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
+            onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+          >
+            <option value={"-1"}>Todas mis categorias</option>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.id}>
+                {categoria.nombre}
+              </option>
+            ))}
+          </select>
+          <Buscador />
+        </CabeceraPagina>
+        <DisplayerPlato platos={platosFiltrados} />
+      </div>
+    </UsuarioAutorizado>
   );
 }

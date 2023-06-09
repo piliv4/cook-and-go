@@ -1,6 +1,7 @@
 import { getMenuById, modificarMenu } from "@/api/menu";
 import { getAllPlatos } from "@/api/plato";
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
 import { GetServerSideProps } from "next";
@@ -23,7 +24,9 @@ export default function CrearMenu({
   }
 
   return (
-    <MenuFormulario crearEditar={editar} menuProp={menu} platos={platos} />
+    <UsuarioAutorizado>
+      <MenuFormulario crearEditar={editar} menuProp={menu} platos={platos} />
+    </UsuarioAutorizado>
   );
 }
 

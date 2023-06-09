@@ -1,6 +1,7 @@
 import { getAllCategoriasPlatos } from "@/api/categoria";
 import { getPlatoById } from "@/api/plato";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";
 import { GetServerSideProps } from "next";
@@ -12,7 +13,10 @@ export default function CrearMenu({
   plato: Plato;
   categorias: Categoria[];
 }) {
-  return <PlatoFormulario categorias={categorias} platoEditar={plato} />;
+  return;
+  <UsuarioAutorizado>
+    <PlatoFormulario categorias={categorias} platoEditar={plato} />;
+  </UsuarioAutorizado>;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {

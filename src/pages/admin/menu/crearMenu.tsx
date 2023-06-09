@@ -1,6 +1,7 @@
 import { crearMenu } from "@/api/menu";
 import { getAllPlatos } from "@/api/plato";
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
 import router from "next/router";
@@ -24,5 +25,9 @@ export default function CrearMenu({ platos }: { platos: Plato[] }) {
     router.push("/admin/menu");
   }
 
-  return <MenuFormulario crearEditar={crear} menuProp={null} platos={platos} />;
+  return (
+    <UsuarioAutorizado>
+      <MenuFormulario crearEditar={crear} menuProp={null} platos={platos} />;
+    </UsuarioAutorizado>
+  );
 }

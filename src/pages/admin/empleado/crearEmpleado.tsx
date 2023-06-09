@@ -1,5 +1,6 @@
 import { crearEmpleado } from "@/api/empleado";
 import EmpleadoFormulario from "@/components/admins/empleados/EmpleadoFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 
@@ -13,5 +14,9 @@ export default function CrearEmpleado() {
     router.push("/admin/empleado");
   }
 
-  return <EmpleadoFormulario empleadoProp={null} crearEditar={crear} />;
+  return (
+    <UsuarioAutorizado>
+      <EmpleadoFormulario empleadoProp={null} crearEditar={crear} />;
+    </UsuarioAutorizado>
+  );
 }

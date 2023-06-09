@@ -8,6 +8,7 @@ import { getPlatosByCategoria } from "@/api/plato";
 import { Categoria } from "@/types/Categoria";
 import { getBebidaByCategoria } from "@/api/bebida";
 import DisplayerBebida from "@/components/admins/bebida/DisplayerBebida";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -32,22 +33,27 @@ const DetallesCategoria = ({
   categoria: Categoria;
 }) => {
   return (
-    <div className="flex flex-col gap-4 ">
-      <CabeceraPagina>
-        <h1 className="text-2xl font-black ">
-          <Link className="hover:text-primaryOrange" href={"/admin/categoria"}>
-            Todas mis categorias
-          </Link>
-          / {categoria.nombre}
-        </h1>
-        <Buscador />
-      </CabeceraPagina>
-      {categoria.esDeBebidas ? (
-        <DisplayerBebida bebidas={detalles} />
-      ) : (
-        <DisplayerPlato platos={detalles} />
-      )}
-    </div>
+    <UsuarioAutorizado>
+      <div className="flex flex-col gap-4 ">
+        <CabeceraPagina>
+          <h1 className="text-2xl font-black ">
+            <Link
+              className="hover:text-primaryOrange"
+              href={"/admin/categoria"}
+            >
+              Todas mis categorias
+            </Link>
+            / {categoria.nombre}
+          </h1>
+          <Buscador />
+        </CabeceraPagina>
+        {categoria.esDeBebidas ? (
+          <DisplayerBebida bebidas={detalles} />
+        ) : (
+          <DisplayerPlato platos={detalles} />
+        )}
+      </div>
+    </UsuarioAutorizado>
   );
 };
 

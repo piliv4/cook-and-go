@@ -1,6 +1,7 @@
 import { eliminarMenu, getMenuById } from "@/api/menu";
 import DisplayerPlatos from "@/components/admins/menu/DisplayerPlatos";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
 import { GetServerSideProps } from "next";
@@ -32,39 +33,41 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
     return "Pan y bebida no incluidos";
   }
   return (
-    <div className="px-48 ">
-      <CabeceraPagina>
-        <div className="text-2xl font-black col-span-3 text-center uppercase relative">
-          {menu.nombre} para {menu.comensales} persona(s)
-          <div className="absolute top-1/2 right-0 flex flex-row gap-3">
-            <BsFillPencilFill
-              className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-              onClick={() => router.push("/admin/menu/editar/" + menu.id)}
-            />
-            <BsTrashFill
-              className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-              onClick={() => borrarMenu()}
-            />
+    <UsuarioAutorizado>
+      <div className="px-48 ">
+        <CabeceraPagina>
+          <div className="text-2xl font-black col-span-3 text-center uppercase relative">
+            {menu.nombre} para {menu.comensales} persona(s)
+            <div className="absolute top-1/2 right-0 flex flex-row gap-3">
+              <BsFillPencilFill
+                className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+                onClick={() => router.push("/admin/menu/editar/" + menu.id)}
+              />
+              <BsTrashFill
+                className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+                onClick={() => borrarMenu()}
+              />
+            </div>
           </div>
+        </CabeceraPagina>
+        {/* SECCIONES DEL MENU */}
+        {tiposMenu.map(
+          (tipoMenu) =>
+            (menu[tipoMenu as keyof Menu] as Plato[]).length > 0 && (
+              <DisplayerPlatos
+                key={tipoMenu}
+                titulo={tipoMenu}
+                platos={menu[tipoMenu as keyof Menu] as Plato[]}
+              />
+            )
+        )}
+        <p className="w-full text-center py-2">{montarCadena()}</p>
+        <div className="flex flex-row font-black text-xl">
+          <p className="w-full">Precio</p>
+          <p>{(Math.round(menu.precio * 100) / 100).toFixed(2)}€</p>
         </div>
-      </CabeceraPagina>
-      {/* SECCIONES DEL MENU */}
-      {tiposMenu.map(
-        (tipoMenu) =>
-          (menu[tipoMenu as keyof Menu] as Plato[]).length > 0 && (
-            <DisplayerPlatos
-              key={tipoMenu}
-              titulo={tipoMenu}
-              platos={menu[tipoMenu as keyof Menu] as Plato[]}
-            />
-          )
-      )}
-      <p className="w-full text-center py-2">{montarCadena()}</p>
-      <div className="flex flex-row font-black text-xl">
-        <p className="w-full">Precio</p>
-        <p>{(Math.round(menu.precio * 100) / 100).toFixed(2)}€</p>
       </div>
-    </div>
+    </UsuarioAutorizado>
   );
 };
 

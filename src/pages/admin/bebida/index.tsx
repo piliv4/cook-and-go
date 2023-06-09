@@ -9,6 +9,7 @@ import BebidaCard from "@/components/admins/bebida/BebidaCard";
 import { Bebida } from "@/types/Bebida";
 import CrearBebidaCard from "@/components/admins/bebida/CrearBebidaCard";
 import { useRouter } from "next/router";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 
 export async function getStaticProps() {
   let categorias = await getAllCategoriasBebidas();
@@ -67,34 +68,36 @@ export default function BebidaPage({
     }
   }, [router]);
   return (
-    <div className="flex flex-col gap-4">
-      <CabeceraPagina>
-        <h1 className="text-2xl font-black ">Todos mis bebidas</h1>
-        <select
-          className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
-          onChange={(e) => {
-            const bebidasFiltradasAux = bebidas.filter(
-              // @ts-ignore
-              (bebida) => bebida.categoria_id === e.target.value
-            );
-            setBebidasFiltradas(bebidasFiltradasAux);
-          }}
-        >
-          <option value="-1">Todas mis bebidas</option>
-          {categorias.map((categoria) => (
-            <option key={categoria.id} value={categoria.id}>
-              {categoria.nombre}
-            </option>
+    <UsuarioAutorizado>
+      <div className="flex flex-col gap-4">
+        <CabeceraPagina>
+          <h1 className="text-2xl font-black ">Todos mis bebidas</h1>
+          <select
+            className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
+            onChange={(e) => {
+              const bebidasFiltradasAux = bebidas.filter(
+                // @ts-ignore
+                (bebida) => bebida.categoria_id === e.target.value
+              );
+              setBebidasFiltradas(bebidasFiltradasAux);
+            }}
+          >
+            <option value="-1">Todas mis bebidas</option>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.id}>
+                {categoria.nombre}
+              </option>
+            ))}
+          </select>
+          <Buscador />
+        </CabeceraPagina>
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+          <CrearBebidaCard />
+          {bebidasFiltradas.map((bebida) => (
+            <BebidaCard bebida={bebida} key={bebida.id} />
           ))}
-        </select>
-        <Buscador />
-      </CabeceraPagina>
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
-        <CrearBebidaCard />
-        {bebidasFiltradas.map((bebida) => (
-          <BebidaCard bebida={bebida} key={bebida.id} />
-        ))}
+        </div>
       </div>
-    </div>
+    </UsuarioAutorizado>
   );
 }

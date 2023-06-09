@@ -3,6 +3,7 @@ import {
   getEstablecimientoById,
 } from "@/api/establecimiento";
 import EstablecimientoFormulario from "@/components/admins/establecimiento/EstablecimientoFormulario";
+import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Establecimiento } from "@/types/Establecimiento";
 import { GetServerSideProps } from "next";
 import router from "next/router";
@@ -22,10 +23,12 @@ export default function EditarEstablecimiento({
   }
 
   return (
-    <EstablecimientoFormulario
-      crearEditar={editar}
-      establecimientoProp={establecimiento}
-    />
+    <UsuarioAutorizado>
+      <EstablecimientoFormulario
+        crearEditar={editar}
+        establecimientoProp={establecimiento}
+      />
+    </UsuarioAutorizado>
   );
 }
 
