@@ -2,12 +2,7 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import {
-  BsArrowBarDown,
-  BsArrowDown,
-  BsFillPersonFill,
-  BsFillTriangleFill,
-} from "react-icons/bs";
+import { BsFillPersonFill, BsFillTriangleFill } from "react-icons/bs";
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -92,17 +87,14 @@ export default function AdminHeader() {
               </div>
               <div className="w-full bg-secondaryGreen flex flex-col  rounded-md p-1">
                 <Link
-                  href={"/admin/empleado/"}
-                  className="text-black rounded-md hover:bg-background"
-                >
-                  Mi perfil
-                </Link>
-                <Link
                   href={"/admin/establecimiento"}
                   className="text-black pt-1 rounded-md hover:bg-terciaryIntermediate"
                 >
                   Mis establecimientos
                 </Link>
+                <p className="text-black rounded-md hover:bg-background">
+                  Cerrar sesión
+                </p>
               </div>
             </div>
           </div>

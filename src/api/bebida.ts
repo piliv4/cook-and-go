@@ -4,19 +4,17 @@ import router from "next/router";
 
 export const crearBebida = async (bebida: Bebida) => {
   try {
-    const { data, error } = await supabase
-      .from("Articulo")
-      .insert([
-        {
-          nombre: bebida.nombre,
-          descripcion: bebida.descripcion,
-          precio: bebida.precio,
-          categoria_id: bebida.categoria,
-          imagenURL: bebida.imagenURL,
-          esBebida: true,
-        },
-      ])
-      .select();
+    const { error } = await supabase.from("Articulo").insert([
+      {
+        nombre: bebida.nombre,
+        descripcion: bebida.descripcion,
+        precio: bebida.precio,
+        categoria_id: bebida.categoria,
+        imagenURL: bebida.imagenURL,
+        esBebida: true,
+      },
+    ]);
+
     if (error) {
       throw new Error("Error al insertar la bebida");
     }
@@ -93,6 +91,7 @@ export const getBebidaByCategoria = async (id: string) => {
     if (error) {
       throw new Error("Error al obtener las bebidas a partir de la categoria");
     }
+    console.log(bebidas);
     return bebidas;
   } catch (error) {
     console.error(error);
@@ -107,8 +106,7 @@ export const getBebidaById = async (id: string) => {
       .select("*")
       .eq("id", id)
       .single();
-
-    bebida.categoria = bebida.categoria_id;
+    if (bebida) bebida.categoria = bebida.categoria_id;
 
     if (error) {
       throw new Error("Error al los bebidas a partir del id");

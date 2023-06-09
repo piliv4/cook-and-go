@@ -16,8 +16,6 @@ export const crearEmpleado = async (empleado: Empleado) => {
     ]);
     if (error) {
       throw new Error("Error al crear el empleado");
-    } else {
-      registrarEmpleadoEnSupabase(empleado);
     }
   } catch (error) {
     console.error(error);
@@ -74,22 +72,6 @@ export const eliminarEmpleado = async (id: string) => {
   }
 };
 
-const registrarEmpleadoEnSupabase = async (empleado: Empleado) => {
-  const { data, error } = await supabase.auth.signUp({
-    email: empleado.correo,
-    password: empleado.contraseña,
-    options: {
-      data: {
-        rol: empleado.rol,
-      },
-    },
-  });
-
-  if (error) {
-    throw new Error(error.message);
-  }
-};
-
 export const getAllEmpleados = async () => {
   try {
     const { data, error } = await supabase
@@ -125,3 +107,48 @@ export const getEmpleadoById = async (id: string) => {
     throw error;
   }
 };
+
+const correoExiste = async (correo: string): Promise<boolean> => {
+  const { data, error } = await supabase
+    .from("Empleado")
+    .select("id")
+    .eq("correo", correo)
+    .limit(1);
+
+  if (error) {
+    console.error("Error al verificar el correo:", error);
+    return false;
+  }
+
+  return data && data.length > 0;
+};
+
+async function iniciarSesion(
+  correo: string,
+  contraseña: string
+): Promise<Empleado | null> {
+  const correoValido = await correoExiste(correo);
+
+  if (!correoValido) {
+    console.error("El correo no existe en la base de datos");
+    return null;
+  }
+
+  const { data, error } = await supabase
+    .from("empleado")
+    .select()
+    .eq("correo", correo)
+    .eq("contraseña", contraseña)
+    .limit(1);
+
+  if (error) {
+    console.error("Error al iniciar sesión:", error);
+    return null;
+  }
+
+  if (data && data.length > 0) {
+    return data[0] as Empleado;
+  }
+
+  return null;
+}
