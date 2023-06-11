@@ -7,6 +7,7 @@ import { useContext } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { usuarioGlobal } = useContext(UsuarioContext);
+  console.log(usuarioGlobal);
   return (
     <EstablecimientoProvider>
       <UsuarioProvider>

@@ -108,34 +108,50 @@ export const getEmpleadoById = async (id: string) => {
   }
 };
 
-const correoExiste = async (correo: string): Promise<boolean> => {
+export const correoExiste = async (correo: string): Promise<string> => {
   const { data, error } = await supabase
     .from("Empleado")
-    .select("id")
-    .eq("correo", correo)
-    .limit(1);
+    .select("*")
+    .eq("correo", correo);
 
   if (error) {
     console.error("Error al verificar el correo:", error);
-    return false;
+    return "Error al verificar el correo electrónico";
   }
-
-  return data && data.length > 0;
+  return data && data.length > 0
+    ? "" // Correo electrónico válido y existe en la base de datos
+    : "Correo electronico no registrado en el sistema";
 };
 
-async function iniciarSesion(
+export const contraseñaValida = async (
   correo: string,
-  contraseña: string
-): Promise<Empleado | null> {
-  const correoValido = await correoExiste(correo);
+  contrasenya: string
+): Promise<string> => {
+  const { data, error } = await supabase
+    .from("Empleado")
+    .select("contraseña")
+    .eq("correo", correo)
+    .single();
 
-  if (!correoValido) {
-    console.error("El correo no existe en la base de datos");
-    return null;
+  if (error) {
+    console.error("Error al verificar la contraseña:", error);
+    return "Error al verificar la contraseña";
   }
 
+  console.log(data);
+  if (data) {
+    const empleadoContraseña = data;
+    //@ts-ignore
+    if (empleadoContraseña.contraseña !== contrasenya) {
+      return "Contraseña incorrecta";
+    }
+  }
+  return ""; // Contraseña válida
+};
+
+export async function iniciarSesion(correo: string, contraseña: string) {
   const { data, error } = await supabase
-    .from("empleado")
+    .from("Empleado")
     .select()
     .eq("correo", correo)
     .eq("contraseña", contraseña)

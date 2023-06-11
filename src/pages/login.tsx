@@ -1,21 +1,50 @@
 import { FormEvent, FormEventHandler, useState } from "react";
 import { useRouter } from "next/router";
 import { FaUtensils } from "react-icons/fa";
+import InputErrorEnvoltorio from "@/components/admins/ui/InputErrorEnvoltorio";
+import { contraseñaValida, correoExiste, iniciarSesion } from "@/api/empleado";
+import MensajeError from "@/components/admins/ui/MensajeError";
+import { UsuarioContext } from "@/context/UsuarioContext";
+import { useContext } from "react";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [errorCorreo, setErrorCorreo] = useState("");
+  const [errorContraseña, setErrorContraseña] = useState("");
+  const [contraseña, setContraseña] = useState("");
   const router = useRouter();
+  const { setUsuarioGlobal } = useContext(UsuarioContext);
 
-  const handleSignIn = async (email: string, password: string) => {};
+  const validarCampos = async () => {
+    // Validar el campo de correo electrónico
+    if (!correo) {
+      setErrorCorreo("Debe ingresar un correo electrónico");
+    } else {
+      const correoValido = await correoExiste(correo);
+      setErrorCorreo(correoValido);
+    }
+    // Validar el campo de contraseña
+    if (!contraseña) {
+      setErrorContraseña("Debe ingresar una contraseña");
+    } else {
+      if (errorCorreo == "") {
+        const contrasenyaValida = await contraseñaValida(correo, contraseña);
+        setErrorContraseña(contrasenyaValida);
+      }
+    }
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    handleSignIn(email, password);
-    try {
-      router.push("/");
-    } catch (error) {
-      console.error("Error de inicio de sesión:", error);
+    return errorContraseña == "" && errorCorreo == "";
+  };
+
+  const inicio = async () => {
+    console.log();
+    const valido = await validarCampos();
+    if (valido) {
+      const usuario = await iniciarSesion(correo, contraseña);
+      if (usuario != null) {
+        setUsuarioGlobal(usuario);
+        router.push("/");
+      }
     }
   };
 
@@ -28,35 +57,40 @@ const Login = () => {
           <p className="font-black text-5xl px-6 text-white">Cook&Go</p>
         </div>
         <div className="my-10 mr-3 px-3 flex flex-col">
-          <form onSubmit={handleSubmit}>
-            <h1 className="text-center text-2xl font-black">¡Bienvenido!</h1>
-            <h2 className="text-sm font-medium text-center mt-1 text-gray-900">
-              Inicie sesión para empezar a gestionar
-            </h2>
-            <div className="py-4 flex flex-col gap-2">
+          <h1 className="text-center text-2xl font-black">¡Bienvenido!</h1>
+          <h2 className="text-sm font-medium text-center mt-1 text-gray-900">
+            Inicie sesión para empezar a gestionar
+          </h2>
+          <div className="py-4 flex flex-col gap-2">
+            <InputErrorEnvoltorio error={errorCorreo}>
               <input
-                type="email"
+                type="correo"
+                placeholder="Correo electrónico"
                 className="w-full rounded-md py-1"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                id="correo"
+                value={correo}
+                onChange={(e) => setCorreo(e.target.value)}
               />
-
+            </InputErrorEnvoltorio>
+            <MensajeError texto={errorCorreo} />
+            <InputErrorEnvoltorio error={errorContraseña}>
               <input
-                type="password"
+                type="contraseña"
                 className="w-full rounded-md py-1"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Contraseña"
+                id="contraseña"
+                value={contraseña}
+                onChange={(e) => setContraseña(e.target.value)}
               />
-            </div>
-            <button
-              type="submit"
-              className="rounded-md w-full py-1 bg-primaryOrange font-black text-white"
-            >
-              Iniciar sesión
-            </button>
-          </form>
+            </InputErrorEnvoltorio>
+            <MensajeError texto={errorContraseña} />
+          </div>
+          <button
+            className="rounded-md w-full py-1 bg-primaryOrange font-black text-white"
+            onClick={() => inicio()}
+          >
+            Iniciar sesión
+          </button>
         </div>
       </div>
     </div>

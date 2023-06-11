@@ -8,7 +8,7 @@ export default function UsuarioAutorizado({
   children: React.ReactNode;
 }) {
   const { usuarioGlobal } = useContext(UsuarioContext);
-
+  console.log(usuarioGlobal);
   useEffect(() => {
     // Verificar si el usuario no ha iniciado sesión
     if (!usuarioGlobal || !usuarioGlobal.id) {
