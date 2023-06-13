@@ -1,4 +1,6 @@
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
+import { UsuarioContext } from "@/context/UsuarioContext";
+import { Empleado } from "@/types/Empleado";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -10,6 +12,8 @@ export default function AdminHeader() {
 
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const { nombre: nombreEstablecimiento } = establecimientoGlobal;
+
+  const { setUsuarioGlobal } = useContext(UsuarioContext);
 
   return (
     <div className="flex flex-row justify-center bg-background">
@@ -92,9 +96,15 @@ export default function AdminHeader() {
                 >
                   Mis establecimientos
                 </Link>
-                <p className="text-black rounded-md hover:bg-background">
+                <button
+                  className="text-black rounded-md hover:bg-background"
+                  onClick={() => {
+                    setUsuarioGlobal({} as Empleado);
+                    router.push("/login");
+                  }}
+                >
                   Cerrar sesión
-                </p>
+                </button>
               </div>
             </div>
           </div>

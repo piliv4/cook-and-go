@@ -1,6 +1,7 @@
 import { UsuarioContext } from "@/context/UsuarioContext";
 import router from "next/router";
 import { useContext, useEffect } from "react";
+import IniciarSesionComp from "../IniciarSesionComp";
 
 export default function UsuarioAutorizado({
   children,
@@ -8,18 +9,14 @@ export default function UsuarioAutorizado({
   children: React.ReactNode;
 }) {
   const { usuarioGlobal } = useContext(UsuarioContext);
-  console.log(usuarioGlobal);
-  useEffect(() => {
-    // Verificar si el usuario no ha iniciado sesión
-    if (!usuarioGlobal || !usuarioGlobal.id) {
-      // Redirigir al usuario a la página de inicio de sesión
-      router.push("/login");
-    }
-  }, [usuarioGlobal]);
 
   return (
     <>
-      <main>{children}</main>
+      {usuarioGlobal && usuarioGlobal.id && usuarioGlobal.id != "" ? (
+        <>{children}</>
+      ) : (
+        <IniciarSesionComp />
+      )}
     </>
   );
 }
