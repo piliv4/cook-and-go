@@ -3,13 +3,9 @@ import { useState } from "react";
 import { crearIngrediente } from "@/api/ingrediente";
 import { esNumeroPositivo, esVacio } from "@/validations/validation";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
+import { unidadMedida } from "@/types/enum";
 
 const CrearIngrediente = () => {
-  //CAMBIAR CUANDO PUEDAS POR EL ENUMERADO CORRECTO
-  const unidadMedida = ["kg", "g", "mg", "l", "ml", "unidades"];
-
-  //El ingrediente a crear TENGO QUE AÑADIR COSAS MIRAR SI LO HAGO CON UN FORMULARIO!!!
-
   const ingredienteVacio = {
     id: "",
     nombre: "",

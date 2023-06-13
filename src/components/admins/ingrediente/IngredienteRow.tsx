@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { BiSave } from "react-icons/bi";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
@@ -7,6 +6,7 @@ import { Ingrediente } from "@/types/Ingrediente";
 import { editarIngrediente, eliminarIngrediente } from "@/api/ingrediente";
 import { esNumeroPositivo, esVacio } from "@/validations/validation";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
+import { unidadMedida } from "@/types/enum";
 
 const IngredienteRow = ({
   ingrediente,
@@ -19,7 +19,6 @@ const IngredienteRow = ({
   setIndexGlobal: Function;
   index: number;
 }) => {
-  const router = useRouter();
   const [ingredienteEditar, setIngredienteEditar] =
     useState<Ingrediente>(ingrediente);
 
@@ -37,14 +36,10 @@ const IngredienteRow = ({
     );
     setErrorPrecioSuplemento(ePrecio ? ePrecio : "");
 
-    // let eStock = esNumeroPositivo(ingredienteEditar.stock + "", "precio suplemento");
-    // setErrorStock(eStock ? eStock : "");
+    let eStock = esNumeroPositivo(ingredienteEditar.stock + "", "stock");
+    setErrorStock(eStock ? eStock : "");
 
-    if (
-      eNombre ||
-      ePrecio
-      // || eStock
-    ) {
+    if (eNombre || ePrecio || eStock) {
       return false;
     }
     return true;
@@ -119,9 +114,50 @@ const IngredienteRow = ({
         )}
       </td>
 
-      <td className="border border-primaryGreen pl-2">200</td>
+      <td className="border border-primaryGreen pl-2">
+        {indexGlobal != index ? (
+          <p>{ingrediente.stock}</p>
+        ) : (
+          <InputErrorEnvoltorio error={errorStock}>
+            <input
+              type={"number"}
+              defaultValue={ingrediente.stock}
+              className="w-full"
+              onChange={(e) =>
+                setIngredienteEditar({
+                  ...ingredienteEditar,
+                  stock: parseInt(e.target.value),
+                } as Ingrediente)
+              }
+            ></input>
+          </InputErrorEnvoltorio>
+        )}
+      </td>
 
-      <td className="border border-primaryGreen pl-2">kg</td>
+      <td className="border border-primaryGreen pl-2">
+        {indexGlobal != index ? (
+          <p>{ingrediente.unidad}</p>
+        ) : (
+          <InputErrorEnvoltorio error="">
+            <select
+              className=" text-right "
+              defaultValue={ingrediente.unidad}
+              onChange={(e) =>
+                setIngredienteEditar({
+                  ...ingredienteEditar,
+                  unidad: e.target.value,
+                } as Ingrediente)
+              }
+            >
+              {unidadMedida.map((unidad, index) => (
+                <option key={index} value={unidad}>
+                  {unidad}
+                </option>
+              ))}
+            </select>
+          </InputErrorEnvoltorio>
+        )}
+      </td>
 
       <td className="border border-primaryGreen ">
         <div className="flex justify-center items-center">
