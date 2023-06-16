@@ -6,6 +6,8 @@ import { contraseñaValida, correoExiste, iniciarSesion } from "@/api/empleado";
 import { useContext, useState } from "react";
 import { UsuarioContext } from "@/context/UsuarioContext";
 import { useRouter } from "next/router";
+import { Establecimiento } from "@/types/Establecimiento";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 const IniciarSesionComp = () => {
   const [correo, setCorreo] = useState("");
   const [errorCorreo, setErrorCorreo] = useState("");
@@ -13,7 +15,7 @@ const IniciarSesionComp = () => {
   const [contraseña, setContraseña] = useState("");
   const router = useRouter();
   const { setUsuarioGlobal } = useContext(UsuarioContext);
-
+  const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
   const validarCampos = async () => {
     // Validar el campo de correo electrónico
     if (!correo) {
@@ -42,6 +44,8 @@ const IniciarSesionComp = () => {
       const usuario = await iniciarSesion(correo, contraseña);
       if (usuario != null) {
         setUsuarioGlobal(usuario);
+
+        setEstablecimientoGlobal({} as Establecimiento);
         router.push("/");
       }
     }

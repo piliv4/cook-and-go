@@ -2,9 +2,9 @@ import supabase from "@/server/client";
 import { getPlatoById } from "./plato";
 import { Plato } from "@/types/Plato";
 import { Menu } from "@/types/Menu";
+import { tiposPlato } from "@/types/enum";
 
 export const crearMenu = async (menu: Menu) => {
-  const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
   try {
     const { data, error } = await supabase
       .from("Menu")
@@ -15,7 +15,7 @@ export const crearMenu = async (menu: Menu) => {
           comensales: menu.comensales,
           incluye_pan: menu.incluyePan,
           incluye_bebida: menu.incluyeBebida,
-          restaurante_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
+          establecimiento_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
         },
       ])
       .select();
@@ -30,7 +30,8 @@ export const crearMenu = async (menu: Menu) => {
     }
 
     if (error) {
-      throw new Error("Error al crear la categoria");
+      console.log(error);
+      throw new Error("Error al crear EL MENU");
     }
   } catch (error) {
     console.error(error);
@@ -103,7 +104,7 @@ export const getMenuById = async (id: string) => {
       .from("MenuArticulo")
       .select()
       .eq("menu_id", menu.id);
-
+    console.log(platosId);
     if (platosId != null) {
       for (const platoId of platosId) {
         let plato = await getPlatoById(platoId.articulo_id);
@@ -157,6 +158,7 @@ const insertarPlatos = async (
         if (!error) {
           return true;
         } else {
+          console.log(error);
           throw new Error("Error al insertar plato");
         }
       } catch (error) {
@@ -182,7 +184,7 @@ export const modificarMenu = async (menu: Menu) => {
           comensales: menu.comensales,
           incluye_pan: menu.incluyePan,
           incluye_bebida: menu.incluyeBebida,
-          restaurante_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
+          establecimiento_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
         },
       ])
       .eq("id", menu.id)

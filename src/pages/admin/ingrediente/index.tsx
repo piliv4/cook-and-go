@@ -43,6 +43,7 @@ export default function IngredientesPagina({
         startIndex,
         endIndex
       );
+      console.log("Al cambiar el indice" + ingredientesPaginados.length);
 
       setIngredientesMostrar(ingredientesPaginados);
     };

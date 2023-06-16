@@ -3,8 +3,9 @@ import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 
 export const crearEmpleado = async (empleado: Empleado) => {
+  console.log(empleado);
   try {
-    const { error } = await supabase.from("Empleado").insert([
+    const { error } = await supabase.from("Usuario").insert([
       {
         nombre: empleado.nombre,
         correo: empleado.correo,
@@ -15,6 +16,7 @@ export const crearEmpleado = async (empleado: Empleado) => {
       },
     ]);
     if (error) {
+      console.log(error);
       throw new Error("Error al crear el empleado");
     }
   } catch (error) {
@@ -26,7 +28,7 @@ export const crearEmpleado = async (empleado: Empleado) => {
 export const modificarEmpleado = async (empleado: Empleado) => {
   try {
     const { error } = await supabase
-      .from("Empleado")
+      .from("Usuario")
       .update([
         {
           nombre: empleado.nombre,
@@ -50,14 +52,14 @@ export const modificarEmpleado = async (empleado: Empleado) => {
 export const eliminarEmpleado = async (id: string) => {
   try {
     const { error: error } = await supabase
-      .from("EmpleadoEstablecimiento")
+      .from("UsuarioEstablecimiento")
       .delete()
-      .eq("empleado_id", id);
+      .eq("usuario_id", id);
     if (error) {
       throw new Error("Error al eliminar las referencias al establecimiento");
     } else {
       const { error: error2 } = await supabase
-        .from("Empleado")
+        .from("Usuario")
         .delete()
         .eq("id", id);
       if (error2) {
@@ -75,7 +77,7 @@ export const eliminarEmpleado = async (id: string) => {
 export const getAllEmpleados = async () => {
   try {
     const { data, error } = await supabase
-      .from("Empleado")
+      .from("Usuario")
       .select("*")
       .order("rol");
 
@@ -92,7 +94,7 @@ export const getAllEmpleados = async () => {
 export const getEmpleadoById = async (id: string) => {
   try {
     const { data, error } = await supabase
-      .from("Empleado")
+      .from("Usuario")
       .select("*")
       .order("nombre")
       .eq("id", id)
@@ -110,7 +112,7 @@ export const getEmpleadoById = async (id: string) => {
 
 export const correoExiste = async (correo: string): Promise<string> => {
   const { data, error } = await supabase
-    .from("Empleado")
+    .from("Usuario")
     .select("*")
     .eq("correo", correo);
 
@@ -128,7 +130,7 @@ export const contraseñaValida = async (
   contrasenya: string
 ): Promise<string> => {
   const { data, error } = await supabase
-    .from("Empleado")
+    .from("Usuario")
     .select("contraseña")
     .eq("correo", correo)
     .single();
@@ -151,7 +153,7 @@ export const contraseñaValida = async (
 
 export async function iniciarSesion(correo: string, contraseña: string) {
   const { data, error } = await supabase
-    .from("Empleado")
+    .from("Usuario")
     .select()
     .eq("correo", correo)
     .eq("contraseña", contraseña)

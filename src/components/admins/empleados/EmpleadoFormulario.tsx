@@ -20,7 +20,7 @@ const EmpleadoFormulario = ({
     dni: "",
     contraseña: "",
     imagenURL: "",
-    rol: "",
+    rol: "Administrador",
   };
   const [empleado, setEmpleado] = useState(
     empleadoProp ? empleadoProp : DEFAULT_EMPLEADO

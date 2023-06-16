@@ -7,6 +7,7 @@ import { Plato } from "@/types/Plato";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
+import { tiposPlato } from "@/types/enum";
 
 const MenuFormulario = ({
   menuProp,
@@ -37,7 +38,6 @@ const MenuFormulario = ({
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorComensales, setErrorComensales] = useState("");
   const [errorPlatos, setErrorPlatos] = useState("");
-  const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
 
   function anyadirPlato(plato: Plato, tipoPlato: string) {
     let key = tipoPlato as keyof Menu;

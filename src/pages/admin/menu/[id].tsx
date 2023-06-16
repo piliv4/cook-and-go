@@ -4,13 +4,12 @@ import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
+import { tiposPlato } from "@/types/enum";
 import { GetServerSideProps } from "next";
 import router from "next/router";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
 
 const DetallesMenu = ({ menu }: { menu: Menu }) => {
-  const tiposMenu = ["entrantes", "primeros", "segundos", "postres"];
-
   async function borrarMenu() {
     try {
       await eliminarMenu(menu.id);
@@ -51,13 +50,13 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
           </div>
         </CabeceraPagina>
         {/* SECCIONES DEL MENU */}
-        {tiposMenu.map(
-          (tipoMenu) =>
-            (menu[tipoMenu as keyof Menu] as Plato[]).length > 0 && (
+        {tiposPlato.map(
+          (tipoPlato) =>
+            (menu[tipoPlato as keyof Menu] as Plato[]).length > 0 && (
               <DisplayerPlatos
-                key={tipoMenu}
-                titulo={tipoMenu}
-                platos={menu[tipoMenu as keyof Menu] as Plato[]}
+                key={tipoPlato}
+                titulo={tipoPlato}
+                platos={menu[tipoPlato as keyof Menu] as Plato[]}
               />
             )
         )}

@@ -12,8 +12,9 @@ export default function EstablecimientoCard({
 }: {
   establecimiento: Establecimiento;
 }) {
-  const { setEstablecimientoGlobal } = useContext(EstablecimientoContext);
-  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+  const { setEstablecimientoGlobal, establecimientoGlobal } = useContext(
+    EstablecimientoContext
+  );
   async function borrarEstablecimiento() {
     await eliminarEstablecimiento(establecimiento.id);
     setEstablecimientoGlobal({} as Establecimiento);

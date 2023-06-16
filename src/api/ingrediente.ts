@@ -85,8 +85,7 @@ export const getAllIngredientes = async () => {
     const { data, error } = await supabase
       .from("Ingrediente")
       .select("*")
-      .order("nombre")
-      .returns<Ingrediente[]>();
+      .order("nombre");
 
     if (error) {
       throw new Error("Error al obtener todos los ingredientes");
@@ -104,12 +103,12 @@ export const getIngredientesPaginados = async (ini: number, fin: number) => {
       .from("Ingrediente")
       .select("*")
       .order("nombre")
-      .returns<Ingrediente[]>()
       .range(ini, fin);
 
     if (error) {
       throw new Error("Error al obtener todos los ingredientes");
     }
+    console.log(data);
     return data;
   } catch (error) {
     console.error(error);
