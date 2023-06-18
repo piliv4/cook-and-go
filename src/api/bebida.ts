@@ -91,7 +91,6 @@ export const getBebidaByCategoria = async (id: string) => {
     if (error) {
       throw new Error("Error al obtener las bebidas a partir de la categoria");
     }
-    console.log(bebidas);
     return bebidas;
   } catch (error) {
     console.error(error);

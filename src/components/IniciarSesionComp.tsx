@@ -38,7 +38,6 @@ const IniciarSesionComp = () => {
   };
 
   const inicio = async () => {
-    console.log();
     const valido = await validarCampos();
     if (valido) {
       const usuario = await iniciarSesion(correo, contraseña);

@@ -27,7 +27,6 @@ const CrearPlatoPopUp = ({
   const [errorNombre, setErrorNombre] = useState("");
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorIngredientes, setErrorIngredientes] = useState("");
-  console.log(platoEditar);
   useEffect(() => {
     setPlato(platoEditar);
   }, [platoEditar]);
@@ -72,7 +71,6 @@ const CrearPlatoPopUp = ({
 
   function aceptar() {
     if (open && validarCampos()) {
-      console.log("culo");
       // plato.id ? editarPlato(plato) : crearPlato(plato);
       // cerrarPopUp();
     }

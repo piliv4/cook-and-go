@@ -47,7 +47,6 @@ const EstablecimientoFormulario = ({
   const [errorDireccion, setErrorDireccion] = useState("");
 
   function guardar() {
-    console.log(establecimiento);
     let eNombre = esVacio(establecimiento.nombre, "nombre");
     setErrorNombre(eNombre ? eNombre : "");
     let eCIF = esCIFValido(establecimiento.cif);

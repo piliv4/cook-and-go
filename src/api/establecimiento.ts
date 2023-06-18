@@ -29,7 +29,6 @@ export const crearEstablecimiento = async (
       .select()
       .single();
     if (error) {
-      console.log(error);
       throw new Error("Error al crear el establecimiento");
     }
     if (establecimiento.secciones.length > 0)
@@ -130,7 +129,6 @@ export const getEstablecimientoById = async (id: string) => {
         }
       }
     }
-    console.log(data);
     return data;
   } catch (error) {
     console.error(error);

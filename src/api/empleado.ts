@@ -3,7 +3,6 @@ import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 
 export const crearEmpleado = async (empleado: Empleado) => {
-  console.log(empleado);
   try {
     const { error } = await supabase.from("Usuario").insert([
       {
@@ -16,7 +15,6 @@ export const crearEmpleado = async (empleado: Empleado) => {
       },
     ]);
     if (error) {
-      console.log(error);
       throw new Error("Error al crear el empleado");
     }
   } catch (error) {
@@ -140,7 +138,6 @@ export const contraseñaValida = async (
     return "Error al verificar la contraseña";
   }
 
-  console.log(data);
   if (data) {
     const empleadoContraseña = data;
     //@ts-ignore

@@ -47,7 +47,6 @@ const IngredienteRow = ({
 
   function editar() {
     if (validarCampos()) {
-      console.log("culo");
       editarIngrediente(ingredienteEditar);
       setIndexGlobal(-1);
     }

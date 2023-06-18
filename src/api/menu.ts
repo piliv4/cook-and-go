@@ -30,7 +30,6 @@ export const crearMenu = async (menu: Menu) => {
     }
 
     if (error) {
-      console.log(error);
       throw new Error("Error al crear EL MENU");
     }
   } catch (error) {
@@ -104,7 +103,6 @@ export const getMenuById = async (id: string) => {
       .from("MenuArticulo")
       .select()
       .eq("menu_id", menu.id);
-    console.log(platosId);
     if (platosId != null) {
       for (const platoId of platosId) {
         let plato = await getPlatoById(platoId.articulo_id);
@@ -158,7 +156,6 @@ const insertarPlatos = async (
         if (!error) {
           return true;
         } else {
-          console.log(error);
           throw new Error("Error al insertar plato");
         }
       } catch (error) {

@@ -24,8 +24,6 @@ const BebidaFormulario = ({
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorCategoria, setErrorCategoria] = useState("");
 
-  console.log(bebida);
-
   function validarCampos() {
     let eNombre = esVacio(bebida.nombre, "nombre");
     setErrorNombre(eNombre ? eNombre : "");

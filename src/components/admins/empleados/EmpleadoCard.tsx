@@ -16,6 +16,7 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
         <Image
           src={empleado.imagenURL}
           alt="imagen_categoria.jpg"
+          sizes="200px"
           className="rounded-full mx-1 absolute"
           fill
         />
