@@ -35,6 +35,7 @@ const SubirImagen = ({
         alt="imagen_categoria.jpg"
         className=""
         fill
+        sizes="200px"
         objectFit="cover"
       />
       <div className="absolute top-0 z-10 bg-white opacity-50 group-hover:opacity-40 duration-150 transition h-full  w-full" />

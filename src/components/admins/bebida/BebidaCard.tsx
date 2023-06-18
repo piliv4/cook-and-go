@@ -14,7 +14,8 @@ export default function BebidaCard({ bebida }: { bebida: Bebida }) {
       <div className="relative py-16 bg-transparent ">
         <Image
           src={bebida.imagenURL}
-          alt="imagen_plato.jpg"
+          alt="imagen_bebida.jpg"
+          sizes="300px"
           className="absolute rounded-t-lg"
           fill
         />

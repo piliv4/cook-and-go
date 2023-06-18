@@ -63,6 +63,7 @@ export default function EditarEstablecimiento({
               src={establecimiento.imagenURL}
               alt="imagen_establecimiento.jpg"
               className="absolute rounded-md"
+              sizes="400px"
               fill
               style={{ objectFit: "cover" }}
             />
@@ -95,7 +96,7 @@ export default function EditarEstablecimiento({
                     <p className="w-full ">Correo electrónico:</p>
                     <p className=" ">{establecimiento.correo}</p>
                   </div>
-                  <p className="flex border-b-[2px] border-primaryOrange border-dotted">
+                  <div className="flex border-b-[2px] border-primaryOrange border-dotted">
                     <p className="w-full">Página web:</p>
                     <Link
                       className="hover:underline"
@@ -103,7 +104,7 @@ export default function EditarEstablecimiento({
                     >
                       {establecimiento.web}
                     </Link>
-                  </p>
+                  </div>
                   <button
                     className="w-full bg-primaryOrange rounded-full py-2 uppercase text-white font-black hover:bg-secondaryOrange"
                     onClick={() => setEstablecimientoGlobal(establecimiento)}

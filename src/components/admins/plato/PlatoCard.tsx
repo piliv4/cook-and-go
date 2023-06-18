@@ -14,6 +14,7 @@ export default function CategoriaCard({ plato }: { plato: Plato }) {
       <div className="relative py-16 bg-transparent ">
         <Image
           src={plato.imagenURL}
+          sizes="300px"
           alt="imagen_plato.jpg"
           className="absolute rounded-t-lg"
           fill

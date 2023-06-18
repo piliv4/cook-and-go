@@ -28,6 +28,7 @@ export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
           src={categoria?.imagenURL}
           alt="imagen_categoria.jpg"
           className="absolute rounded-t-lg"
+          sizes="300px"
           fill
         />
         <div className="absolute top-0 z-10 bg-gradient-to-t h-full from-white w-full" />
