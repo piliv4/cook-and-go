@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BsTrashFill } from "react-icons/bs";
 import SubirImagen from "../ui/SubirImagen";
 import { Bebida } from "@/types/Bebida";
@@ -10,6 +10,7 @@ import MensajeError from "../ui/MensajeError";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 import CabeceraPagina from "../ui/CabeceraPagina";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
 const BebidaFormulario = ({
   bebidaEditar,
@@ -18,6 +19,8 @@ const BebidaFormulario = ({
   bebidaEditar: Bebida;
   categorias: Categoria[];
 }) => {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+
   const router = useRouter();
   const [bebida, setBebida] = useState<Bebida>(bebidaEditar);
   const [errorNombre, setErrorNombre] = useState("");
@@ -41,7 +44,9 @@ const BebidaFormulario = ({
 
   function aceptar() {
     if (validarCampos()) {
-      bebida.id ? editarBebida(bebida) : crearBebida(bebida);
+      bebida.id
+        ? editarBebida(bebida)
+        : crearBebida(bebida, establecimientoGlobal.id);
     }
   }
 

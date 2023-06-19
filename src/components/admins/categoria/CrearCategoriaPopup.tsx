@@ -1,6 +1,6 @@
 import supabase from "@/server/client";
 import router from "next/router";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import Popup from "reactjs-popup";
 import SubirImagen from "../ui/SubirImagen";
 import { Categoria } from "@/types/Categoria";
@@ -8,6 +8,7 @@ import { crearCategoria, editarCategoria } from "@/api/categoria";
 import { esVacio } from "@/validations/validation";
 import MensajeError from "../ui/MensajeError";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
 const CrearCategoriaPopup = ({
   cerrarPopUp,
@@ -18,6 +19,7 @@ const CrearCategoriaPopup = ({
   open: boolean;
   categoriaEditar: Categoria | null;
 }) => {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const [imagen, setImagen] = useState(
     categoriaEditar ? categoriaEditar?.imagenURL : ""
   );
@@ -50,7 +52,7 @@ const CrearCategoriaPopup = ({
         };
         categoriaEditar
           ? editarCategoria(categoria)
-          : crearCategoria(categoria);
+          : crearCategoria(categoria, establecimientoGlobal.id);
         setImagen("");
         cerrarPopUp();
       }

@@ -3,7 +3,10 @@ import { Categoria } from "@/types/Categoria";
 import router from "next/router";
 import { eliminarPlatosByCategoriaId } from "./plato";
 
-export const crearCategoria = async (categoria: Categoria) => {
+export const crearCategoria = async (
+  categoria: Categoria,
+  establecimientoId: string
+) => {
   try {
     const { error } = await supabase.from("Categoria").insert([
       {
@@ -11,6 +14,7 @@ export const crearCategoria = async (categoria: Categoria) => {
         descripcion: categoria.descripcion,
         imagenURL: categoria.imagenURL,
         esDeBebidas: categoria.esDeBebidas,
+        establecimiento_id: establecimientoId,
       },
     ]);
 
@@ -79,6 +83,30 @@ export const getAllCategorias = async () => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getAllCategoriasByEstablecimiento = async (
+  establecimientoId: string
+) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Categoria")
+        .select("*")
+        .order("nombre")
+        .eq("establecimiento_id", establecimientoId);
+
+      if (error) {
+        throw new Error("Error al obtener todas las categorias");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
   }
 };
 

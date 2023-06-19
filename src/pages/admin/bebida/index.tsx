@@ -1,57 +1,63 @@
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { getAllBebidas, getBebidaByCategoria } from "@/api/bebida";
+import {
+  getAllBebidas,
+  getAllBebidasByEstablecimientoId,
+  getBebidaByCategoria,
+} from "@/api/bebida";
 import { Categoria } from "@/types/Categoria";
 import { getAllCategoriasBebidas } from "@/api/categoria";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BebidaCard from "@/components/admins/bebida/BebidaCard";
 import { Bebida } from "@/types/Bebida";
 import CrearBebidaCard from "@/components/admins/bebida/CrearBebidaCard";
 import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
 export async function getStaticProps() {
   let categorias = await getAllCategoriasBebidas();
-  let bebidas = await getAllBebidas();
   return {
     props: {
       categorias: categorias,
-      bebidas: bebidas as Bebida[],
     },
   };
 }
 
 export default function BebidaPage({
-  bebidas,
   categorias,
 }: {
-  bebidas: Plato[];
   categorias: Categoria[];
 }) {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+
   const router = useRouter();
-  const [bebidasFiltradas, setBebidasFiltradas] = useState<Bebida[]>(bebidas);
+  const [bebidasFiltradas, setBebidasFiltradas] = useState<Bebida[]>([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
 
   useEffect(() => {
     async function fetchBebidasFiltradas() {
+      let bebidasFiltradasAux = [];
       if (categoriaSeleccionada !== "-1") {
         try {
-          const bebidasFiltradasAux = await getBebidaByCategoria(
+          bebidasFiltradasAux = await getBebidaByCategoria(
             categoriaSeleccionada
           );
-          setBebidasFiltradas(bebidasFiltradasAux);
         } catch (error) {
           console.error(error);
         }
       } else {
-        setBebidasFiltradas(bebidas);
+        bebidasFiltradasAux = await getAllBebidasByEstablecimientoId(
+          establecimientoGlobal.id
+        );
       }
+      setBebidasFiltradas(bebidasFiltradasAux);
     }
 
     fetchBebidasFiltradas();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoriaSeleccionada]);
+  }, [categoriaSeleccionada, establecimientoGlobal]);
 
   useEffect(() => {
     async function fetchData() {
@@ -75,11 +81,7 @@ export default function BebidaPage({
           <select
             className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
             onChange={(e) => {
-              const bebidasFiltradasAux = bebidas.filter(
-                // @ts-ignore
-                (bebida) => bebida.categoria_id === e.target.value
-              );
-              setBebidasFiltradas(bebidasFiltradasAux);
+              setCategoriaSeleccionada(e.target.value);
             }}
           >
             <option value="-1">Todas mis bebidas</option>

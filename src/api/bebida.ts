@@ -2,7 +2,10 @@ import supabase from "@/server/client";
 import { Bebida } from "@/types/Bebida";
 import router from "next/router";
 
-export const crearBebida = async (bebida: Bebida) => {
+export const crearBebida = async (
+  bebida: Bebida,
+  establecimientoId: string
+) => {
   try {
     const { error } = await supabase.from("Articulo").insert([
       {
@@ -12,6 +15,7 @@ export const crearBebida = async (bebida: Bebida) => {
         categoria_id: bebida.categoria,
         imagenURL: bebida.imagenURL,
         esBebida: true,
+        establecimiento_id: establecimientoId,
       },
     ]);
 
@@ -78,6 +82,31 @@ export const getAllBebidas = async () => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getAllBebidasByEstablecimientoId = async (
+  establecimientoId: string
+) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Articulo")
+        .select("*")
+        .order("nombre")
+        .eq("establecimiento_id", establecimientoId)
+        .eq("esBebida", true);
+
+      if (error) {
+        throw new Error("Error al obtener todas las bebidas");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
   }
 };
 
