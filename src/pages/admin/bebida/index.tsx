@@ -2,7 +2,6 @@ import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
 import {
-  getAllBebidas,
   getAllBebidasByEstablecimientoId,
   getBebidaByCategoria,
 } from "@/api/bebida";
@@ -64,7 +63,12 @@ export default function BebidaPage() {
   useEffect(() => {
     async function fetchData() {
       // Realiza la llamada a getServerSideProps para obtener los datos actualizados
-      const bebidas = (await getAllBebidas()) as Plato[];
+      let bebidas = [] as Bebida[];
+      if (establecimientoGlobal.id != undefined) {
+        bebidas = (await getAllBebidasByEstablecimientoId(
+          establecimientoGlobal.id
+        )) as Bebida[];
+      }
 
       // Actualiza los bebidas filtrados con los datos actualizados
       setBebidasFiltradas(bebidas);
@@ -74,7 +78,7 @@ export default function BebidaPage() {
     if (router.asPath === router.route) {
       fetchData();
     }
-  }, [router]);
+  }, [establecimientoGlobal.id, router]);
   return (
     <UsuarioAutorizado>
       <div className="flex flex-col gap-4">
