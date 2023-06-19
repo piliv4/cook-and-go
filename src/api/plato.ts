@@ -4,7 +4,7 @@ import { getIngredientesByPlato } from "./ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
 import router from "next/router";
 
-export const crearPlato = async (plato: Plato) => {
+export const crearPlato = async (plato: Plato, establecimientoId: string) => {
   try {
     const { data, error } = await supabase
       .from("Articulo")
@@ -16,6 +16,7 @@ export const crearPlato = async (plato: Plato) => {
           categoria_id: plato.categoria,
           imagenURL: plato.imagenURL,
           esBebida: false,
+          establecimiento_id: establecimientoId,
         },
       ])
       .select();
@@ -87,6 +88,31 @@ export const getAllPlatos = async () => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getAllPlatosByEstablecimiento = async (
+  establecimientoId: string
+) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Articulo")
+        .select("*")
+        .order("nombre")
+        .eq("establecimiento_id", establecimientoId)
+        .eq("esBebida", false);
+
+      if (error) {
+        throw new Error("Error al obtener todas los platos");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
   }
 };
 

@@ -1,24 +1,29 @@
 import { crearMenu } from "@/api/menu";
-import { getAllPlatos } from "@/api/plato";
+import { getAllPlatosByEstablecimiento } from "@/api/plato";
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Menu } from "@/types/Menu";
 import { Plato } from "@/types/Plato";
 import router from "next/router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
-export async function getStaticProps() {
-  let platos = await getAllPlatos();
-  return {
-    props: {
-      platos: platos as Plato[],
-    },
-  };
-}
-
-export default function CrearMenu({ platos }: { platos: Plato[] }) {
+export default function CrearMenu() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
+  const [platos, setPlatos] = useState<Plato[]>([]);
+
+  useEffect(() => {
+    const fetchPlatos = async () => {
+      let platosAux = [];
+      if (establecimientoGlobal.id != undefined) {
+        platosAux = await getAllPlatosByEstablecimiento(
+          establecimientoGlobal.id
+        );
+      }
+      setPlatos(platosAux);
+    };
+    fetchPlatos();
+  }, [establecimientoGlobal]);
 
   async function crear(menu: Menu) {
     try {

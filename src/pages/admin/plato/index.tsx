@@ -2,7 +2,10 @@ import DisplayerPlato from "@/components/admins/plato/DisplayerPlato";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
-import { getAllPlatos, getPlatosByCategoria } from "@/api/plato";
+import {
+  getAllPlatosByEstablecimiento,
+  getPlatosByCategoria,
+} from "@/api/plato";
 import { Categoria } from "@/types/Categoria";
 import { getAllCategorias, getAllCategoriasPlatos } from "@/api/categoria";
 import { useContext, useEffect, useState } from "react";
@@ -10,20 +13,9 @@ import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
-export async function getStaticProps() {
-  let categorias = await getAllCategorias();
-  let platos = await getAllPlatos();
-  return {
-    props: {
-      categorias: categorias,
-      platos: platos as Plato[],
-    },
-  };
-}
-
-export default function PlatoPage({ platos }: { platos: Plato[] }) {
+export default function PlatoPage() {
   const router = useRouter();
-  const [platosFiltrados, setPlatosFiltrados] = useState(platos);
+  const [platosFiltrados, setPlatosFiltrados] = useState<Plato[]>([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -41,19 +33,24 @@ export default function PlatoPage({ platos }: { platos: Plato[] }) {
 
   useEffect(() => {
     async function fetchPlatosFiltrados() {
+      let platosFiltradosAux = [];
       if (categoriaSeleccionada !== "-1") {
         try {
           // Realiza la llamada a la base de datos para obtener los platos filtrados por la categoría seleccionada
-          const platosFiltradosAux = await getPlatosByCategoria(
+          platosFiltradosAux = await getPlatosByCategoria(
             categoriaSeleccionada
           );
-          setPlatosFiltrados(platosFiltradosAux);
         } catch (error) {
           console.error(error);
         }
       } else {
-        setPlatosFiltrados(platos);
+        if (establecimientoGlobal.id != undefined) {
+          platosFiltradosAux = await getAllPlatosByEstablecimiento(
+            establecimientoGlobal.id
+          );
+        }
       }
+      setPlatosFiltrados(platosFiltradosAux);
     }
 
     fetchPlatosFiltrados();
@@ -62,18 +59,19 @@ export default function PlatoPage({ platos }: { platos: Plato[] }) {
 
   useEffect(() => {
     async function fetchData() {
-      // Realiza la llamada a getServerSideProps para obtener los datos actualizados
-      const platos = (await getAllPlatos()) as Plato[];
-
-      // Actualiza los platos filtrados con los datos actualizados
-      setPlatosFiltrados(platos);
+      let platosFiltradosAux = [] as Plato[];
+      if (establecimientoGlobal.id != undefined) {
+        platosFiltradosAux = (await getAllPlatosByEstablecimiento(
+          establecimientoGlobal.id
+        )) as Plato[];
+      }
+      setPlatosFiltrados(platosFiltradosAux);
     }
 
-    // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
     if (router.asPath === router.route) {
       fetchData();
     }
-  }, [router]);
+  }, [establecimientoGlobal.id, router]);
 
   return (
     <UsuarioAutorizado>
