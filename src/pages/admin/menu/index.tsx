@@ -15,19 +15,6 @@ export default function MenuPagina() {
   const [menus, setMenus] = useState<Menu[]>([]);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const fetchAllMenus = async () => {
-  //     let menusAux = [];
-  //     if (establecimientoGlobal.id != undefined) {
-  //       menusAux = await getAllMenusByEstablecimiento(establecimientoGlobal.id);
-  //     }
-
-  //     setMenus(menusAux);
-  //   };
-
-  //   fetchAllMenus();
-  // }, [establecimientoGlobal]);
-
   useEffect(() => {
     // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
     const fetchIngredientes = async () => {
@@ -44,7 +31,6 @@ export default function MenuPagina() {
     }
   }, [establecimientoGlobal, router]);
 
-  //REFRESCAR LOS MENUS CUANDO PASE ALGO
   return (
     <UsuarioAutorizado>
       <div className=" ">

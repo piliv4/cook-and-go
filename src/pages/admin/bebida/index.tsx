@@ -16,25 +16,27 @@ import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
-export async function getStaticProps() {
-  let categorias = await getAllCategoriasBebidas();
-  return {
-    props: {
-      categorias: categorias,
-    },
-  };
-}
-
-export default function BebidaPage({
-  categorias,
-}: {
-  categorias: Categoria[];
-}) {
+export default function BebidaPage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
 
   const router = useRouter();
   const [bebidasFiltradas, setBebidasFiltradas] = useState<Bebida[]>([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+
+  useEffect(() => {
+    const fetchIngredientes = async () => {
+      let categoriasAux = [];
+      if (establecimientoGlobal.id != undefined) {
+        categoriasAux = await getAllCategoriasBebidas(establecimientoGlobal.id);
+      }
+      setCategorias(categoriasAux);
+    };
+
+    if (router.asPath === router.route) {
+      fetchIngredientes();
+    }
+  }, [establecimientoGlobal, router]);
 
   useEffect(() => {
     async function fetchBebidasFiltradas() {

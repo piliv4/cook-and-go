@@ -4,10 +4,11 @@ import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import { Plato } from "@/types/Plato";
 import { getAllPlatos, getPlatosByCategoria } from "@/api/plato";
 import { Categoria } from "@/types/Categoria";
-import { getAllCategorias } from "@/api/categoria";
-import { useEffect, useState } from "react";
+import { getAllCategorias, getAllCategoriasPlatos } from "@/api/categoria";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
 export async function getStaticProps() {
   let categorias = await getAllCategorias();
@@ -20,16 +21,23 @@ export async function getStaticProps() {
   };
 }
 
-export default function PlatoPage({
-  platos,
-  categorias,
-}: {
-  platos: Plato[];
-  categorias: Categoria[];
-}) {
+export default function PlatoPage({ platos }: { platos: Plato[] }) {
   const router = useRouter();
   const [platosFiltrados, setPlatosFiltrados] = useState(platos);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+
+  useEffect(() => {
+    const fetchIngredientes = async () => {
+      let categoriasAux = [];
+      if (establecimientoGlobal.id != undefined) {
+        categoriasAux = await getAllCategoriasPlatos(establecimientoGlobal.id);
+      }
+      setCategorias(categoriasAux);
+    };
+    fetchIngredientes();
+  }, [establecimientoGlobal]);
 
   useEffect(() => {
     async function fetchPlatosFiltrados() {

@@ -110,12 +110,13 @@ export const getAllCategoriasByEstablecimiento = async (
   }
 };
 
-export const getAllCategoriasBebidas = async () => {
+export const getAllCategoriasBebidas = async (establecimientoId: string) => {
   try {
     const { data, error } = await supabase
       .from("Categoria")
       .select("*")
       .order("nombre")
+      .eq("establecimiento_id", establecimientoId)
       .eq("esDeBebidas", true);
 
     if (error) {
@@ -128,16 +129,18 @@ export const getAllCategoriasBebidas = async () => {
   }
 };
 
-export const getAllCategoriasPlatos = async () => {
+export const getAllCategoriasPlatos = async (establecimientoId: string) => {
   try {
     const { data, error } = await supabase
       .from("Categoria")
       .select("*")
       .order("nombre")
+      .eq("establecimiento_id", establecimientoId)
       .eq("esDeBebidas", false);
 
     if (error) {
-      throw new Error("Error al obtener todas las categorias");
+      console.log(error);
+      throw new Error("Error al obtener todas las categorias por bebida");
     }
     return data;
   } catch (error) {

@@ -1,22 +1,26 @@
 import { getAllCategoriasBebidas } from "@/api/categoria";
 import BebidaFormulario from "@/components/admins/bebida/BebidaFormulario";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Categoria } from "@/types/Categoria";
+import { useContext, useEffect, useState } from "react";
 
-export async function getStaticProps() {
-  let categorias = await getAllCategoriasBebidas();
-  return {
-    props: {
-      categorias: categorias as Categoria[],
-    },
-  };
-}
+export default function CrearPlato() {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
 
-export default function CrearPlato({
-  categorias,
-}: {
-  categorias: Categoria[];
-}) {
+  useEffect(() => {
+    const fetchIngredientes = async () => {
+      let categoriasAux = [];
+      if (establecimientoGlobal.id != undefined) {
+        categoriasAux = await getAllCategoriasBebidas(establecimientoGlobal.id);
+      }
+      setCategorias(categoriasAux);
+    };
+
+    fetchIngredientes();
+  }, [establecimientoGlobal]);
+
   const DEFAULT_BEBIDA = {
     id: "",
     nombre: "",

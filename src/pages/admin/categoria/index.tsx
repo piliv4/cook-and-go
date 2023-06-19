@@ -2,23 +2,32 @@ import Buscador from "@/components/admins/ui/Buscador";
 import CategoriaCard from "@/components/admins/categoria/CategoriaCard";
 import CrearCategoriaCard from "@/components/admins/categoria/CrearCategoriaCard";
 import { Categoria } from "@/types/Categoria";
-import { getAllCategorias } from "@/api/categoria";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { getAllCategoriasByEstablecimiento } from "@/api/categoria";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
-export async function getServerSideProps() {
-  let categorias = await getAllCategorias();
-  return {
-    props: {
-      categorias: categorias,
-    },
-  };
-}
+export default function CategoriaHomePage() {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const router = useRouter();
 
-export default function CategoriaHomePage({
-  categorias,
-}: {
-  categorias: Categoria[];
-}) {
+  useEffect(() => {
+    const fetchIngredientes = async () => {
+      let categoriasAux = [];
+      if (establecimientoGlobal.id != undefined) {
+        categoriasAux = await getAllCategoriasByEstablecimiento(
+          establecimientoGlobal.id
+        );
+      }
+      setCategorias(categoriasAux);
+    };
+
+    if (router.asPath === router.route) {
+      fetchIngredientes();
+    }
+  }, [establecimientoGlobal, router]);
   return (
     <UsuarioAutorizado>
       <div className="flex flex-col gap-4 ">
