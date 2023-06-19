@@ -11,7 +11,6 @@ import { GetServerSideProps } from "next";
 import router from "next/router";
 import { useContext } from "react";
 import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
-import MesaCard from "@/components/admins/establecimiento/MesaCard";
 import Link from "next/link";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 

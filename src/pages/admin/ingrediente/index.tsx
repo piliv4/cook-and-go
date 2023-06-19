@@ -1,31 +1,31 @@
 import { Ingrediente } from "@/types/Ingrediente";
 import {
   getAllIngredientes,
+  getAllIngredientesByEstablecimiento,
   getIngredientesPaginados,
 } from "@/api/ingrediente";
 import CrearIngrediente from "@/components/admins/ingrediente/CrearIngrediente";
 import Buscador from "@/components/admins/ui/Buscador";
 import IngredienteTable from "@/components/admins/ingrediente/IngredienteTable";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
-export async function getStaticProps() {
-  const ingredientes = await getAllIngredientes();
-  return {
-    props: {
-      ingredientes: ingredientes,
-    },
-  };
-}
+// export async function getStaticProps() {
+//   const ingredientes = await getAllIngredientes();
+//   return {
+//     props: {
+//       ingredientes: ingredientes,
+//     },
+//   };
+// }
 
-export default function IngredientesPagina({
-  ingredientes,
-}: {
-  ingredientes: Ingrediente[];
-}) {
+export default function IngredientesPagina() {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const router = useRouter();
   const [index, setIndex] = useState(0);
+  const [allIngredientesLength, setAllIngredientesLength] = useState(0);
   const [ingredientesMostrar, setIngredientesMostrar] = useState<Ingrediente[]>(
     []
   );
@@ -33,30 +33,52 @@ export default function IngredientesPagina({
   const itemsPerPage = 11;
 
   useEffect(() => {
+    const fetchAllIngredientes = async () => {
+      let ingredientes;
+      if (establecimientoGlobal.id != undefined) {
+        console.log(establecimientoGlobal.id);
+        ingredientes = await getAllIngredientesByEstablecimiento(
+          establecimientoGlobal.id
+        );
+      }
+
+      setAllIngredientesLength(ingredientes ? ingredientes.length : 0);
+    };
+
+    fetchAllIngredientes();
+  }, [establecimientoGlobal, ingredientesMostrar]);
+
+  useEffect(() => {
     const fetchIngredientes = async () => {
       const startIndex = index;
       const endIndex = index + itemsPerPage;
-
+      let ingredientesPaginados = [];
       // Aquí debes realizar la llamada a la base de datos para obtener los ingredientes
       // con los parámetros de offset y limit
-      const ingredientesPaginados = await getIngredientesPaginados(
-        startIndex,
-        endIndex
-      );
+      if (establecimientoGlobal.id != undefined) {
+        ingredientesPaginados = await getIngredientesPaginados(
+          startIndex,
+          endIndex,
+          establecimientoGlobal.id
+        );
+      }
 
       setIngredientesMostrar(ingredientesPaginados);
     };
 
     fetchIngredientes();
-  }, [index]);
+  }, [establecimientoGlobal, index]);
 
   useEffect(() => {
     // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
     const fetchIngredientes = async () => {
-      const ingredientes = await getIngredientesPaginados(
-        index,
-        index + itemsPerPage
-      );
+      let ingredientes = [];
+      if (establecimientoGlobal.id != undefined)
+        ingredientes = await getIngredientesPaginados(
+          index,
+          index + itemsPerPage,
+          establecimientoGlobal.id
+        );
       setIngredientesMostrar(ingredientes);
     };
 
@@ -64,7 +86,7 @@ export default function IngredientesPagina({
     if (router.asPath === router.route) {
       fetchIngredientes();
     }
-  }, [index, router]);
+  }, [establecimientoGlobal, index, router]);
 
   const AnteriorClick = () => {
     const nextIndex = Math.max(index - itemsPerPage, 0);
@@ -96,7 +118,7 @@ export default function IngredientesPagina({
               </button>
             </div>
           )}
-          {index + 11 < ingredientes.length && (
+          {index + 11 < allIngredientesLength && (
             <div className="w-full flex justify-end">
               <button
                 className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"

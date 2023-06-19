@@ -1,6 +1,7 @@
-import { getAllIngredientes } from "@/api/ingrediente";
+import { getAllIngredientesByEstablecimiento } from "@/api/ingrediente";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Ingrediente } from "@/types/Ingrediente";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { BiSearch } from "react-icons/bi";
 
 const SeleccionarIngredientes = ({
@@ -8,16 +9,19 @@ const SeleccionarIngredientes = ({
 }: {
   anyadirIngrediente: Function;
 }) => {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const [ingredientes, setIngredientes] = useState<Ingrediente[] | null>(null);
   const [value, setValue] = useState("");
 
   useEffect(() => {
     const fetchPosts = async () => {
-      let ingredientes = await getAllIngredientes();
+      let ingredientes = await getAllIngredientesByEstablecimiento(
+        establecimientoGlobal.id
+      );
       setIngredientes(ingredientes as Ingrediente[]);
     };
     fetchPosts();
-  }, []);
+  }, [establecimientoGlobal.id]);
 
   return (
     <div className=" flex flex-col group min-h-[100px] ">

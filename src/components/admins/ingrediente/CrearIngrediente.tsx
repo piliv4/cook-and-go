@@ -1,9 +1,11 @@
 import { Ingrediente } from "@/types/Ingrediente";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { crearIngrediente } from "@/api/ingrediente";
 import { esNumeroPositivo, esVacio } from "@/validations/validation";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
 import { unidadMedida } from "@/types/enum";
+
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
 const CrearIngrediente = () => {
   const ingredienteVacio = {
@@ -15,6 +17,7 @@ const CrearIngrediente = () => {
     unidad: "kg",
   };
   const [ingrediente, setIngrediente] = useState<Ingrediente>(ingredienteVacio);
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const [errorNombre, setErrorNombre] = useState("");
   const [errorPrecioSuplemento, setErrorPrecioSuplemento] = useState("");
   const [errorStock, setErrorStock] = useState("");
@@ -41,7 +44,7 @@ const CrearIngrediente = () => {
   //CREAR INGREDIENTE
   async function crear() {
     if (validarCampos()) {
-      crearIngrediente(ingrediente);
+      crearIngrediente(ingrediente, establecimientoGlobal.id);
       setIngrediente(ingredienteVacio);
     }
   }

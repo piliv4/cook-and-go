@@ -2,7 +2,10 @@ import supabase from "@/server/client";
 import { Ingrediente } from "@/types/Ingrediente";
 import router from "next/router";
 
-export const crearIngrediente = async (ingrediente: Ingrediente) => {
+export const crearIngrediente = async (
+  ingrediente: Ingrediente,
+  establecimientoId: string
+) => {
   try {
     // Realiza la llamada a la API de Supabase para crear una nueva entidad
     const { error } = await supabase.from("Ingrediente").insert([
@@ -12,6 +15,7 @@ export const crearIngrediente = async (ingrediente: Ingrediente) => {
         precioSuplemento: ingrediente.precioSuplemento,
         stock: ingrediente.stock,
         unidad: ingrediente.unidad,
+        establecimiento_id: establecimientoId,
       },
     ]);
 
@@ -97,21 +101,55 @@ export const getAllIngredientes = async () => {
   }
 };
 
-export const getIngredientesPaginados = async (ini: number, fin: number) => {
-  try {
-    const { data, error } = await supabase
-      .from("Ingrediente")
-      .select("*")
-      .order("nombre")
-      .range(ini, fin);
+export const getAllIngredientesByEstablecimiento = async (
+  establecimientoId: string
+) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Ingrediente")
+        .select("*")
+        .eq("establecimiento_id", establecimientoId)
+        .order("nombre");
 
-    if (error) {
-      throw new Error("Error al obtener todos los ingredientes");
+      if (error) {
+        throw new Error("Error al obtener todos los ingredientes");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
-    return data;
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } else {
+    return [];
+  }
+};
+
+export const getIngredientesPaginados = async (
+  ini: number,
+  fin: number,
+  establecimientoId: string
+) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Ingrediente")
+        .select("*")
+        .eq("establecimiento_id", establecimientoId)
+        .order("nombre")
+        .range(ini, fin);
+
+      if (error) {
+        console.log(error);
+        throw new Error("Error al obtener todos los ingredientes");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
   }
 };
 
