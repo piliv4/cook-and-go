@@ -12,15 +12,6 @@ import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
-// export async function getStaticProps() {
-//   const ingredientes = await getAllIngredientes();
-//   return {
-//     props: {
-//       ingredientes: ingredientes,
-//     },
-//   };
-// }
-
 export default function IngredientesPagina() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const router = useRouter();

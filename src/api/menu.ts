@@ -4,37 +4,39 @@ import { Plato } from "@/types/Plato";
 import { Menu } from "@/types/Menu";
 import { tiposPlato } from "@/types/enum";
 
-export const crearMenu = async (menu: Menu) => {
-  try {
-    const { data, error } = await supabase
-      .from("Menu")
-      .insert([
-        {
-          nombre: menu.nombre,
-          precio: menu.precio,
-          comensales: menu.comensales,
-          incluye_pan: menu.incluyePan,
-          incluye_bebida: menu.incluyeBebida,
-          establecimiento_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
-        },
-      ])
-      .select();
-    if (!error) {
-      tiposPlato.map((tipoPlato) =>
-        insertarPlatos(
-          menu[tipoPlato as keyof Menu] as Plato[],
-          (data[0] as Menu).id,
-          tipoPlato
-        )
-      );
-    }
+export const crearMenu = async (menu: Menu, establecimientoId: string) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Menu")
+        .insert([
+          {
+            nombre: menu.nombre,
+            precio: menu.precio,
+            comensales: menu.comensales,
+            incluye_pan: menu.incluyePan,
+            incluye_bebida: menu.incluyeBebida,
+            establecimiento_id: establecimientoId,
+          },
+        ])
+        .select();
+      if (!error) {
+        tiposPlato.map((tipoPlato) =>
+          insertarPlatos(
+            menu[tipoPlato as keyof Menu] as Plato[],
+            (data[0] as Menu).id,
+            tipoPlato
+          )
+        );
+      }
 
-    if (error) {
-      throw new Error("Error al crear EL MENU");
+      if (error) {
+        throw new Error("Error al crear EL MENU");
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
-  } catch (error) {
-    console.error(error);
-    throw error;
   }
 };
 
@@ -80,6 +82,29 @@ export const getAllMenus = async () => {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+};
+
+export const getAllMenusByEstablecimiento = async (
+  establecimientoId: string
+) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Menu")
+        .select("*")
+        .eq("establecimiento_id", establecimientoId)
+        .order("nombre");
+      if (error) {
+        throw new Error("Error al eliminar el menu");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
   }
 };
 
@@ -169,7 +194,6 @@ const insertarPlatos = async (
 };
 
 export const modificarMenu = async (menu: Menu) => {
-  const tiposPlato = ["entrantes", "primeros", "segundos", "postres"];
   eliminarRelacionesDeMenu(menu.id);
   try {
     const { data, error } = await supabase
@@ -181,7 +205,6 @@ export const modificarMenu = async (menu: Menu) => {
           comensales: menu.comensales,
           incluye_pan: menu.incluyePan,
           incluye_bebida: menu.incluyeBebida,
-          establecimiento_id: "ea443834-c2ff-45e9-9504-ab580bcbbe01",
         },
       ])
       .eq("id", menu.id)

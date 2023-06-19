@@ -1,21 +1,50 @@
-import { getAllMenus } from "@/api/menu";
+import { getAllMenus, getAllMenusByEstablecimiento } from "@/api/menu";
 import MenuCard from "@/components/admins/menu/MenuCard";
 import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Menu } from "@/types/Menu";
-import router from "next/router";
+import router, { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
-export async function getServerSideProps() {
-  let menus = await getAllMenus();
-  return {
-    props: {
-      menus: menus,
-    },
-  };
-}
+export default function MenuPagina() {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
 
-export default function menu({ menus }: { menus: Menu[] }) {
+  //OBTERNER LOS MENUS EN FUNCION DEL ESTABLECIMIENTO
+  const [menus, setMenus] = useState<Menu[]>([]);
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   const fetchAllMenus = async () => {
+  //     let menusAux = [];
+  //     if (establecimientoGlobal.id != undefined) {
+  //       menusAux = await getAllMenusByEstablecimiento(establecimientoGlobal.id);
+  //     }
+
+  //     setMenus(menusAux);
+  //   };
+
+  //   fetchAllMenus();
+  // }, [establecimientoGlobal]);
+
+  useEffect(() => {
+    // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
+    const fetchIngredientes = async () => {
+      let menusAux = [];
+      if (establecimientoGlobal.id != undefined) {
+        menusAux = await getAllMenusByEstablecimiento(establecimientoGlobal.id);
+      }
+      setMenus(menusAux);
+    };
+
+    // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
+    if (router.asPath === router.route) {
+      fetchIngredientes();
+    }
+  }, [establecimientoGlobal, router]);
+
+  //REFRESCAR LOS MENUS CUANDO PASE ALGO
   return (
     <UsuarioAutorizado>
       <div className=" ">
