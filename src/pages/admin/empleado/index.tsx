@@ -1,24 +1,35 @@
-import Buscador from "@/components/admins/ui/Buscador";
-import { getAllEmpleados } from "@/api/empleado";
+import { getAllEmpleadosByEstablecimiento } from "@/api/empleado";
 import { Empleado } from "@/types/Empleado";
 import EmpleadoCard from "@/components/admins/empleados/EmpleadoCard";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { useContext, useEffect, useState } from "react";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
-export async function getServerSideProps() {
-  let empleados = await getAllEmpleados();
-  return {
-    props: {
-      empleados: empleados,
-    },
-  };
-}
+export default function EmpleadoIndex() {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
 
-export default function EmpleadoIndex({
-  empleados,
-}: {
-  empleados: Empleado[];
-}) {
+  //OBTERNER LOS MENUS EN FUNCION DEL ESTABLECIMIENTO
+  const [empleados, setEmpleados] = useState<Empleado[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
+    const fetchEmpleados = async () => {
+      let empleadosAux = [] as Empleado[];
+      if (establecimientoGlobal.id != undefined) {
+        empleadosAux = await getAllEmpleadosByEstablecimiento(
+          establecimientoGlobal.id
+        );
+      }
+      setEmpleados(empleadosAux);
+    };
+
+    // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
+    if (router.asPath === router.route) {
+      fetchEmpleados();
+    }
+  }, [establecimientoGlobal, router]);
   return (
     <UsuarioAutorizado>
       <div className="flex flex-col gap-4 ">

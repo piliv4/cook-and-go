@@ -20,7 +20,7 @@ const EmpleadoFormulario = ({
     dni: "",
     contraseña: "",
     imagenURL: "",
-    rol: "Administrador",
+    rol: "Cocinero",
   };
   const [empleado, setEmpleado] = useState(
     empleadoProp ? empleadoProp : DEFAULT_EMPLEADO
@@ -165,7 +165,6 @@ const EmpleadoFormulario = ({
               })
             }
           >
-            <option>Administrador</option>
             <option>Cocinero</option>
             <option>Camarero</option>
           </select>

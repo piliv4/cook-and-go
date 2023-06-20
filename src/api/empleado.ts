@@ -2,20 +2,59 @@ import supabase from "@/server/client";
 import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 
-export const crearEmpleado = async (empleado: Empleado) => {
+export const crearEmpleado = async (
+  empleado: Empleado,
+  establecimientoId: string
+) => {
   try {
-    const { error } = await supabase.from("Usuario").insert([
+    const { data, error } = await supabase
+      .from("Usuario")
+      .insert([
+        {
+          nombre: empleado.nombre,
+          correo: empleado.correo,
+          contraseña: empleado.contraseña,
+          dni: empleado.dni,
+          imagenURL: empleado.imagenURL,
+        },
+      ])
+      .select()
+      .single();
+    //Insertamos la relación
+
+    if (error) {
+      throw new Error("Error al crear el empleado");
+    } else {
+      if (data)
+        await insertarRelacion(
+          (data as Empleado).id,
+          establecimientoId,
+          empleado.rol
+        );
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const insertarRelacion = async (
+  empleadoId: string,
+  establecimientoId: string,
+  rol: string
+) => {
+  try {
+    const { error } = await supabase.from("UsuarioEstablecimiento").insert([
       {
-        nombre: empleado.nombre,
-        correo: empleado.correo,
-        contraseña: empleado.contraseña,
-        dni: empleado.dni,
-        imagenURL: empleado.imagenURL,
-        rol: empleado.rol,
+        usuario_id: empleadoId,
+        establecimiento_id: establecimientoId,
+        rol: rol,
       },
     ]);
     if (error) {
-      throw new Error("Error al crear el empleado");
+      throw new Error(
+        "Error al establecer la relacion entre empleado y usuario"
+      );
     }
   } catch (error) {
     console.error(error);
@@ -24,6 +63,8 @@ export const crearEmpleado = async (empleado: Empleado) => {
 };
 
 export const modificarEmpleado = async (empleado: Empleado) => {
+  //Primero modificamos el rol
+  await modificarRol(empleado);
   try {
     const { error } = await supabase
       .from("Usuario")
@@ -34,12 +75,30 @@ export const modificarEmpleado = async (empleado: Empleado) => {
           contraseña: empleado.contraseña,
           dni: empleado.dni,
           imagenURL: empleado.imagenURL,
-          rol: empleado.rol,
         },
       ])
       .eq("id", empleado.id);
     if (error) {
       throw new Error("Error al modificar el empleado");
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const modificarRol = async (empleado: Empleado) => {
+  try {
+    const { error } = await supabase
+      .from("UsuarioEmpleado")
+      .update([
+        {
+          rol: empleado.rol,
+        },
+      ])
+      .eq("usuario_id", empleado.id);
+    if (error) {
+      throw new Error("Error al modificar el rol");
     }
   } catch (error) {
     console.error(error);
@@ -72,17 +131,33 @@ export const eliminarEmpleado = async (id: string) => {
   }
 };
 
-export const getAllEmpleados = async () => {
+export const getAllEmpleadosByEstablecimiento = async (
+  establecimientoId: string
+) => {
   try {
     const { data, error } = await supabase
       .from("Usuario")
-      .select("*")
-      .order("rol");
+      .select(
+        `id, nombre, correo, contraseña, dni, imagenURL, UsuarioEstablecimiento!inner(establecimiento_id, rol)`
+      )
+      .eq("UsuarioEstablecimiento.establecimiento_id", establecimientoId)
+      .neq("UsuarioEstablecimiento.rol", "Administrador");
 
     if (error) {
       throw new Error("Error al obtener todas los empleados");
     }
-    return data;
+    // Transformación de los datos a objetos de tipo Empleado
+    const empleados: Empleado[] = data.map((usuario: any) => ({
+      id: usuario.id,
+      nombre: usuario.nombre,
+      correo: usuario.correo,
+      contraseña: usuario.contraseña,
+      dni: usuario.dni,
+      imagenURL: usuario.imagenURL,
+      rol: usuario.UsuarioEstablecimiento[0].rol,
+    }));
+
+    return empleados;
   } catch (error) {
     console.error(error);
     throw error;

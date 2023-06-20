@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { BsTrashFill } from "react-icons/bs";
 import SubirImagen from "../ui/SubirImagen";
 import SeleccionarIngredientes from "./SeleccionarIngredientes";
@@ -11,6 +11,7 @@ import MensajeError from "../ui/MensajeError";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
 import CabeceraPagina from "../ui/CabeceraPagina";
 import InputErrorEnvoltorio from "../ui/InputErrorEnvoltorio";
+import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 
 const PlatoFormulario = ({
   platoEditar,
@@ -19,6 +20,7 @@ const PlatoFormulario = ({
   platoEditar: Plato;
   categorias: Categoria[];
 }) => {
+  const { establecimientoGlobal } = useContext(EstablecimientoContext);
   const router = useRouter();
   const [plato, setPlato] = useState<Plato>(platoEditar);
   const [errorNombre, setErrorNombre] = useState("");
@@ -44,7 +46,9 @@ const PlatoFormulario = ({
 
   function aceptar() {
     if (validarCampos()) {
-      plato.id ? editarPlato(plato) : crearPlato(plato);
+      plato.id
+        ? editarPlato(plato)
+        : crearPlato(plato, establecimientoGlobal.id);
     }
   }
 
