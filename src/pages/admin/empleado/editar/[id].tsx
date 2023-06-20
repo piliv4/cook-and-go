@@ -1,5 +1,6 @@
 import { getEmpleadoById, modificarEmpleado } from "@/api/empleado";
 import EmpleadoFormulario from "@/components/admins/empleados/EmpleadoFormulario";
+import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Empleado } from "@/types/Empleado";
 import { GetServerSideProps } from "next";
@@ -17,7 +18,9 @@ export default function EditarEmpleado({ empleado }: { empleado: Empleado }) {
 
   return (
     <UsuarioAutorizado>
-      <EmpleadoFormulario crearEditar={editar} empleadoProp={empleado} />;
+      <VerificarEstablecimiento>
+        <EmpleadoFormulario crearEditar={editar} empleadoProp={empleado} />;
+      </VerificarEstablecimiento>
     </UsuarioAutorizado>
   );
 }

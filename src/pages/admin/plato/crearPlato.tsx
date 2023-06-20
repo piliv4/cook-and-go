@@ -1,5 +1,6 @@
 import { getAllCategoriasPlatos } from "@/api/categoria";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
+import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Categoria } from "@/types/Categoria";
@@ -31,7 +32,9 @@ export default function CrearPlato() {
 
   return (
     <UsuarioAutorizado>
-      <PlatoFormulario platoEditar={DEFAULT_PLATO} categorias={categorias} />
+      <VerificarEstablecimiento>
+        <PlatoFormulario platoEditar={DEFAULT_PLATO} categorias={categorias} />
+      </VerificarEstablecimiento>
     </UsuarioAutorizado>
   );
 }

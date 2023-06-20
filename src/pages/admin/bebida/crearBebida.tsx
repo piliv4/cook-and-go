@@ -1,5 +1,6 @@
 import { getAllCategoriasBebidas } from "@/api/categoria";
 import BebidaFormulario from "@/components/admins/bebida/BebidaFormulario";
+import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Categoria } from "@/types/Categoria";
@@ -31,7 +32,12 @@ export default function CrearPlato() {
   };
   return (
     <UsuarioAutorizado>
-      <BebidaFormulario bebidaEditar={DEFAULT_BEBIDA} categorias={categorias} />
+      <VerificarEstablecimiento>
+        <BebidaFormulario
+          bebidaEditar={DEFAULT_BEBIDA}
+          categorias={categorias}
+        />
+      </VerificarEstablecimiento>
     </UsuarioAutorizado>
   );
 }

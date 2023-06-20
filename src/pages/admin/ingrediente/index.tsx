@@ -11,6 +11,7 @@ import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
+import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 
 export default function IngredientesPagina() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -91,36 +92,38 @@ export default function IngredientesPagina() {
 
   return (
     <UsuarioAutorizado>
-      <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
-          <h1 className="text-2xl font-black ">Mis ingredientes</h1>
-          <Buscador />
+      <VerificarEstablecimiento>
+        <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
+            <h1 className="text-2xl font-black ">Mis ingredientes</h1>
+            <Buscador />
+          </div>
+          <CrearIngrediente />
+          <IngredienteTable ingrediente={ingredientesMostrar} />
+          <div className="text-white flex flex-row">
+            {index > 0 && (
+              <div className="w-full flex ">
+                <button
+                  className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"
+                  onClick={() => AnteriorClick()}
+                >
+                  Anterior
+                </button>
+              </div>
+            )}
+            {index + 11 < allIngredientesLength && (
+              <div className="w-full flex justify-end">
+                <button
+                  className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"
+                  onClick={() => SiguienteClick()}
+                >
+                  Siguiente
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-        <CrearIngrediente />
-        <IngredienteTable ingrediente={ingredientesMostrar} />
-        <div className="text-white flex flex-row">
-          {index > 0 && (
-            <div className="w-full flex ">
-              <button
-                className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"
-                onClick={() => AnteriorClick()}
-              >
-                Anterior
-              </button>
-            </div>
-          )}
-          {index + 11 < allIngredientesLength && (
-            <div className="w-full flex justify-end">
-              <button
-                className="rounded-full bg-primaryOrange font-black px-4 py-1 hover:bg-secondaryOrange"
-                onClick={() => SiguienteClick()}
-              >
-                Siguiente
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
+      </VerificarEstablecimiento>
     </UsuarioAutorizado>
   );
 }

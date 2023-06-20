@@ -1,6 +1,7 @@
 import { getMenuById, modificarMenu } from "@/api/menu";
 import { getAllPlatosByEstablecimiento } from "@/api/plato";
 import MenuFormulario from "@/components/admins/menu/MenuFormulario";
+import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Menu } from "@/types/Menu";
@@ -37,7 +38,9 @@ export default function CrearMenu({ menu }: { menu: Menu }) {
 
   return (
     <UsuarioAutorizado>
-      <MenuFormulario crearEditar={editar} menuProp={menu} platos={platos} />
+      <VerificarEstablecimiento>
+        <MenuFormulario crearEditar={editar} menuProp={menu} platos={platos} />
+      </VerificarEstablecimiento>
     </UsuarioAutorizado>
   );
 }

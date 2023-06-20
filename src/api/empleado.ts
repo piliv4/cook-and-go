@@ -108,22 +108,14 @@ export const modificarRol = async (empleado: Empleado) => {
 
 export const eliminarEmpleado = async (id: string) => {
   try {
-    const { error: error } = await supabase
-      .from("UsuarioEstablecimiento")
+    const { error: error2 } = await supabase
+      .from("Usuario")
       .delete()
-      .eq("usuario_id", id);
-    if (error) {
-      throw new Error("Error al eliminar las referencias al establecimiento");
+      .eq("id", id);
+    if (error2) {
+      throw new Error("Error al eliminar el empleado");
     } else {
-      const { error: error2 } = await supabase
-        .from("Usuario")
-        .delete()
-        .eq("id", id);
-      if (error2) {
-        throw new Error("Error al eliminar el empleado");
-      } else {
-        router.replace(router.asPath);
-      }
+      router.replace(router.asPath);
     }
   } catch (error) {
     console.error(error);
