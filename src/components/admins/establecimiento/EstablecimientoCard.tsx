@@ -23,7 +23,10 @@ export default function EstablecimientoCard({
   }
   return (
     <div
-      className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
+      className={`bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden ${
+        establecimientoGlobal.id == establecimiento.id &&
+        "shadow-md shadow-primaryOrange"
+      }`}
       key={establecimiento.id}
     >
       <div className="relative py-16 bg-transparent ">
@@ -52,7 +55,13 @@ export default function EstablecimientoCard({
         {establecimiento.descripcion}
       </p>
 
-      <div className=" border border-gray-200 py-1 flex justify-center bg-secondaryGreen hover:bg-secondaryOrange transition duration-200 text-white font-light hover:text-black">
+      <div
+        className={`border border-gray-200 py-1 flex justify-center text-white transition duration-200 font-light hover:text-black ${
+          establecimientoGlobal.id == establecimiento.id
+            ? "bg-primaryOrange hover:bg-secondaryOrange "
+            : "bg-secondaryGreen hover:bg-secondaryOrange "
+        }`}
+      >
         <div
           className="bg-transparent"
           onClick={() => setEstablecimientoGlobal(establecimiento)}

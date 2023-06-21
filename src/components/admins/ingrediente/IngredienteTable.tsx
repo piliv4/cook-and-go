@@ -1,9 +1,15 @@
 import { Ingrediente } from "@/types/Ingrediente";
 import IngredienteRow from "./IngredienteRow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
   const [editarIndex, setEditarIndex] = useState(-1);
+  useEffect(() => {
+    return () => {
+      setEditarIndex(-1);
+    };
+  }, [ingrediente]);
+
   return (
     <div className="w-full ">
       <table className="w-full mt-2 border-collapse ">
