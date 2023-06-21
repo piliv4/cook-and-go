@@ -2,8 +2,9 @@ import { eliminarEmpleado } from "@/api/empleado";
 import { Empleado } from "@/types/Empleado";
 import router from "next/router";
 import Image from "next/image";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import Link from "next/link";
+import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 
 export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
   return (
@@ -28,9 +29,12 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
             className=" fill- hover:fill-secondaryOrange transition duration-150"
             onClick={() => router.push("/admin/empleado/editar/" + empleado.id)}
           />
-          <BsTrashFill
-            className="fill- hover:fill-secondaryOrange transition duration-150"
-            onClick={() => eliminarEmpleado(empleado.id)}
+          <BorrarCofirmacion
+            borrar={() => eliminarEmpleado(empleado.id)}
+            nombre={empleado.nombre}
+            tipo="empleado"
+            tipoArticulo="al empleado"
+            negro={true}
           />
         </div>
         <Link

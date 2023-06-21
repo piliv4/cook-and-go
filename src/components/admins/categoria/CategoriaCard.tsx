@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
 import { useState } from "react";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import CrearCategoriaPopup from "./CrearCategoriaPopup";
 import { Categoria } from "@/types/Categoria";
 import { eliminarCategoria } from "@/api/categoria";
+import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 
 export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
   const [open, setOpen] = useState(false);
@@ -59,9 +60,12 @@ export default function CategoriaCard({ categoria }: { categoria: Categoria }) {
           className="group fill-white hover:fill-secondaryOrange transition duration-150"
           onClick={() => setOpen(true)}
         />
-        <BsTrashFill
-          className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => borrarCategoria()}
+        <BorrarCofirmacion
+          borrar={async () => borrarCategoria()}
+          nombre={categoria.nombre}
+          tipo="categoría"
+          tipoArticulo="la categoría"
+          negro={false}
         />
       </div>
       <CrearCategoriaPopup

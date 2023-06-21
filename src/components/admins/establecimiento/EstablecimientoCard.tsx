@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import { Establecimiento } from "@/types/Establecimiento";
 import { eliminarEstablecimiento } from "@/api/establecimiento";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { useContext } from "react";
+import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 
 export default function EstablecimientoCard({
   establecimiento,
@@ -68,9 +69,12 @@ export default function EstablecimientoCard({
             router.push("/admin/establecimiento/editar/" + establecimiento.id)
           }
         />
-        <BsTrashFill
-          className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => borrarEstablecimiento()}
+        <BorrarCofirmacion
+          borrar={() => borrarEstablecimiento()}
+          nombre={establecimiento.nombre}
+          tipo="establecimiento"
+          tipoArticulo="el establecimiento"
+          negro={false}
         />
       </div>
     </div>

@@ -1,9 +1,10 @@
 import router from "next/router";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import { Menu } from "@/types/Menu";
 import { eliminarMenu } from "@/api/menu";
 import { FaUtensils } from "react-icons/fa";
 import Link from "next/link";
+import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 
 export default function MenuCard({ menu }: { menu: Menu }) {
   async function eliminar() {
@@ -38,12 +39,15 @@ export default function MenuCard({ menu }: { menu: Menu }) {
         </div>
         <div className="flex flex-row gap-1 items-end absolute top-1 right-1">
           <BsFillPencilFill
-            className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+            className="group fill-black hover:fill-secondaryOrange transition duration-150"
             onClick={() => router.push("/admin/menu/editar/" + menu.id)}
           />
-          <BsTrashFill
-            className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-            onClick={() => eliminar()}
+          <BorrarCofirmacion
+            borrar={() => eliminar()}
+            nombre={menu.nombre}
+            tipo="menú"
+            tipoArticulo="el menú"
+            negro={true}
           />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { eliminarMenu, getMenuById } from "@/api/menu";
 import DisplayerPlatos from "@/components/admins/menu/DisplayerPlatos";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
+import BorrarCofirmacion from "@/components/admins/ui/BorrarConfirmacion";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
@@ -9,7 +10,7 @@ import { Plato } from "@/types/Plato";
 import { tiposPlato } from "@/types/enum";
 import { GetServerSideProps } from "next";
 import router from "next/router";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 
 const DetallesMenu = ({ menu }: { menu: Menu }) => {
   async function borrarMenu() {
@@ -43,12 +44,15 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
                 {menu.nombre} para {menu.comensales} persona(s)
                 <div className="absolute top-1/2 right-0 flex flex-row gap-3">
                   <BsFillPencilFill
-                    className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+                    className="group fill-black hover:fill-secondaryOrange transition duration-150"
                     onClick={() => router.push("/admin/menu/editar/" + menu.id)}
                   />
-                  <BsTrashFill
-                    className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-                    onClick={() => borrarMenu()}
+                  <BorrarCofirmacion
+                    borrar={() => borrarMenu()}
+                    nombre={menu.nombre}
+                    tipo="menú"
+                    tipoArticulo="el menú"
+                    negro={true}
                   />
                 </div>
               </div>

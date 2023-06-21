@@ -3,7 +3,8 @@ import { Bebida } from "@/types/Bebida";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
+import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 
 export default function BebidaCard({ bebida }: { bebida: Bebida }) {
   return (
@@ -48,9 +49,12 @@ export default function BebidaCard({ bebida }: { bebida: Bebida }) {
             router.push("/admin/bebida/editar/" + bebida.id);
           }}
         />
-        <BsTrashFill
-          className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={async () => eliminarBebida(bebida.id)}
+        <BorrarCofirmacion
+          borrar={async () => eliminarBebida(bebida.id)}
+          nombre={bebida.nombre}
+          tipo="bebida"
+          tipoArticulo="la bebida"
+          negro={false}
         />
       </div>
     </div>

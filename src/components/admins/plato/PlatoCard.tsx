@@ -3,7 +3,8 @@ import { Plato } from "@/types/Plato";
 import Image from "next/image";
 import Link from "next/link";
 import router from "next/router";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
+import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 
 export default function CategoriaCard({ plato }: { plato: Plato }) {
   return (
@@ -48,9 +49,12 @@ export default function CategoriaCard({ plato }: { plato: Plato }) {
             router.push("/admin/plato/editar/" + plato.id);
           }}
         />
-        <BsTrashFill
-          className="fill-white hover:fill-secondaryOrange transition duration-150"
-          onClick={() => eliminarPlato(plato.id)}
+        <BorrarCofirmacion
+          borrar={() => eliminarPlato(plato.id)}
+          nombre={plato.nombre}
+          tipo="plato"
+          tipoArticulo="el plato"
+          negro={false}
         />
       </div>
     </div>

@@ -1,7 +1,7 @@
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import Image from "next/image";
 import { GetServerSideProps } from "next";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import router from "next/router";
 import { Categoria } from "@/types/Categoria";
 import { Plato } from "@/types/Plato";
@@ -10,6 +10,7 @@ import { getCategoriaById } from "@/api/categoria";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
+import BorrarCofirmacion from "@/components/admins/ui/BorrarConfirmacion";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
@@ -42,12 +43,15 @@ const DetallesPlato = ({
               </h1>
               <div className="w-full flex flex-row gap-2 justify-end">
                 <BsFillPencilFill
-                  className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+                  className="group fill-black hover:fill-secondaryOrange transition duration-150"
                   onClick={() => router.push("/admin/plato/editar/" + plato.id)}
                 />
-                <BsTrashFill
-                  className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-                  onClick={() => eliminarPlato(plato.id)}
+                <BorrarCofirmacion
+                  borrar={() => eliminarPlato(plato.id)}
+                  nombre={plato.nombre}
+                  tipo="plato"
+                  tipoArticulo="el plato"
+                  negro={true}
                 />
               </div>
             </CabeceraPagina>

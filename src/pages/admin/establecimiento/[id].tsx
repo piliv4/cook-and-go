@@ -1,5 +1,4 @@
 import {
-  editarEstablecimiento,
   eliminarEstablecimiento,
   getEstablecimientoById,
 } from "@/api/establecimiento";
@@ -10,10 +9,11 @@ import { Establecimiento } from "@/types/Establecimiento";
 import { GetServerSideProps } from "next";
 import router from "next/router";
 import { useContext } from "react";
-import { BsFillPencilFill, BsTrashFill } from "react-icons/bs";
+import { BsFillPencilFill } from "react-icons/bs";
 import Link from "next/link";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
+import BorrarCofirmacion from "@/components/admins/ui/BorrarConfirmacion";
 
 export default function EditarEstablecimiento({
   establecimiento,
@@ -26,7 +26,7 @@ export default function EditarEstablecimiento({
   async function borrarEstablecimiento() {
     await eliminarEstablecimiento(establecimiento.id);
     setEstablecimientoGlobal({} as Establecimiento);
-    router.replace(router.asPath);
+    router.push("/admin/establecimiento");
   }
   return (
     <UsuarioAutorizado>
@@ -43,16 +43,19 @@ export default function EditarEstablecimiento({
               </h1>
               <div className="flex flex-row gap-2 justify-end items-end pb-1">
                 <BsFillPencilFill
-                  className="group fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
+                  className="group fill-black hover:fill-secondaryOrange transition duration-150"
                   onClick={() =>
                     router.push(
                       "/admin/establecimiento/editar/" + establecimiento.id
                     )
                   }
                 />
-                <BsTrashFill
-                  className="fill-primaryOrange hover:fill-secondaryOrange transition duration-150"
-                  onClick={() => borrarEstablecimiento()}
+                <BorrarCofirmacion
+                  borrar={async () => borrarEstablecimiento()}
+                  nombre={establecimiento.nombre}
+                  tipo="establecimiento"
+                  tipoArticulo="el establecimiento"
+                  negro={true}
                 />
               </div>
             </div>

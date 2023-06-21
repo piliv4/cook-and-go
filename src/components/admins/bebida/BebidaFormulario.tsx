@@ -1,10 +1,8 @@
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { BsTrashFill } from "react-icons/bs";
 import SubirImagen from "../ui/SubirImagen";
 import { Bebida } from "@/types/Bebida";
 import { Categoria } from "@/types/Categoria";
-import { Ingrediente } from "@/types/Ingrediente";
 import { crearBebida, editarBebida } from "@/api/bebida";
 import MensajeError from "../ui/MensajeError";
 import { esMayorQueCero, esVacio } from "@/validations/validation";
