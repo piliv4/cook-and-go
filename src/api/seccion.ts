@@ -1,10 +1,6 @@
 import supabase from "@/server/client";
 import { Mesa, Seccion } from "@/types/Establecimiento";
-import {
-  crearMesa,
-  eliminarMesasBySeccionId,
-  eliminarMesasYSeccion,
-} from "./mesa";
+import { crearMesa, eliminarMesasYSeccion } from "./mesa";
 
 export const crearSeccion = async (
   seccion: Seccion,
@@ -64,9 +60,9 @@ export const getSeccionesByEstablecimientoId = async (
 };
 
 const insertarMesas = async (mesas: Mesa[], seccionId: string) => {
-  mesas.map(async (mesa) => {
+  mesas.map(async (mesa, index) => {
     try {
-      crearMesa(mesa, seccionId);
+      crearMesa(mesa, seccionId, index);
     } catch (error) {
       console.error(error);
       throw error;

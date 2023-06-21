@@ -8,7 +8,8 @@ import {
 import { getMesaBySeccionId } from "./mesa";
 
 export const crearEstablecimiento = async (
-  establecimiento: Establecimiento
+  establecimiento: Establecimiento,
+  empleadoId: string
 ) => {
   try {
     const { data, error } = await supabase
@@ -28,9 +29,29 @@ export const crearEstablecimiento = async (
       ])
       .select()
       .single();
+    if (data) {
+      const { error: error2 } = await supabase
+        .from("UsuarioEstablecimiento")
+        .insert([
+          {
+            usuario_id: empleadoId,
+            establecimiento_id: data.id,
+            rol: "Administrador",
+          },
+        ])
+        .select()
+        .single();
+      if (error2) {
+        throw new Error(
+          "Error al insertar la relacion entre usuario y establecimiento"
+        );
+      }
+    }
+
     if (error) {
       throw new Error("Error al crear el establecimiento");
     }
+
     if (establecimiento.secciones.length > 0)
       insertarSecciones(
         establecimiento.secciones,
