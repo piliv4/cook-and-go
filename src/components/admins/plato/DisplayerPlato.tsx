@@ -1,6 +1,5 @@
 import { useState } from "react";
 import CrearPlatoCard from "./CrearPlatoCard";
-import CrearPlatoPopUp from "./CrearPlatoPopUp";
 import PlatoCard from "./PlatoCard";
 import { useRouter } from "next/router";
 import { Plato } from "@/types/Plato";
