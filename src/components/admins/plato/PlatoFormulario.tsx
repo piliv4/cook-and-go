@@ -84,7 +84,7 @@ const PlatoFormulario = ({
                 onChange={(e) => {
                   setPlato({ ...plato, nombre: e.target.value });
                 }}
-                className="w-full"
+                className="w-full focus:outline-none"
               />
             </InputErrorEnvoltorio>
             <MensajeError texto={errorNombre} />
@@ -133,7 +133,7 @@ const PlatoFormulario = ({
                 onChange={(e) => {
                   setPlato({ ...plato, precio: parseFloat(e.target.value) });
                 }}
-                className="w-full"
+                className="w-full focus:outline-none"
               />
             </InputErrorEnvoltorio>
             <MensajeError texto={errorPrecio} />

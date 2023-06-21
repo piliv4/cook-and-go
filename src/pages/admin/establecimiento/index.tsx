@@ -1,24 +1,41 @@
-import { getAllEstablecimientos } from "@/api/establecimiento";
+import {
+  getAllEstablecimientos,
+  getAllEstablecimientosByUsuario,
+} from "@/api/establecimiento";
 import EstablecimientoCard from "@/components/admins/establecimiento/EstablecimientoCard";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import { UsuarioContext } from "@/context/UsuarioContext";
 import { Establecimiento } from "@/types/Establecimiento";
-import router from "next/router";
+import router, { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 
-export async function getServerSideProps() {
-  let establecimientos = await getAllEstablecimientos();
-  return {
-    props: {
-      establecimientos: establecimientos,
-    },
-  };
-}
+export default function EstablecimientoPage() {
+  const { usuarioGlobal } = useContext(UsuarioContext);
 
-export default function EstablecimientoPage({
-  establecimientos,
-}: {
-  establecimientos: Establecimiento[];
-}) {
+  //OBTERNER LOS MENUS EN FUNCION DEL ESTABLECIMIENTO
+  const [establecimientos, setEstablecimiento] = useState<Establecimiento[]>(
+    []
+  );
+  const router = useRouter();
+
+  useEffect(() => {
+    // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
+    const fetchEstablecimientos = async () => {
+      let establecimientosAux = [] as Establecimiento[];
+      if (usuarioGlobal.id != undefined) {
+        establecimientosAux = await getAllEstablecimientosByUsuario(
+          usuarioGlobal.id
+        );
+      }
+      setEstablecimiento(establecimientosAux);
+    };
+
+    // Verifica si el componente se carga directamente o se realiza un reemplazo de la ruta
+    if (router.asPath === router.route) {
+      fetchEstablecimientos();
+    }
+  }, [usuarioGlobal, router]);
   return (
     <UsuarioAutorizado>
       <div className="flex flex-col gap-4">

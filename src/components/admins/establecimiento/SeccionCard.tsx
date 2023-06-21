@@ -44,7 +44,7 @@ const SeccionCard = ({
           defaultValue={establecimiento.secciones[index].nombre}
           value={establecimiento.secciones[index].nombre}
           onChange={(e) => cambiarNombre(e.target.value)}
-          className="placeholder:font-normal placeholder:text-sm  px-2 font-black ml-2  inline-block border-2 rounded-md border-primaryGreen"
+          className="placeholder:font-normal placeholder:text-sm  px-2 font-black ml-2  inline-block border-2 rounded-md border-primaryGreen focus:outline-none"
         />
         <div className="w-full flex justify-end pr-2">
           <div className="  border-2 flex justify-center bg-background items-center rounded-md border-primaryGreen">

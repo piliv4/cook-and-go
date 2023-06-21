@@ -82,7 +82,7 @@ const BebidaFormulario = ({
                 onChange={(e) => {
                   setBebida({ ...bebida, nombre: e.target.value });
                 }}
-                className="w-full"
+                className="w-full focus:outline-none"
               />
             </InputErrorEnvoltorio>
             <MensajeError texto={errorNombre} />
@@ -95,7 +95,7 @@ const BebidaFormulario = ({
               <select
                 id="categoria"
                 value={bebida.categoria}
-                className="w-full"
+                className="w-full focus:outline-none"
                 onChange={(e) => {
                   setBebida({ ...bebida, categoria: e.target.value });
                 }}
@@ -131,7 +131,7 @@ const BebidaFormulario = ({
                 onChange={(e) => {
                   setBebida({ ...bebida, precio: parseFloat(e.target.value) });
                 }}
-                className="w-full"
+                className="w-full focus:outline-none"
               />
             </InputErrorEnvoltorio>
             <MensajeError texto={errorPrecio} />
@@ -143,7 +143,7 @@ const BebidaFormulario = ({
               id="descripcion"
               defaultValue={bebidaEditar?.descripcion}
               rows={3}
-              className="px-6 border-[1px] h-auto w-full rounded-md resize-none border-primaryGreen"
+              className="px-6 border-[1px] h-auto w-full rounded-md resize-none border-primaryGreen focus:outline-none"
               onChange={(e) => {
                 setBebida({ ...bebida, descripcion: e.target.value });
               }}

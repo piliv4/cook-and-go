@@ -62,7 +62,7 @@ const IngredienteRow = ({
             <input
               type={"text"}
               defaultValue={ingrediente.nombre}
-              className="w-full"
+              className="w-full focus:outline-none"
               onChange={(e) =>
                 setIngredienteEditar({
                   ...ingredienteEditar,
@@ -81,7 +81,7 @@ const IngredienteRow = ({
             <input
               type={"text"}
               defaultValue={ingrediente.descripcion}
-              className="w-full"
+              className="w-full focus:outline-none"
               onChange={(e) =>
                 setIngredienteEditar({
                   ...ingredienteEditar,
@@ -101,7 +101,7 @@ const IngredienteRow = ({
             <input
               type={"number"}
               defaultValue={ingrediente.precioSuplemento}
-              className="w-full"
+              className="w-full focus:outline-none"
               onChange={(e) =>
                 setIngredienteEditar({
                   ...ingredienteEditar,
@@ -121,7 +121,7 @@ const IngredienteRow = ({
             <input
               type={"number"}
               defaultValue={ingrediente.stock}
-              className="w-full"
+              className="w-full focus:outline-none"
               onChange={(e) =>
                 setIngredienteEditar({
                   ...ingredienteEditar,

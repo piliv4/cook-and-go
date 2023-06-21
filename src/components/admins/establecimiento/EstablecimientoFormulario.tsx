@@ -120,7 +120,7 @@ const EstablecimientoFormulario = ({
                 <InputErrorEnvoltorio error={errorNombre}>
                   <input
                     type={"text"}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     placeholder="Nombre del establecimiento"
                     defaultValue={establecimiento.nombre}
                     onChange={(e) =>
@@ -141,7 +141,7 @@ const EstablecimientoFormulario = ({
                 <InputErrorEnvoltorio error={errorCIF}>
                   <input
                     type={"text"}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     placeholder="Código de identificación fiscal"
                     defaultValue={establecimiento.cif}
                     onChange={(e) =>
@@ -161,7 +161,7 @@ const EstablecimientoFormulario = ({
 
             <input
               type={"text"}
-              className="px-6  border-[1px] rounded-md border-primaryGreen"
+              className="px-6  border-[1px] rounded-md border-primaryGreen focus:outline-none"
               placeholder="Detalles sobre el establecimiento"
               defaultValue={establecimiento.descripcion}
               onChange={(e) =>
@@ -186,7 +186,7 @@ const EstablecimientoFormulario = ({
                 <InputErrorEnvoltorio error={errorTelefono}>
                   <input
                     type={"tel"}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     placeholder="Número de teléfono"
                     defaultValue={
                       (establecimiento.telefono =
@@ -210,7 +210,7 @@ const EstablecimientoFormulario = ({
                 <InputErrorEnvoltorio error={errorCorreo}>
                   <input
                     type={"email"}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     placeholder="Dirección de correo electrónico"
                     defaultValue={establecimiento.correo}
                     onChange={(e) =>
@@ -230,7 +230,7 @@ const EstablecimientoFormulario = ({
               <InputErrorEnvoltorio error={errorWeb}>
                 <input
                   type={"url"}
-                  className="w-full"
+                  className="w-full focus:outline-none"
                   placeholder="Dirección de la página web"
                   defaultValue={establecimiento.web}
                   onChange={(e) =>
@@ -256,7 +256,7 @@ const EstablecimientoFormulario = ({
                 <InputErrorEnvoltorio error={errorLocalidad}>
                   <input
                     type={"text"}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     placeholder="Localidad"
                     defaultValue={establecimiento.ciudad}
                     onChange={(e) =>
@@ -276,7 +276,7 @@ const EstablecimientoFormulario = ({
                 <InputErrorEnvoltorio error={errorDireccion}>
                   <input
                     type={"text"}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     placeholder="Dirección del establecimiento"
                     defaultValue={establecimiento.direccion}
                     onChange={(e) =>

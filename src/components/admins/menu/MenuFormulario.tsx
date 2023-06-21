@@ -107,7 +107,7 @@ const MenuFormulario = ({
             <InputErrorEnvoltorio error={errorNombre}>
               <input
                 type={"text"}
-                className="w-full"
+                className="w-full focus:outline-none"
                 defaultValue={menu.nombre}
                 onChange={(e) => setMenu({ ...menu, nombre: e.target.value })}
               />
@@ -120,7 +120,7 @@ const MenuFormulario = ({
               <InputErrorEnvoltorio error={errorPrecio}>
                 <input
                   type={"tel"}
-                  className="w-full"
+                  className="w-full focus:outline-none"
                   defaultValue={menu.precio}
                   onChange={(e) =>
                     setMenu({ ...menu, precio: parseFloat(e.target.value) })
@@ -135,7 +135,7 @@ const MenuFormulario = ({
               <InputErrorEnvoltorio error={errorComensales}>
                 <input
                   type="number"
-                  className="w-full"
+                  className="w-full focus:outline-none"
                   defaultValue={menu.comensales}
                   onChange={(e) =>
                     setMenu({ ...menu, comensales: parseInt(e.target.value) })

@@ -77,7 +77,7 @@ const CrearCategoriaPopup = ({
                   <input
                     type={"text"}
                     defaultValue={categoriaEditar?.nombre}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     id="nombre"
                   />
                 </InputErrorEnvoltorio>
@@ -91,7 +91,7 @@ const CrearCategoriaPopup = ({
                   <input
                     type={"text"}
                     defaultValue={categoriaEditar?.descripcion}
-                    className="w-full"
+                    className="w-full focus:outline-none"
                     id="descripcion"
                   ></input>
                 </InputErrorEnvoltorio>

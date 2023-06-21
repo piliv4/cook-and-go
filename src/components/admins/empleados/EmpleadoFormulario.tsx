@@ -76,7 +76,7 @@ const EmpleadoFormulario = ({
             <InputErrorEnvoltorio error={errorNombre}>
               <input
                 type={"text"}
-                className="w-full "
+                className="w-full focus:outline-none"
                 placeholder="Nombre y Apellidos"
                 defaultValue={empleado.nombre}
                 onChange={(e) =>
@@ -97,7 +97,7 @@ const EmpleadoFormulario = ({
             <InputErrorEnvoltorio error={errorDNINIE}>
               <input
                 type={"text"}
-                className="w-full"
+                className="w-full focus:outline-none"
                 placeholder="Documento de identificación"
                 defaultValue={empleado.dni}
                 onChange={(e) =>
@@ -119,7 +119,7 @@ const EmpleadoFormulario = ({
           <InputErrorEnvoltorio error={errorCorreo}>
             <input
               type={"email"}
-              className="w-full"
+              className="w-full focus:outline-none"
               placeholder="Correo electrónico"
               defaultValue={empleado.correo}
               onChange={(e) =>
@@ -140,7 +140,7 @@ const EmpleadoFormulario = ({
           <InputErrorEnvoltorio error={errorContrasenya}>
             <input
               type={"password"}
-              className="w-full"
+              className="w-full focus:outline-none"
               placeholder="Contraseña"
               defaultValue={empleado.contraseña}
               onChange={(e) =>

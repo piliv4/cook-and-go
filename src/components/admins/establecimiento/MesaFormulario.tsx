@@ -23,7 +23,7 @@ const MesaFormulario = ({ anyadirMesa }: { anyadirMesa: Function }) => {
           onChange={(e) =>
             setMesa({ ...mesa, comensales: parseInt(e.target.value) })
           }
-          className="w-6 text-center bg-background   border-[1px] border-primaryGreen rounded-md mr-1 "
+          className="w-6 text-center bg-background   border-[1px] border-primaryGreen rounded-md mr-1 focus:outline-none"
         ></input>
         <p className="text-center">comensales</p>
       </div>

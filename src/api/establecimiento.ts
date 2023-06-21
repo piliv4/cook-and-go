@@ -107,6 +107,31 @@ export const getAllEstablecimientos = async () => {
   }
 };
 
+export const getAllEstablecimientosByUsuario = async (usuarioId: string) => {
+  if (usuarioId && usuarioId != "") {
+    try {
+      const { data, error } = await supabase
+        .from("Establecimiento")
+        .select(
+          "id, nombre, descripcion, cif, correo, web, telefono, ciudad, direccion, imagenURL ,UsuarioEstablecimiento!inner(usuario_id)"
+        )
+        .eq("UsuarioEstablecimiento.usuario_id", usuarioId)
+        .order("nombre");
+
+      if (error) {
+        throw new Error("Error al obtener todas los establecimientos");
+      }
+      console.log(error);
+      return data as unknown as Establecimiento[];
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
+  }
+};
+
 export const getEstablecimientoById = async (id: string) => {
   try {
     const { data, error } = await supabase

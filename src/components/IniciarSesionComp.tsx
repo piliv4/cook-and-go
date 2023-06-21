@@ -68,7 +68,7 @@ const IniciarSesionComp = () => {
               <input
                 type="correo"
                 placeholder="Correo electrónico"
-                className="w-full rounded-md py-1"
+                className="w-full rounded-md py-1 focus:outline-none"
                 id="correo"
                 value={correo}
                 onChange={(e) => setCorreo(e.target.value)}
@@ -77,8 +77,8 @@ const IniciarSesionComp = () => {
             <MensajeError texto={errorCorreo} />
             <InputErrorEnvoltorio error={errorContraseña}>
               <input
-                type="contraseña"
-                className="w-full rounded-md py-1"
+                type="password"
+                className="w-full rounded-md py-1 focus:outline-none"
                 placeholder="Contraseña"
                 id="contraseña"
                 value={contraseña}
