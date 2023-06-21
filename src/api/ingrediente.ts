@@ -56,6 +56,30 @@ export const editarIngrediente = async (ingrediente: Ingrediente) => {
   }
 };
 
+export const editarStock = async (ingredientes: Ingrediente[]) => {
+  ingredientes.map(async (ingrediente) => {
+    try {
+      const { error } = await supabase
+        .from("Ingrediente")
+        .update([
+          {
+            stock: ingrediente.stock,
+          },
+        ])
+        .eq("id", ingrediente.id);
+
+      if (error) {
+        throw new Error("Error al modificar el stock el Ingrediente");
+      } else {
+        router.push(router.asPath);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  });
+};
+
 export const eliminarIngrediente = async (id: string) => {
   try {
     const { error: error } = await supabase
@@ -114,6 +138,29 @@ export const getAllIngredientesByEstablecimiento = async (
 
       if (error) {
         throw new Error("Error al obtener todos los ingredientes");
+      }
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
+  }
+};
+
+export const getIngredientesFaltantes = async (establecimientoId: string) => {
+  if (establecimientoId) {
+    try {
+      const { data, error } = await supabase
+        .from("Ingrediente")
+        .select("*")
+        .eq("establecimiento_id", establecimientoId)
+        .lte("stock", 0)
+        .order("nombre");
+
+      if (error) {
+        throw new Error("Error al obtener los ingredientes faltantes");
       }
       return data;
     } catch (error) {
