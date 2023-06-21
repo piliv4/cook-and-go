@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 
 export default function PlatoPage() {
   const router = useRouter();
@@ -76,26 +77,28 @@ export default function PlatoPage() {
 
   return (
     <UsuarioAutorizado>
-      <VerificarEstablecimiento>
-        <div className="flex flex-col gap-4">
-          <CabeceraPagina>
-            <h1 className="text-2xl font-black ">Todos mis platos</h1>
-            <select
-              className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
-              onChange={(e) => setCategoriaSeleccionada(e.target.value)}
-            >
-              <option value={"-1"}>Todas mis categorias</option>
-              {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.nombre}
-                </option>
-              ))}
-            </select>
-            <Buscador />
-          </CabeceraPagina>
-          <DisplayerPlato platos={platosFiltrados} />
-        </div>
-      </VerificarEstablecimiento>
+      <AdministradorAutorizado>
+        <VerificarEstablecimiento>
+          <div className="flex flex-col gap-4">
+            <CabeceraPagina>
+              <h1 className="text-2xl font-black ">Todos mis platos</h1>
+              <select
+                className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
+                onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+              >
+                <option value={"-1"}>Todas mis categorias</option>
+                {categorias.map((categoria) => (
+                  <option key={categoria.id} value={categoria.id}>
+                    {categoria.nombre}
+                  </option>
+                ))}
+              </select>
+              <Buscador />
+            </CabeceraPagina>
+            <DisplayerPlato platos={platosFiltrados} />
+          </div>
+        </VerificarEstablecimiento>
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }

@@ -3,6 +3,7 @@ import {
   getEstablecimientoById,
 } from "@/api/establecimiento";
 import EstablecimientoFormulario from "@/components/admins/establecimiento/EstablecimientoFormulario";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { Establecimiento } from "@/types/Establecimiento";
 import { GetServerSideProps } from "next";
@@ -24,10 +25,12 @@ export default function EditarEstablecimiento({
 
   return (
     <UsuarioAutorizado>
-      <EstablecimientoFormulario
-        crearEditar={editar}
-        establecimientoProp={establecimiento}
-      />
+      <AdministradorAutorizado>
+        <EstablecimientoFormulario
+          crearEditar={editar}
+          establecimientoProp={establecimiento}
+        />
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }

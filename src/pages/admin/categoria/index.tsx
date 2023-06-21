@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { getAllCategoriasByEstablecimiento } from "@/api/categoria";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 
 export default function CategoriaHomePage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -31,20 +32,22 @@ export default function CategoriaHomePage() {
   }, [establecimientoGlobal, router]);
   return (
     <UsuarioAutorizado>
-      <VerificarEstablecimiento>
-        <div className="flex flex-col gap-4 ">
-          <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
-            <h1 className="text-2xl font-black ">Todas mis categorias</h1>
-            <Buscador />
+      <AdministradorAutorizado>
+        <VerificarEstablecimiento>
+          <div className="flex flex-col gap-4 ">
+            <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
+              <h1 className="text-2xl font-black ">Todas mis categorias</h1>
+              <Buscador />
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+              <CrearCategoriaCard />
+              {categorias.map((categoria) => (
+                <CategoriaCard categoria={categoria} key={categoria.id} />
+              ))}
+            </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
-            <CrearCategoriaCard />
-            {categorias.map((categoria) => (
-              <CategoriaCard categoria={categoria} key={categoria.id} />
-            ))}
-          </div>
-        </div>
-      </VerificarEstablecimiento>
+        </VerificarEstablecimiento>
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }

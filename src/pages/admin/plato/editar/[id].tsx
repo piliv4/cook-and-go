@@ -1,6 +1,7 @@
 import { getAllCategoriasPlatos } from "@/api/categoria";
 import { getPlatoById } from "@/api/plato";
 import PlatoFormulario from "@/components/admins/plato/PlatoFormulario";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
@@ -26,9 +27,11 @@ export default function EditarPlato({ plato }: { plato: Plato }) {
   }, [establecimientoGlobal]);
   return (
     <UsuarioAutorizado>
-      <VerificarEstablecimiento>
-        <PlatoFormulario categorias={categorias} platoEditar={plato} />;
-      </VerificarEstablecimiento>
+      <AdministradorAutorizado>
+        <VerificarEstablecimiento>
+          <PlatoFormulario categorias={categorias} platoEditar={plato} />;
+        </VerificarEstablecimiento>
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }

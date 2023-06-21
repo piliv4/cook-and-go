@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 import { useContext, useEffect, useState } from "react";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 
 export default function CrearMenu({ bebida }: { bebida: Bebida }) {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -25,9 +26,11 @@ export default function CrearMenu({ bebida }: { bebida: Bebida }) {
   }, [establecimientoGlobal]);
 
   return (
-    <VerificarEstablecimiento>
-      <BebidaFormulario categorias={categorias} bebidaEditar={bebida} />;
-    </VerificarEstablecimiento>
+    <AdministradorAutorizado>
+      <VerificarEstablecimiento>
+        <BebidaFormulario categorias={categorias} bebidaEditar={bebida} />;
+      </VerificarEstablecimiento>
+    </AdministradorAutorizado>
   );
 }
 

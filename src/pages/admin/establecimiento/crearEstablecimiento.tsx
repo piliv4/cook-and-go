@@ -1,5 +1,6 @@
 import { crearEstablecimiento } from "@/api/establecimiento";
 import LocalFormulario from "@/components/admins/establecimiento/EstablecimientoFormulario";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { UsuarioContext } from "@/context/UsuarioContext";
 import { Establecimiento } from "@/types/Establecimiento";
@@ -20,7 +21,9 @@ export default function CrearEstablecimiento() {
 
   return (
     <UsuarioAutorizado>
-      <LocalFormulario establecimientoProp={null} crearEditar={crear} />;
+      <AdministradorAutorizado>
+        <LocalFormulario establecimientoProp={null} crearEditar={crear} />;
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }

@@ -1,5 +1,6 @@
 import { crearEmpleado } from "@/api/empleado";
 import EmpleadoFormulario from "@/components/admins/empleados/EmpleadoFormulario";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
@@ -20,9 +21,11 @@ export default function CrearEmpleado() {
 
   return (
     <UsuarioAutorizado>
-      <VerificarEstablecimiento>
-        <EmpleadoFormulario empleadoProp={null} crearEditar={crear} />;
-      </VerificarEstablecimiento>
+      <AdministradorAutorizado>
+        <VerificarEstablecimiento>
+          <EmpleadoFormulario empleadoProp={null} crearEditar={crear} />;
+        </VerificarEstablecimiento>
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }

@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
+import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 
 export default function BebidaPage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -82,33 +83,35 @@ export default function BebidaPage() {
   }, [establecimientoGlobal.id, router]);
   return (
     <UsuarioAutorizado>
-      <VerificarEstablecimiento>
-        <div className="flex flex-col gap-4">
-          <CabeceraPagina>
-            <h1 className="text-2xl font-black ">Todos mis bebidas</h1>
-            <select
-              className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
-              onChange={(e) => {
-                setCategoriaSeleccionada(e.target.value);
-              }}
-            >
-              <option value="-1">Todas mis bebidas</option>
-              {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.nombre}
-                </option>
+      <AdministradorAutorizado>
+        <VerificarEstablecimiento>
+          <div className="flex flex-col gap-4">
+            <CabeceraPagina>
+              <h1 className="text-2xl font-black ">Todos mis bebidas</h1>
+              <select
+                className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
+                onChange={(e) => {
+                  setCategoriaSeleccionada(e.target.value);
+                }}
+              >
+                <option value="-1">Todas mis bebidas</option>
+                {categorias.map((categoria) => (
+                  <option key={categoria.id} value={categoria.id}>
+                    {categoria.nombre}
+                  </option>
+                ))}
+              </select>
+              <Buscador />
+            </CabeceraPagina>
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+              <CrearBebidaCard />
+              {bebidasFiltradas.map((bebida) => (
+                <BebidaCard bebida={bebida} key={bebida.id} />
               ))}
-            </select>
-            <Buscador />
-          </CabeceraPagina>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
-            <CrearBebidaCard />
-            {bebidasFiltradas.map((bebida) => (
-              <BebidaCard bebida={bebida} key={bebida.id} />
-            ))}
+            </div>
           </div>
-        </div>
-      </VerificarEstablecimiento>
+        </VerificarEstablecimiento>
+      </AdministradorAutorizado>
     </UsuarioAutorizado>
   );
 }
