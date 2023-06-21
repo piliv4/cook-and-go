@@ -58,6 +58,7 @@ const CrearIngrediente = () => {
           <InputErrorEnvoltorio error={errorNombre}>
             <input
               type="text"
+              className="focus:outline-none"
               placeholder="Introduce un nombre"
               value={ingrediente.nombre}
               onChange={(e) =>
@@ -74,7 +75,7 @@ const CrearIngrediente = () => {
           <textarea
             placeholder="Introduce una breve descripción"
             rows={1}
-            className="pl-2 pr-20 border-[1px] rounded-md overflow-hidden resize-none"
+            className="pl-2 pr-20 border-[1px] rounded-md overflow-hidden resize-none focus:outline-none"
             value={ingrediente.descripcion}
             onChange={(e) =>
               setIngrediente({
@@ -89,6 +90,7 @@ const CrearIngrediente = () => {
           <InputErrorEnvoltorio error={errorPrecioSuplemento}>
             <input
               type="number"
+              className="focus:outline-none"
               placeholder="Introduce el pps"
               value={ingrediente.precioSuplemento}
               onChange={(e) =>
@@ -105,6 +107,7 @@ const CrearIngrediente = () => {
           <InputErrorEnvoltorio error={errorStock}>
             <input
               type="number"
+              className="focus:outline-none"
               placeholder="Introduce el stock actual"
               onChange={(e) =>
                 setIngrediente({

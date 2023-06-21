@@ -215,6 +215,19 @@ export const contraseñaValida = async (
   return ""; // Contraseña válida
 };
 
+async function getRol(empleadoId: string) {
+  const { data, error } = await supabase
+    .from("UsuarioEstablecimiento")
+    .select("rol")
+    .eq("usuario_id", empleadoId)
+    .limit(1)
+    .single();
+
+  if (error) {
+    console.error("Error al iniciar sesión:", error);
+  }
+  return data?.rol;
+}
 export async function iniciarSesion(correo: string, contraseña: string) {
   const { data, error } = await supabase
     .from("Usuario")
@@ -226,10 +239,11 @@ export async function iniciarSesion(correo: string, contraseña: string) {
   if (error) {
     console.error("Error al iniciar sesión:", error);
     return null;
-  }
-
-  if (data && data.length > 0) {
-    return data[0] as Empleado;
+  } else {
+    if (data && data.length > 0) {
+      (data[0] as Empleado).rol = await getRol((data[0] as Empleado).id);
+      return data[0] as Empleado;
+    }
   }
 
   return null;
