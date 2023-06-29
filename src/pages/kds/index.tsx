@@ -1,3 +1,4 @@
+import { getComandasByEstablecimiento } from "@/api/comanda";
 import Comanda from "@/components/kds/Comanda";
 import supabase from "@/server/client";
 import { useEffect, useState } from "react";
@@ -37,6 +38,15 @@ export default function KDS() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [supabase]);
+
+  useEffect(() => {
+    const fetchIngredientes = async () => {
+      let categoriasAux = [];
+      //categoriasAux = await getComandasByEstablecimiento();
+    };
+
+    fetchIngredientes();
+  }, []);
 
   return (
     <div className="max-w-xl min-w-full">
