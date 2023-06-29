@@ -98,7 +98,9 @@ export const getAllCategoriasByEstablecimiento = async (
         .eq("establecimiento_id", establecimientoId);
 
       if (error) {
-        throw new Error("Error al obtener todas las categorias");
+        throw new Error(
+          "Error al obtener las categorias en función del establecimiento"
+        );
       }
       return data;
     } catch (error) {

@@ -66,7 +66,7 @@ export const esTelefonoValido = (cadena: string) => {
   const telVacio = esVacio(cadena, "teléfono");
   if (telVacio) return telVacio;
 
-  const telNum = esVacio(cadena, "teléfono");
+  const telNum = esNumeroPositivo(cadena, "teléfono");
   if (telNum) return telNum;
 
   const telefonoRegex = /^[6-9]\d{8}$/;

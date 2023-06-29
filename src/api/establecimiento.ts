@@ -119,7 +119,7 @@ export const getAllEstablecimientos = async () => {
       .order("nombre");
 
     if (error) {
-      throw new Error("Error al obtener todas los establecimientos");
+      throw new Error("Error al obtener todos los establecimientos");
     }
     return data;
   } catch (error) {
@@ -162,7 +162,7 @@ export const getEstablecimientoById = async (id: string) => {
       .single();
 
     if (error) {
-      throw new Error("Error al obtener todas los establecimientos");
+      throw new Error("Error al obtener el establecimiento");
     } else {
       (data as Establecimiento).secciones =
         await getSeccionesByEstablecimientoId(id);

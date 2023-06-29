@@ -1,22 +1,20 @@
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
-import Link from "next/link";
+import { UsuarioContext } from "@/context/UsuarioContext";
+import router from "next/router";
+import { useContext, useEffect } from "react";
 
 export default function Home() {
+  const { usuarioGlobal } = useContext(UsuarioContext);
+  useEffect(() => {
+    if (usuarioGlobal.rol === "Administrador") {
+      router.push("/admin"); // Redirigir a la página no autorizada
+    } else if (usuarioGlobal.rol === "Cocinero") {
+      router.push("/kds"); // Redirigir a la página no autorizada
+    }
+  }, [usuarioGlobal.rol]);
   return (
     <UsuarioAutorizado>
-      <div>
-        <div className="max-w-max min-w-full flex justify-center">
-          <h1 className="text-3xl font-bold ">¡Bienvenido a cook and go!</h1>
-        </div>
-        <div>
-          <Link href="/admin/">
-            <p> Página del administrador</p>
-          </Link>
-          <Link href="/kds/">
-            <p> Página de pantalla de cocina</p>
-          </Link>
-        </div>
-      </div>
+      <p></p>
     </UsuarioAutorizado>
   );
 }

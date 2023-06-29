@@ -73,7 +73,9 @@ export default function AdminHeader() {
             </Link>
           </div>
         ) : (
-          <p>¡Seleccione un establecimiento para empezar a gestionarlo!</p>
+          <p className="w-full text-center">
+            ¡Seleccione un establecimiento para empezar a gestionarlo!
+          </p>
         )}
 
         <div className="mt-[3px] flex flex-row w-fit  justify-end ">

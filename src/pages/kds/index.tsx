@@ -1,5 +1,6 @@
 import Comanda from "@/components/kds/Comanda";
-import { useState } from "react";
+import supabase from "@/server/client";
+import { useEffect, useState } from "react";
 
 export default function KDS() {
   const [comandas, setComandas] = useState([
@@ -15,6 +16,27 @@ export default function KDS() {
     aux.splice(index, 1);
     setComandas(aux);
   }
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime_comandas")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "Comanda",
+        },
+        (payload) => {
+          console.log({ payload });
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supabase]);
 
   return (
     <div className="max-w-xl min-w-full">
