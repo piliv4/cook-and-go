@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Plato from "./Plato";
 import Timer from "./Timer";
+import supabase from "@/server/client";
 
 export default function Comanda({
   index,
