@@ -3,11 +3,9 @@ import Extra from "./Extra";
 import { Plato } from "@/types/Plato";
 
 export default function PlatoComponente({
-  index,
   plato,
   finalizarPlato,
 }: {
-  index: number;
   plato: Plato;
   finalizarPlato: Function;
 }) {

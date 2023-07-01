@@ -38,8 +38,6 @@ export const getComandasByEstablecimiento = async (
           comandaAux.platos = await getAllArticulosDeComanda(comanda.id);
           //Añadimos la comanda
           parsedComandas.push(comandaAux);
-          console.log(comandaAux);
-          console.log(parsedComandas);
         } catch (error) {
           console.error(error);
           throw error;
@@ -61,7 +59,7 @@ const getAllArticulosDeComanda = async (comandaId: string) => {
       .from("Articulo")
       .select("* ,ComandaArticulo!inner(*)")
       .eq("ComandaArticulo.comanda_id", comandaId)
-      .eq("esBebida", true);
+      .eq("esBebida", false);
     if (error) {
       throw new Error("Error al obtener los articulos de las comandas");
     }

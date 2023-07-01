@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import PlatoComponente from "./Plato";
 import Timer from "./Timer";
 import { Comanda } from "@/types/Comanda";
+import supabase from "@/server/client";
+import { getPlatoById } from "@/api/plato";
 
 export default function ComandaComponente({
   index,
@@ -30,6 +32,30 @@ export default function ComandaComponente({
     );
   }
 
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime_comandas")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "ComandaArticulo",
+        },
+        async (payload) => {
+          if (payload.new.comanda_id === comanda.id) {
+            let platoAux = await getPlatoById(payload.new.articulo_id);
+            setPlatos(platos.concat(platoAux));
+          }
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supabase]);
+
   return (
     <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
       <div
@@ -46,7 +72,6 @@ export default function ComandaComponente({
           return (
             <PlatoComponente
               key={index}
-              index={index}
               plato={plato}
               finalizarPlato={finalizarPlato}
             />
