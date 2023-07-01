@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Plato from "./Plato";
+import PlatoComponente from "./Plato";
 import Timer from "./Timer";
 import { Comanda } from "@/types/Comanda";
 
@@ -12,7 +12,7 @@ export default function ComandaComponente({
   comanda: Comanda;
   finalizarComanda: Function;
 }) {
-  const [platos, setPlatos] = useState([0, 1, 2, 3]);
+  const [platos, setPlatos] = useState(comanda.platos);
   const [platosActivos, setPlatosActivos] = useState(platos.length);
   const [colorFondo, setColorFondo] = useState("bg-emerald-300");
 
@@ -36,15 +36,20 @@ export default function ComandaComponente({
         className={"w-full grid grid-cols-[70%_30%]  " && colorFondo}
         onDoubleClick={() => finalizarComanda(index)}
       >
-        <h1>{comanda.mesaNombre}</h1>
+        <h1>Mesa {comanda.mesaNombre}</h1>
         <div className="flex">
           <Timer setColorFondo={setColorFondo} />
         </div>
       </div>
       <div className="w-full py-2 px-2 gap-2 flex flex-col ">
-        {platos.map((number, index) => {
+        {platos.map((plato, index) => {
           return (
-            <Plato key={index} index={index} finalizarPlato={finalizarPlato} />
+            <PlatoComponente
+              key={index}
+              index={index}
+              plato={plato}
+              finalizarPlato={finalizarPlato}
+            />
           );
         })}
       </div>

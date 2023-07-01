@@ -1,11 +1,14 @@
 import { useState } from "react";
 import Extra from "./Extra";
+import { Plato } from "@/types/Plato";
 
-export default function Plato({
+export default function PlatoComponente({
   index,
+  plato,
   finalizarPlato,
 }: {
   index: number;
+  plato: Plato;
   finalizarPlato: Function;
 }) {
   const [enPreparacion, setEnPreparacion] = useState(false);
@@ -25,7 +28,7 @@ export default function Plato({
               : "font-medium p-1"
           }
         >
-          1 PATATAS A LO POBRE
+          {plato.nombre}
         </p>
         {!ordenTerminada && (
           <div className="pl-4">
