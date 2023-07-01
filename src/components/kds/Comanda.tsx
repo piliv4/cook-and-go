@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import Plato from "./Plato";
 import Timer from "./Timer";
-import supabase from "@/server/client";
+import { Comanda } from "@/types/Comanda";
 
-export default function Comanda({
+export default function ComandaComponente({
   index,
   comanda,
   finalizarComanda,
 }: {
   index: number;
-  comanda: string;
+  comanda: Comanda;
   finalizarComanda: Function;
 }) {
   const [platos, setPlatos] = useState([0, 1, 2, 3]);
@@ -36,7 +36,7 @@ export default function Comanda({
         className={"w-full grid grid-cols-[70%_30%]  " && colorFondo}
         onDoubleClick={() => finalizarComanda(index)}
       >
-        <h1>{comanda}</h1>
+        <h1>{comanda.mesaNombre}</h1>
         <div className="flex">
           <Timer setColorFondo={setColorFondo} />
         </div>

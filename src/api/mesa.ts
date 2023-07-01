@@ -80,3 +80,21 @@ export const getMesaBySeccionId = async (id: string) => {
     throw error;
   }
 };
+
+export const getMesaById = async (id: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Mesa")
+      .select()
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error("Error al obtener la mesa por id");
+    }
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

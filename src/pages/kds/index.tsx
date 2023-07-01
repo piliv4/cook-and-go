@@ -1,16 +1,11 @@
 import { getComandasByEstablecimiento } from "@/api/comanda";
-import Comanda from "@/components/kds/Comanda";
+import ComandaComponente from "@/components/kds/Comanda";
 import supabase from "@/server/client";
+import { Comanda } from "@/types/Comanda";
 import { useEffect, useState } from "react";
 
 export default function KDS() {
-  const [comandas, setComandas] = useState([
-    "Comanda 1",
-    "Comanda 2",
-    "Comanda 3",
-    "Comanda 4",
-    "Comanda 5",
-  ]);
+  const [comandas, setComandas] = useState<Comanda[]>([]);
 
   function finalizarComanda({ index }: { index: number }) {
     const aux = [...comandas];
@@ -41,10 +36,12 @@ export default function KDS() {
 
   useEffect(() => {
     const fetchIngredientes = async () => {
-      let categoriasAux = [];
-      //categoriasAux = await getComandasByEstablecimiento();
+      let comandasAux = [] as Comanda[];
+      comandasAux = await getComandasByEstablecimiento(
+        "b7640f12-7240-4856-a6f7-8e5bc1bddad2"
+      );
+      setComandas(comandasAux);
     };
-
     fetchIngredientes();
   }, []);
 
@@ -57,7 +54,7 @@ export default function KDS() {
       </div>
       <div className="grid grid-cols-5 gap-3 px-3">
         {comandas.map((comanda, index) => (
-          <Comanda
+          <ComandaComponente
             key={index}
             comanda={comanda}
             index={index}
