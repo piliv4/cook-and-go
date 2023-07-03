@@ -34,7 +34,7 @@ export default function ComandaComponente({
 
   useEffect(() => {
     const channel = supabase
-      .channel("realtime_comandas")
+      .channel("realtime_comandasArticulo")
       .on(
         "postgres_changes",
         {
