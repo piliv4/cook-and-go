@@ -6,4 +6,5 @@ export interface Empleado {
   dni: string;
   imagenURL: string;
   rol: string;
+  establecimientoId: string;
 }

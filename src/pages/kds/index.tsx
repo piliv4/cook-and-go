@@ -1,11 +1,13 @@
 import { getComandasByEstablecimiento } from "@/api/comanda";
 import ComandaComponente from "@/components/kds/Comanda";
+import { UsuarioContext } from "@/context/UsuarioContext";
 import supabase from "@/server/client";
 import { Comanda } from "@/types/Comanda";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function KDS() {
   const [comandas, setComandas] = useState<Comanda[]>([]);
+  const { usuarioGlobal } = useContext(UsuarioContext);
 
   function finalizarComanda({ index }: { index: number }) {
     const aux = [...comandas];
@@ -37,13 +39,17 @@ export default function KDS() {
   useEffect(() => {
     const fetchIngredientes = async () => {
       let comandasAux = [] as Comanda[];
-      comandasAux = await getComandasByEstablecimiento(
-        "b7640f12-7240-4856-a6f7-8e5bc1bddad2"
-      );
+      if (
+        usuarioGlobal.establecimientoId != "" &&
+        usuarioGlobal.establecimientoId != undefined
+      )
+        comandasAux = await getComandasByEstablecimiento(
+          usuarioGlobal.establecimientoId
+        );
       setComandas(comandasAux);
     };
     fetchIngredientes();
-  }, []);
+  }, [usuarioGlobal.establecimientoId]);
 
   return (
     <div className="max-w-xl min-w-full">

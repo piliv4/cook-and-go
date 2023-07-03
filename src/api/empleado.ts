@@ -1,6 +1,7 @@
 import supabase from "@/server/client";
 import { Empleado } from "@/types/Empleado";
 import router from "next/router";
+import { getAllEstablecimientosByUsuario } from "./establecimiento";
 
 export const crearEmpleado = async (
   empleado: Empleado,
@@ -147,6 +148,10 @@ export const getAllEmpleadosByEstablecimiento = async (
       dni: usuario.dni,
       imagenURL: usuario.imagenURL,
       rol: usuario.UsuarioEstablecimiento[0].rol,
+      establecimientoId:
+        usuario.UsuarioEstablecimiento.length > 1
+          ? ""
+          : usuario.UsuarioEstablecimiento[0].establecimiento_id,
     }));
 
     return empleados;
@@ -228,6 +233,7 @@ async function getRol(empleadoId: string) {
   }
   return data?.rol;
 }
+
 export async function iniciarSesion(correo: string, contraseña: string) {
   const { data, error } = await supabase
     .from("Usuario")
@@ -242,6 +248,11 @@ export async function iniciarSesion(correo: string, contraseña: string) {
   } else {
     if (data && data.length > 0) {
       (data[0] as Empleado).rol = await getRol((data[0] as Empleado).id);
+      let establecimientosAux = await getAllEstablecimientosByUsuario(
+        (data[0] as Empleado).id
+      );
+      (data[0] as Empleado).establecimientoId =
+        establecimientosAux.length == 1 ? establecimientosAux[0].id : "";
       return data[0] as Empleado;
     }
   }
