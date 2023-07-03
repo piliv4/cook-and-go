@@ -1,7 +1,10 @@
 import supabase from "@/server/client";
 import { Empleado } from "@/types/Empleado";
 import router from "next/router";
-import { getAllEstablecimientosByUsuario } from "./establecimiento";
+import {
+  getAllEstablecimientosByUsuario,
+  getEstablecimientoIdByUsuarioId,
+} from "./establecimiento";
 
 export const crearEmpleado = async (
   empleado: Empleado,
@@ -248,12 +251,8 @@ export async function iniciarSesion(correo: string, contraseña: string) {
   } else {
     if (data && data.length > 0) {
       (data[0] as Empleado).rol = await getRol((data[0] as Empleado).id);
-      let establecimientosAux = await getAllEstablecimientosByUsuario(
-        (data[0] as Empleado).id
-      );
       (data[0] as Empleado).establecimientoId =
-        establecimientosAux.length == 1 ? establecimientosAux[0].id : "";
-      return data[0] as Empleado;
+        await getEstablecimientoIdByUsuarioId((data[0] as Empleado).id);
     }
   }
 

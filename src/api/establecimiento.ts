@@ -153,6 +153,28 @@ export const getAllEstablecimientosByUsuario = async (usuarioId: string) => {
   }
 };
 
+export const getEstablecimientoIdByUsuarioId = async (usuarioId: string) => {
+  if (usuarioId && usuarioId != "") {
+    try {
+      const { data, error } = await supabase
+        .from("UsuarioEstablecimiento")
+        .select()
+        .eq("usuario_id", usuarioId);
+
+      if (error) {
+        throw new Error("Error al obtener todas los establecimientos");
+      }
+      if (data.length == 1) return data[0].establecimiento_id;
+      return "";
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  } else {
+    return [];
+  }
+};
+
 export const getEstablecimientoById = async (id: string) => {
   try {
     const { data, error } = await supabase

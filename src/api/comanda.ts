@@ -2,6 +2,7 @@ import supabase from "@/server/client";
 import { Comanda } from "@/types/Comanda";
 import { Plato } from "@/types/Plato";
 import { getMesaById } from "./mesa";
+import { adaptarComanda } from "@/helpers/adaptadores";
 
 export const getComandasByEstablecimiento = async (
   establecimientoId: string
@@ -24,14 +25,7 @@ export const getComandasByEstablecimiento = async (
       for (const comanda of comandas) {
         try {
           //Parseamos la comanda
-          let comandaAux = {
-            id: comanda.id,
-            fechaFin: comanda.fecha_hora_fin,
-            fechaIni: comanda.fecha_hora_ini,
-            enServicio: comanda.esta_en_servicio,
-            mesaNombre: "",
-            platos: [] as Plato[],
-          };
+          let comandaAux = adaptarComanda(comanda);
           //Obtenemos el nombre de la mesa
           comandaAux.mesaNombre = (await getMesaById(comanda.mesa_id)).numero;
           //Obtenemos los platos de la comanda

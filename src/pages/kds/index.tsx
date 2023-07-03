@@ -1,6 +1,8 @@
 import { getComandasByEstablecimiento } from "@/api/comanda";
+import { getEstablecimientoIdByUsuarioId } from "@/api/establecimiento";
 import ComandaComponente from "@/components/kds/Comanda";
 import { UsuarioContext } from "@/context/UsuarioContext";
+import { adaptarComanda } from "@/helpers/adaptadores";
 import supabase from "@/server/client";
 import { Comanda } from "@/types/Comanda";
 import { useContext, useEffect, useState } from "react";
@@ -15,27 +17,7 @@ export default function KDS() {
     setComandas(aux);
   }
 
-  useEffect(() => {
-    const channel = supabase
-      .channel("realtime_comandas")
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "Comanda",
-        },
-        (payload) => {
-          console.log({ payload });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase]);
-
+  //OBTENCIÓN DE TODAS LAS COMANDAS (PRIMERA CARGA Y REFRESCOS)
   useEffect(() => {
     const fetchIngredientes = async () => {
       let comandasAux = [] as Comanda[];
@@ -50,6 +32,32 @@ export default function KDS() {
     };
     fetchIngredientes();
   }, [usuarioGlobal.establecimientoId]);
+
+  //LISTENER RECUERDA QUE SOLO RECOGE UN VALOR
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime_comandas")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "Comanda",
+        },
+        async (payload) => {
+          let establecimientoId = await getEstablecimientoIdByUsuarioId(
+            payload.new.usuario_id
+          );
+          if (establecimientoId === usuarioGlobal.id)
+            setComandas(comandas.concat(adaptarComanda(payload.new)));
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [supabase]);
 
   return (
     <div className="max-w-xl min-w-full">
