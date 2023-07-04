@@ -256,5 +256,5 @@ export async function iniciarSesion(correo: string, contraseña: string) {
     }
   }
 
-  return null;
+  return data[0] as Empleado;
 }

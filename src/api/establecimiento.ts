@@ -171,7 +171,7 @@ export const getEstablecimientoIdByUsuarioId = async (usuarioId: string) => {
       throw error;
     }
   } else {
-    return [];
+    return "";
   }
 };
 

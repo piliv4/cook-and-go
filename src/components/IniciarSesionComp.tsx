@@ -40,10 +40,11 @@ const IniciarSesionComp = () => {
   const inicio = async () => {
     const valido = await validarCampos();
     if (valido) {
+      console.log("culo");
       const usuario = await iniciarSesion(correo, contraseña);
+      console.log(usuario);
       if (usuario != null) {
         setUsuarioGlobal(usuario);
-
         setEstablecimientoGlobal({} as Establecimiento);
         router.push("/");
       }

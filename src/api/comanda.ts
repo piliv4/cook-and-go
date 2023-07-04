@@ -46,7 +46,7 @@ export const getComandasByEstablecimiento = async (
   }
 };
 
-const getAllArticulosDeComanda = async (comandaId: string) => {
+export const getAllArticulosDeComanda = async (comandaId: string) => {
   try {
     //Obtenemos todas las comandas activa de un establecimiento
     const { data, error } = await supabase
@@ -76,11 +76,11 @@ export const añadirComanda = async () => {
     ])
     .select()
     .single();
-  // if (data) {
-  //   await añadirPlato("3a7fe25e-bdd2-4484-9219-6100703c0793", data.id);
-  //   await añadirPlato("ddc3fa4c-afcb-4731-aab8-dd9221702d6f", data.id);
-  //   await añadirPlato("8cc0d1a9-e00c-464d-8e31-07f903e7d74a", data.id);
-  // }
+  if (data) {
+    await añadirPlato("3a7fe25e-bdd2-4484-9219-6100703c0793", data.id);
+    await añadirPlato("ddc3fa4c-afcb-4731-aab8-dd9221702d6f", data.id);
+    await añadirPlato("8cc0d1a9-e00c-464d-8e31-07f903e7d74a", data.id);
+  }
 };
 
 export const añadirPlato = async (platoId: String, comandaId: string) => {

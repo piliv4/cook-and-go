@@ -43,18 +43,17 @@ export default function ComandaComponente({
           table: "ComandaArticulo",
         },
         async (payload) => {
-          if (payload.new.comanda_id === comanda.id) {
-            let platoAux = await getPlatoById(payload.new.articulo_id);
-            setPlatos(platos.concat(platoAux));
-          }
+          // if (payload.new.comanda_id === comanda.id) {
+          //   let platoAux = await getPlatoById(payload.new.articulo_id);
+          //   setPlatos(platos.concat(platoAux));
+          // }
         }
       )
       .subscribe();
     return () => {
       supabase.removeChannel(channel);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase]);
+  }, [platos, setPlatos, comanda.id]);
 
   return (
     <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
