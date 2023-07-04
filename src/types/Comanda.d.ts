@@ -1,4 +1,4 @@
-import { Plato } from "./Plato";
+import { ArticuloDeComanda } from "./ArticuloDeComanda";
 
 export interface Comanda {
   id: string;
@@ -6,5 +6,5 @@ export interface Comanda {
   fechaIni: string;
   enServicio: Boolean;
   mesaNombre: string;
-  platos: Plato[];
+  platos: ArticuloDeComanda[];
 }

@@ -27,8 +27,6 @@ const PlatoFormulario = ({
   const [errorPrecio, setErrorPrecio] = useState("");
   const [errorCategoria, setErrorCategoria] = useState("");
 
-  console.log(plato);
-
   function validarCampos() {
     let ePlato = esVacio(plato.nombre, "nombre");
     setErrorNombre(ePlato ? ePlato : "");

@@ -43,10 +43,13 @@ export default function ComandaComponente({
           table: "ComandaArticulo",
         },
         async (payload) => {
-          // if (payload.new.comanda_id === comanda.id) {
-          //   let platoAux = await getPlatoById(payload.new.articulo_id);
-          //   setPlatos(platos.concat(platoAux));
-          // }
+          if (
+            payload.new.comanda_id === comanda.id &&
+            !platos.some((plato) => plato.id === payload.new.articulo_id)
+          ) {
+            let platoAux = await getPlatoById(payload.new.articulo_id);
+            setPlatos(platos.concat(platoAux));
+          }
         }
       )
       .subscribe();
@@ -71,7 +74,8 @@ export default function ComandaComponente({
           return (
             <PlatoComponente
               key={index}
-              plato={plato}
+              articuloDeComanda={plato}
+              comandaId={comanda.id}
               finalizarPlato={finalizarPlato}
             />
           );

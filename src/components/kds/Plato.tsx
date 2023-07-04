@@ -1,20 +1,37 @@
 import { useState } from "react";
 import Extra from "./Extra";
-import { Plato } from "@/types/Plato";
+import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
+import { setEstadoArticulo } from "@/api/comanda";
 
 export default function PlatoComponente({
-  plato,
+  articuloDeComanda,
   finalizarPlato,
 }: {
-  plato: Plato;
+  articuloDeComanda: ArticuloDeComanda;
+  comandaId: string;
   finalizarPlato: Function;
 }) {
-  const [enPreparacion, setEnPreparacion] = useState(false);
-  const [ordenTerminada, setOrdenTerminada] = useState(false);
+  const [enPreparacion, setEnPreparacion] = useState(
+    articuloDeComanda.estado == "preparacion"
+  );
+  const [ordenTerminada, setOrdenTerminada] = useState(
+    articuloDeComanda.estado == "preparado"
+  );
+
+  console.log(articuloDeComanda);
+  function preparar() {
+    setEnPreparacion(true);
+    setEstadoArticulo(articuloDeComanda.id, "preparacion");
+  }
+
+  function finalizar() {
+    setOrdenTerminada(true);
+    setEstadoArticulo(articuloDeComanda.id, "preparado");
+    finalizarPlato();
+  }
+
   function flujoComanda() {
-    !enPreparacion
-      ? setEnPreparacion(true)
-      : (setOrdenTerminada(true), finalizarPlato());
+    !enPreparacion ? preparar() : finalizar();
   }
   return (
     <div className="bg-white w-full  border-[1px] border-slate-400 rounded-md overflow-hidden">
@@ -26,7 +43,7 @@ export default function PlatoComponente({
               : "font-medium p-1"
           }
         >
-          {plato.nombre}
+          {articuloDeComanda.plato.nombre}
         </p>
         {!ordenTerminada && (
           <div className="pl-4">

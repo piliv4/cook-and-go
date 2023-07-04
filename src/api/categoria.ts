@@ -141,7 +141,6 @@ export const getAllCategoriasPlatos = async (establecimientoId: string) => {
       .eq("esDeBebidas", false);
 
     if (error) {
-      console.log(error);
       throw new Error("Error al obtener todas las categorias por bebida");
     }
     return data;

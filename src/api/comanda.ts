@@ -2,7 +2,11 @@ import supabase from "@/server/client";
 import { Comanda } from "@/types/Comanda";
 import { Plato } from "@/types/Plato";
 import { getMesaById } from "./mesa";
-import { adaptarComanda } from "@/helpers/adaptadores";
+import {
+  adaptadorArticuloComanda,
+  adaptarComanda,
+} from "@/helpers/adaptadores";
+import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
 
 export const getComandasByEstablecimiento = async (
   establecimientoId: string
@@ -47,8 +51,8 @@ export const getComandasByEstablecimiento = async (
 };
 
 export const getAllArticulosDeComanda = async (comandaId: string) => {
+  let parsedArticulos = [] as ArticuloDeComanda[];
   try {
-    //Obtenemos todas las comandas activa de un establecimiento
     const { data, error } = await supabase
       .from("Articulo")
       .select("* ,ComandaArticulo!inner(*)")
@@ -57,7 +61,10 @@ export const getAllArticulosDeComanda = async (comandaId: string) => {
     if (error) {
       throw new Error("Error al obtener los articulos de las comandas");
     }
-    return data;
+    for (const dato of data) {
+      parsedArticulos.push(adaptadorArticuloComanda(dato));
+    }
+    return parsedArticulos;
   } catch (error) {
     console.error(error);
     throw error;
@@ -94,4 +101,20 @@ export const añadirPlato = async (platoId: String, comandaId: string) => {
       },
     ])
     .select();
+};
+
+export const setEstadoArticulo = async (id: String, estado: string) => {
+  console.log(id);
+  try {
+    const { error } = await supabase
+      .from("ComandaArticulo")
+      .update([
+        {
+          estado: estado,
+        },
+      ])
+      .eq("id", id);
+  } catch (error) {
+    console.error(error);
+  }
 };

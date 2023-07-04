@@ -187,7 +187,6 @@ export const getIngredientesPaginados = async (
         .range(ini, fin);
 
       if (error) {
-        console.log(error);
         throw new Error("Error al obtener todos los ingredientes");
       }
       return data;

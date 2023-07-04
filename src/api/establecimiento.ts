@@ -142,7 +142,6 @@ export const getAllEstablecimientosByUsuario = async (usuarioId: string) => {
       if (error) {
         throw new Error("Error al obtener todas los establecimientos");
       }
-      console.log(error);
       return data as unknown as Establecimiento[];
     } catch (error) {
       console.error(error);

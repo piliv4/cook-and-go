@@ -30,7 +30,6 @@ export default function IngredientesPagina() {
     const fetchAllIngredientes = async () => {
       let ingredientes;
       if (establecimientoGlobal.id != undefined) {
-        console.log(establecimientoGlobal.id);
         ingredientes = await getAllIngredientesByEstablecimiento(
           establecimientoGlobal.id
         );
