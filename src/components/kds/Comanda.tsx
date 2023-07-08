@@ -43,12 +43,20 @@ export default function ComandaComponente({
           table: "ComandaArticulo",
         },
         async (payload) => {
+          //COMO EL REALTIME SE TRIGEREA CADA VEZ QUE SE AÑADE ALGO
+          //SIEMPRE LO DEBEREMOS RECIBIR EN COCINA
           if (
             payload.new.comanda_id === comanda.id &&
-            !platos.some((plato) => plato.id === payload.new.articulo_id)
+            !platos.some((plato) => plato.id === payload.new.id)
           ) {
             let platoAux = await getPlatoById(payload.new.articulo_id);
-            setPlatos(platos.concat(platoAux));
+            setPlatos(
+              platos.concat({
+                id: payload.new.id,
+                estado: payload.new.estado,
+                plato: platoAux,
+              })
+            );
           }
         }
       )

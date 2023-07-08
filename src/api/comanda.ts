@@ -62,7 +62,11 @@ export const getAllArticulosDeComanda = async (comandaId: string) => {
       throw new Error("Error al obtener los articulos de las comandas");
     }
     for (const dato of data) {
-      parsedArticulos.push(adaptadorArticuloComanda(dato));
+      if (
+        dato.ComandaArticulo[0].estado == "pedido" ||
+        dato.ComandaArticulo[0].estado == "preparacion"
+      )
+        parsedArticulos.push(adaptadorArticuloComanda(dato));
     }
     return parsedArticulos;
   } catch (error) {

@@ -61,8 +61,10 @@ export default function KDS() {
               let comandaAux = adaptarComanda(payload.new);
               //Obtengo los platos
               comandaAux.platos = await getAllArticulosDeComanda(comandaAux.id);
-              //Concateno la nueva comanda
-              setComandas(comandas.concat(comandaAux));
+              //Concateno la nueva comanda solo si el nº de platos es mayor que 0
+              //esto significa que tiene articulos que debemos preparar
+              if (comandaAux.platos.length > 0)
+                setComandas(comandas.concat(comandaAux));
             }
           }
         )

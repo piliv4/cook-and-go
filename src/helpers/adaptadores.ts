@@ -13,7 +13,6 @@ export const adaptarComanda = (comandaParam: any) => {
 };
 
 export const adaptadorArticuloComanda = (articuloComandaParam: any) => {
-  console.log(articuloComandaParam);
   return {
     id: articuloComandaParam.ComandaArticulo[0].id,
     estado: articuloComandaParam.ComandaArticulo[0].estado,
