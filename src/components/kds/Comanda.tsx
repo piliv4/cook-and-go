@@ -7,11 +7,9 @@ import { getPlatoById } from "@/api/plato";
 import { setEstadoArticulo } from "@/api/comanda";
 
 export default function ComandaComponente({
-  index,
   comanda,
   finalizarComanda,
 }: {
-  index: number;
   comanda: Comanda;
   finalizarComanda: Function;
 }) {
@@ -35,10 +33,13 @@ export default function ComandaComponente({
   };
 
   function finalizarPlato(id: string) {
-    if (articulos.every((articulo) => articulo.estado === "preparado")) {
-      finalizarComanda(index);
-    } else {
-      actualizarEstadoPorId(id, "preparado");
+    console.log(comanda);
+    actualizarEstadoPorId(id, "preparado");
+    if (
+      articulos.filter((articulo) => articulo.estado === "preparado").length ==
+      articulos.length - 1
+    ) {
+      finalizarComanda(comanda.id);
     }
   }
 
@@ -80,7 +81,7 @@ export default function ComandaComponente({
     <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
       <div
         className={"w-full grid grid-cols-[70%_30%]  " && colorFondo}
-        onDoubleClick={() => finalizarComanda(index)}
+        onDoubleClick={() => finalizarComanda(comanda.id)}
       >
         <h1>Mesa {comanda.mesaNombre}</h1>
         <div className="flex">

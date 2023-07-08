@@ -15,10 +15,9 @@ export default function KDS() {
   const [comandas, setComandas] = useState<Comanda[]>([]);
   const { usuarioGlobal } = useContext(UsuarioContext);
 
-  function finalizarComanda({ index }: { index: number }) {
-    const aux = [...comandas];
-    aux.splice(index, 1);
-    setComandas(aux);
+  function finalizarComanda(id: string) {
+    const comandasAux = comandas.filter((comanda) => comanda.id !== id);
+    setComandas(comandasAux);
   }
 
   //OBTENCIÓN DE TODAS LAS COMANDAS (PRIMERA CARGA Y REFRESCOS)
@@ -89,7 +88,6 @@ export default function KDS() {
           <ComandaComponente
             key={index}
             comanda={comanda}
-            index={index}
             finalizarComanda={finalizarComanda}
           />
         ))}
