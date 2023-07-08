@@ -89,10 +89,10 @@ export default function ComandaComponente({
         </div>
       </div>
       <div className="w-full py-2 px-2 gap-2 flex flex-col ">
-        {articulos.map((plato, index) => {
+        {articulos.map((plato) => {
           return (
             <PlatoComponente
-              key={index}
+              key={plato.id}
               articuloDeComanda={plato}
               actualizarEstadoPorId={actualizarEstadoPorId}
               finalizarPlato={finalizarPlato}

@@ -108,7 +108,6 @@ export const añadirPlato = async (platoId: String, comandaId: string) => {
 };
 
 export const setEstadoArticulo = async (id: String, estado: string) => {
-  console.log(id);
   try {
     const { error } = await supabase
       .from("ComandaArticulo")

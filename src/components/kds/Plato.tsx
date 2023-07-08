@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Extra from "./Extra";
 import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
-import { setEstadoArticulo } from "@/api/comanda";
 
 export default function PlatoComponente({
   articuloDeComanda,

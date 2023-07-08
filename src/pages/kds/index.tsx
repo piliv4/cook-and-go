@@ -84,9 +84,9 @@ export default function KDS() {
         <button onClick={() => añadirComanda()}>AÑADIR COMANDA</button>
       </div>
       <div className="grid grid-cols-5 gap-3 px-3">
-        {comandas.map((comanda, index) => (
+        {comandas.map((comanda) => (
           <ComandaComponente
-            key={index}
+            key={comanda.id}
             comanda={comanda}
             finalizarComanda={finalizarComanda}
           />
