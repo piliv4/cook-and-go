@@ -78,27 +78,29 @@ export default function ComandaComponente({
   }, [articulos, setArticulos, comanda.id]);
 
   return (
-    <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
-      <div
-        className={"w-full grid grid-cols-[70%_30%]  " && colorFondo}
-        onDoubleClick={() => finalizarComanda(comanda.id)}
-      >
-        <h1>Mesa {comanda.mesaNombre}</h1>
-        <div className="flex">
-          <Timer setColorFondo={setColorFondo} />
+    <div>
+      <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
+        <div
+          className={"w-full grid grid-cols-[70%_30%]  " && colorFondo}
+          onDoubleClick={() => finalizarComanda(comanda.id)}
+        >
+          <h1>Mesa {comanda.mesaNombre}</h1>
+          <div className="flex">
+            <Timer setColorFondo={setColorFondo} />
+          </div>
         </div>
-      </div>
-      <div className="w-full py-2 px-2 gap-2 flex flex-col ">
-        {articulos.map((plato) => {
-          return (
-            <PlatoComponente
-              key={plato.id}
-              articuloDeComanda={plato}
-              actualizarEstadoPorId={actualizarEstadoPorId}
-              finalizarPlato={finalizarPlato}
-            />
-          );
-        })}
+        <div className="w-full py-2 px-2 gap-2 flex flex-col ">
+          {articulos.map((plato) => {
+            return (
+              <PlatoComponente
+                key={plato.id}
+                articuloDeComanda={plato}
+                actualizarEstadoPorId={actualizarEstadoPorId}
+                finalizarPlato={finalizarPlato}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
