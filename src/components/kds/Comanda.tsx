@@ -4,6 +4,7 @@ import Timer from "./Timer";
 import { Comanda } from "@/types/Comanda";
 import supabase from "@/server/client";
 import { getPlatoById } from "@/api/plato";
+import { setEstadoArticulo } from "@/api/comanda";
 
 export default function ComandaComponente({
   index,
@@ -14,22 +15,31 @@ export default function ComandaComponente({
   comanda: Comanda;
   finalizarComanda: Function;
 }) {
-  const [platos, setPlatos] = useState(comanda.platos);
-  const [platosActivos, setPlatosActivos] = useState(platos.length);
+  const [articulos, setArticulos] = useState(comanda.platos);
   const [colorFondo, setColorFondo] = useState("bg-emerald-300");
 
-  function finalizarPlato() {
-    if (platosActivos > 1) {
-      setPlatosActivos(platosActivos - 1);
-    } else if (platosActivos == 1) {
-      setPlatosActivos(platosActivos - 1);
+  const actualizarEstadoPorId = (id: string, nuevoEstado: string) => {
+    const nuevoArray = articulos.map((articulo) => {
+      if (articulo.id === id) {
+        //Actualizamos en la base de datos
+        setEstadoArticulo(id, nuevoEstado);
+        //Actualizamos el estado
+        return {
+          ...articulo,
+          estado: nuevoEstado,
+        };
+      }
+      return articulo;
+    });
+    setArticulos(nuevoArray);
+  };
+
+  function finalizarPlato(id: string) {
+    if (articulos.every((articulo) => articulo.estado === "preparado")) {
       finalizarComanda(index);
     } else {
-      console.log("Problema al finalizar platos");
+      actualizarEstadoPorId(id, "preparado");
     }
-    console.log(
-      "Platos activos: " + platosActivos + "de la comanada: " + index
-    );
   }
 
   useEffect(() => {
@@ -47,11 +57,11 @@ export default function ComandaComponente({
           //SIEMPRE LO DEBEREMOS RECIBIR EN COCINA
           if (
             payload.new.comanda_id === comanda.id &&
-            !platos.some((plato) => plato.id === payload.new.id)
+            !articulos.some((plato) => plato.id === payload.new.id)
           ) {
             let platoAux = await getPlatoById(payload.new.articulo_id);
-            setPlatos(
-              platos.concat({
+            setArticulos(
+              articulos.concat({
                 id: payload.new.id,
                 estado: payload.new.estado,
                 plato: platoAux,
@@ -64,7 +74,7 @@ export default function ComandaComponente({
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [platos, setPlatos, comanda.id]);
+  }, [articulos, setArticulos, comanda.id]);
 
   return (
     <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
@@ -78,12 +88,12 @@ export default function ComandaComponente({
         </div>
       </div>
       <div className="w-full py-2 px-2 gap-2 flex flex-col ">
-        {platos.map((plato, index) => {
+        {articulos.map((plato, index) => {
           return (
             <PlatoComponente
               key={index}
               articuloDeComanda={plato}
-              comandaId={comanda.id}
+              actualizarEstadoPorId={actualizarEstadoPorId}
               finalizarPlato={finalizarPlato}
             />
           );

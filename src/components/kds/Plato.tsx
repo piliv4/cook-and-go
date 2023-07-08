@@ -5,10 +5,11 @@ import { setEstadoArticulo } from "@/api/comanda";
 
 export default function PlatoComponente({
   articuloDeComanda,
+  actualizarEstadoPorId,
   finalizarPlato,
 }: {
   articuloDeComanda: ArticuloDeComanda;
-  comandaId: string;
+  actualizarEstadoPorId: Function;
   finalizarPlato: Function;
 }) {
   const [enPreparacion, setEnPreparacion] = useState(
@@ -18,16 +19,14 @@ export default function PlatoComponente({
     articuloDeComanda.estado == "preparado"
   );
 
-  console.log(articuloDeComanda);
   function preparar() {
     setEnPreparacion(true);
-    setEstadoArticulo(articuloDeComanda.id, "preparacion");
+    actualizarEstadoPorId(articuloDeComanda.id, "preparacion");
   }
 
   function finalizar() {
     setOrdenTerminada(true);
-    setEstadoArticulo(articuloDeComanda.id, "preparado");
-    finalizarPlato();
+    finalizarPlato(articuloDeComanda.id);
   }
 
   function flujoComanda() {

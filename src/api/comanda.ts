@@ -34,8 +34,8 @@ export const getComandasByEstablecimiento = async (
           comandaAux.mesaNombre = (await getMesaById(comanda.mesa_id)).numero;
           //Obtenemos los platos de la comanda
           comandaAux.platos = await getAllArticulosDeComanda(comanda.id);
-          //Añadimos la comanda
-          parsedComandas.push(comandaAux);
+          //Añadimos la comanda solo si tiene platos para preparar
+          if (comandaAux.platos.length > 0) parsedComandas.push(comandaAux);
         } catch (error) {
           console.error(error);
           throw error;
