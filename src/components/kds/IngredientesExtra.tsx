@@ -21,14 +21,16 @@ export default function IngredientesExtra({
   return (
     <>
       {ingredientes.length > 0 && (
-        <ul>
-          {ingredientes.map((ingrediente) => (
-            <li key={ingrediente.id}>
-              <span>-</span>
-              {ingrediente.nombre}{" "}
-            </li>
-          ))}
-        </ul>
+        <div className="p-1 px-2">
+          <p className="font-medium">Extras:</p>
+          <ul className="pl-2">
+            {ingredientes.map((ingrediente) => (
+              <li key={ingrediente.id}>
+                <p className="text-sm">- {ingrediente.nombre} </p>
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </>
   );

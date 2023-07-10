@@ -14,7 +14,7 @@ export default function ComandaComponente({
   finalizarComanda: Function;
 }) {
   const [articulos, setArticulos] = useState(comanda.platos);
-  const [colorFondo, setColorFondo] = useState("bg-emerald-300");
+  const [colorFondo, setColorFondo] = useState("bg-[#6ff284]");
 
   const actualizarEstadoPorId = (id: string, nuevoEstado: string) => {
     const nuevoArray = articulos.map((articulo) => {
@@ -79,13 +79,13 @@ export default function ComandaComponente({
 
   return (
     <div>
-      <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-400">
+      <div className="rounded-md shadow-md border-[1px]  overflow-hidden border-gray-200 bg-gray-200">
         <div
-          className={"w-full grid grid-cols-[70%_30%]  " && colorFondo}
+          className={"w-full flex  " && colorFondo}
           onDoubleClick={() => finalizarComanda(comanda.id)}
         >
-          <h1>Mesa {comanda.mesaNombre}</h1>
-          <div className="flex">
+          <div className="mx-3 ">
+            <h1 className="font-bold">Mesa {comanda.mesaNombre}</h1>
             <Timer setColorFondo={setColorFondo} />
           </div>
         </div>

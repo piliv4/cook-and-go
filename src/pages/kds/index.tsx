@@ -77,9 +77,9 @@ export default function KDS() {
 
   return (
     <div className="max-w-xl min-w-full">
-      <div className="bg-blue-600 py-3 grid grid-cols-[80%_20%] mb-4">
-        <h1 className="font-bold text-lg px-2 text-white">
-          KDS (kitchen dispay system)
+      <div className="bg-primaryGreen rounded-b-full py-3 grid grid-cols-[80%_20%] mb-4">
+        <h1 className="font-bold text-lg pl-10 text-white">
+          KDS (kitchen display system)
         </h1>
         <button onClick={() => añadirComanda()}>AÑADIR COMANDA</button>
       </div>

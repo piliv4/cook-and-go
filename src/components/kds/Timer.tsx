@@ -6,7 +6,7 @@ export default function Timer({ setColorFondo }: { setColorFondo: Function }) {
     setTimeout(() => setCounter(counter + 1), 1000);
 
     if (1 <= Math.floor(counter / 60) && Math.floor(counter / 60) < 5) {
-      setColorFondo("bg-amber-500");
+      setColorFondo("bg-[#faf36e]");
     } else if (Math.floor(counter / 60) >= 5) {
       setColorFondo("bg-red-500");
     }

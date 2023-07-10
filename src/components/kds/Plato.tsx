@@ -3,7 +3,7 @@ import Extra from "./Extra";
 import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
 import ConsultarIngredientes from "./ConsultarIngredientes";
 import IngredientesExtra from "./IngredientesExtra";
-import { BsEye } from "react-icons/bs";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function PlatoComponente({
   articuloDeComanda,
@@ -21,6 +21,8 @@ export default function PlatoComponente({
     articuloDeComanda.estado == "preparado"
   );
 
+  const [verIngredientes, setVerIngredientes] = useState(false);
+
   function preparar() {
     setEnPreparacion(true);
     actualizarEstadoPorId(articuloDeComanda.id, "preparacion");
@@ -35,31 +37,38 @@ export default function PlatoComponente({
     !enPreparacion ? preparar() : finalizar();
   }
   return (
-    <div className="bg-white w-full  border-[1px] border-slate-400 rounded-md overflow-hidden">
+    <div className="bg-white w-full  border-[1px] border-slate-600 rounded-md overflow-hidden">
       <div
         className={
           ordenTerminada
             ? "font-medium p-1 font line-through"
-            : "font-medium p-1 border-b-[1px] border-slate-400 flex items-center"
+            : "font-medium p-1 border-b-[1px] border-slate-400 flex items-center "
         }
       >
-        <p className="w-full">{articuloDeComanda.plato.nombre}</p>
-        {!ordenTerminada && <BsEye />}
+        <p className="w-full font-bold ">{articuloDeComanda.plato.nombre}</p>
+        {!ordenTerminada &&
+          (verIngredientes ? (
+            <BsEyeSlash onClick={() => setVerIngredientes(!verIngredientes)} />
+          ) : (
+            <BsEye onClick={() => setVerIngredientes(!verIngredientes)} />
+          ))}
       </div>
-      <div className="p-1">
-        {!ordenTerminada && (
-          <div>
-            <ConsultarIngredientes platoId={articuloDeComanda.plato.id} />
-            <IngredientesExtra articuloComandaId={articuloDeComanda.id} />
-          </div>
-        )}
-      </div>
+      {!ordenTerminada && (
+        <div>
+          <ConsultarIngredientes
+            platoId={articuloDeComanda.plato.id}
+            verIngredientes={verIngredientes}
+          />
+
+          <IngredientesExtra articuloComandaId={articuloDeComanda.id} />
+        </div>
+      )}
       {!ordenTerminada && (
         <button
           className={
             !enPreparacion
-              ? "bg-green-400 w-full font-medium text-white"
-              : "bg-rose-600 w-full font-medium text-white"
+              ? "bg-secondaryGreen w-full font-medium text-white"
+              : "bg-primaryGreen w-full font-medium text-white"
           }
           onClick={() => flujoComanda()}
         >
