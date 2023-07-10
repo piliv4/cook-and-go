@@ -216,11 +216,24 @@ export const getIngredientesByPlato = async (id: string) => {
         ingrediente && ingredientes.push(ingrediente[0] as Ingrediente);
       }
     }
-
     if (error) {
       throw new Error("Error al obtener los ingredientes por plato");
     }
     return ingredientes;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getIngredientesExtra = async (articuloComandaId: string) => {
+  try {
+    const { data, error } = await supabase
+      .from("Ingrediente")
+      .select("* ,ComandaArticuloIngrediente!inner(*)")
+      .eq("ComandaArticuloIngrediente.comanda_articulo_id", articuloComandaId);
+    if (!error) return data;
+    return [];
   } catch (error) {
     console.error(error);
     throw error;

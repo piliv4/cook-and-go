@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Extra from "./Extra";
 import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
+import ConsultarIngredientes from "./ConsultarIngredientes";
+import IngredientesExtra from "./IngredientesExtra";
+import { BsEye } from "react-icons/bs";
 
 export default function PlatoComponente({
   articuloDeComanda,
@@ -33,21 +36,21 @@ export default function PlatoComponente({
   }
   return (
     <div className="bg-white w-full  border-[1px] border-slate-400 rounded-md overflow-hidden">
+      <div
+        className={
+          ordenTerminada
+            ? "font-medium p-1 font line-through"
+            : "font-medium p-1 border-b-[1px] border-slate-400 flex items-center"
+        }
+      >
+        <p className="w-full">{articuloDeComanda.plato.nombre}</p>
+        {!ordenTerminada && <BsEye />}
+      </div>
       <div className="p-1">
-        <p
-          className={
-            ordenTerminada
-              ? "font-medium p-1 font line-through"
-              : "font-medium p-1"
-          }
-        >
-          {articuloDeComanda.plato.nombre}
-        </p>
         {!ordenTerminada && (
-          <div className="pl-4">
-            <Extra />
-            <Extra />
-            <Extra />
+          <div>
+            <ConsultarIngredientes platoId={articuloDeComanda.plato.id} />
+            <IngredientesExtra articuloComandaId={articuloDeComanda.id} />
           </div>
         )}
       </div>
