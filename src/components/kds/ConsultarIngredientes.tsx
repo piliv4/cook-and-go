@@ -27,6 +27,7 @@ export default function ConsultarIngredientes({
       setIngredientes(ingredientesAux);
     };
     fetchIngredientes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [platoId]);
 
   //NOS PONEMOS A LA ESCUCHA DE MODIFICACIONES DEL STOCK
