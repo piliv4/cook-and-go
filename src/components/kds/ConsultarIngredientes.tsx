@@ -80,7 +80,7 @@ export default function ConsultarIngredientes({
       setIngredientes(ingredientesAux);
     };
     fetchIngredientes();
-  }, [platoId]);
+  }, [platoId, setErrorPlato]);
 
   return (
     <>
@@ -101,7 +101,7 @@ export default function ConsultarIngredientes({
               {ingredientes.map((ingrediente) => (
                 <IngredienteCheckBox
                   ingrediente={ingrediente}
-                  key={ingrediente.id}
+                  key={ingrediente.id + ingrediente.stock}
                 />
               ))}
             </ul>
