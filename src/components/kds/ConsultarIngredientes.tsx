@@ -2,13 +2,16 @@ import { getIngredientesByPlato } from "@/api/ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
 import { useEffect, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
+import IngredienteCheckBox from "./IngredienteCheckBox";
 
 export default function ConsultarIngredientes({
   platoId,
   verIngredientes,
+  setErrorPlato,
 }: {
   platoId: string;
   verIngredientes: boolean;
+  setErrorPlato: Function;
 }) {
   const [ingredientes, setIngredientes] = useState<Ingrediente[]>([]);
   const [mostrarInfo, setMostrarInfo] = useState(false);
@@ -38,10 +41,11 @@ export default function ConsultarIngredientes({
           {ingredientes.length > 0 ? (
             <ul className="pl-2">
               {ingredientes.map((ingrediente) => (
-                <li key={ingrediente.id} className="flex justify-between pb-1">
-                  <input type="checkbox"></input>
-                  <p className="text-sm flex-1">{ingrediente.nombre}</p>
-                </li>
+                <IngredienteCheckBox
+                  ingrediente={ingrediente}
+                  setErrorPlato={setErrorPlato}
+                  key={ingrediente.id}
+                />
               ))}
             </ul>
           ) : (

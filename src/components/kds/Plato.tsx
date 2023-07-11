@@ -3,7 +3,7 @@ import Extra from "./Extra";
 import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
 import ConsultarIngredientes from "./ConsultarIngredientes";
 import IngredientesExtra from "./IngredientesExtra";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { BsExclamationTriangleFill, BsEye, BsEyeSlash } from "react-icons/bs";
 
 export default function PlatoComponente({
   articuloDeComanda,
@@ -17,6 +17,7 @@ export default function PlatoComponente({
   const [enPreparacion, setEnPreparacion] = useState(
     articuloDeComanda.estado == "preparacion"
   );
+  const [errorPlato, setErrorPlato] = useState(true);
   const [ordenTerminada, setOrdenTerminada] = useState(
     articuloDeComanda.estado == "preparado"
   );
@@ -33,6 +34,10 @@ export default function PlatoComponente({
     finalizarPlato(articuloDeComanda.id);
   }
 
+  function puedoPrepararPlato(valor: boolean) {
+    setErrorPlato(errorPlato && valor);
+  }
+
   function flujoComanda() {
     !enPreparacion ? preparar() : finalizar();
   }
@@ -42,10 +47,11 @@ export default function PlatoComponente({
         className={
           ordenTerminada
             ? "font-medium p-1 font line-through"
-            : "font-medium p-1 border-b-[1px] border-slate-400 flex items-center "
+            : "font-medium p-1 border-b-[1px] border-slate-400 flex gap-1 items-center "
         }
       >
         <p className="w-full font-bold ">{articuloDeComanda.plato.nombre}</p>
+        {!errorPlato && <BsExclamationTriangleFill />}
         {!ordenTerminada &&
           (verIngredientes ? (
             <BsEyeSlash onClick={() => setVerIngredientes(!verIngredientes)} />
@@ -58,6 +64,7 @@ export default function PlatoComponente({
           <ConsultarIngredientes
             platoId={articuloDeComanda.plato.id}
             verIngredientes={verIngredientes}
+            setErrorPlato={puedoPrepararPlato}
           />
 
           <IngredientesExtra articuloComandaId={articuloDeComanda.id} />

@@ -1,7 +1,25 @@
 import { useEffect, useState } from "react";
 
-export default function Timer({ setColorFondo }: { setColorFondo: Function }) {
-  const [counter, setCounter] = useState(0);
+export default function Timer({
+  setColorFondo,
+  fechaIni,
+}: {
+  setColorFondo: Function;
+  fechaIni: string;
+}) {
+  const fechaActual: Date = new Date();
+
+  // Obtener la fecha de origen en formato ISO 8601
+  const fechaOrigen: Date = new Date(fechaIni);
+
+  // Obtener la diferencia en milisegundos entre la fecha actual y la fecha de origen
+  const diferenciaMilisegundos: number =
+    fechaActual.getTime() - fechaOrigen.getTime();
+
+  // Obtener la diferencia en segundos
+  const diferenciaSegundos: number = Math.floor(diferenciaMilisegundos / 1000);
+
+  const [counter, setCounter] = useState(diferenciaSegundos);
   useEffect(() => {
     setTimeout(() => setCounter(counter + 1), 1000);
 

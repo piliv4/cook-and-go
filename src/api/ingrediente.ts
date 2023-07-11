@@ -239,3 +239,18 @@ export const getIngredientesExtra = async (articuloComandaId: string) => {
     throw error;
   }
 };
+
+export const cambiarStockIngrediente = async (
+  ingredienteId: string,
+  stock: number
+) => {
+  try {
+    const { data, error } = await supabase
+      .from("Ingrediente")
+      .update([{ stock: stock }])
+      .eq("id", ingredienteId);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

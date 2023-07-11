@@ -86,7 +86,7 @@ export default function ComandaComponente({
         >
           <div className="mx-3 ">
             <h1 className="font-bold">Mesa {comanda.mesaNombre}</h1>
-            <Timer setColorFondo={setColorFondo} />
+            <Timer setColorFondo={setColorFondo} fechaIni={comanda.fechaIni} />
           </div>
         </div>
         <div className="w-full py-2 px-2 gap-2 flex flex-col ">
