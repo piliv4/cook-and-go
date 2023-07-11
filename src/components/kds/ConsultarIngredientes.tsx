@@ -42,7 +42,6 @@ export default function ConsultarIngredientes({
           table: "Ingrediente",
         },
         async (payload) => {
-          console.log(payload);
           //Si alguno de los ingredientes modificados está dentro de nuestro
           //array de ingredientes
           if (ingredientes.some((e) => e.id == payload.new.id)) {
