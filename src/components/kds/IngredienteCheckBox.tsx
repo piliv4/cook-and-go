@@ -4,13 +4,10 @@ import { useState } from "react";
 
 export default function IngredienteCheckBox({
   ingrediente,
-  setErrorPlato,
 }: {
-  setErrorPlato: Function;
   ingrediente: Ingrediente;
 }) {
   const [activo, setActivo] = useState(ingrediente.stock > 0);
-  setErrorPlato(!activo);
   return (
     <li key={ingrediente.id} className="flex justify-between pb-1">
       <input
