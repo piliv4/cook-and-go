@@ -9,11 +9,14 @@ import { UsuarioContext } from "@/context/UsuarioContext";
 import { adaptarComanda } from "@/helpers/adaptadores";
 import supabase from "@/server/client";
 import { Comanda } from "@/types/Comanda";
+import { Empleado } from "@/types/Empleado";
+import router from "next/router";
 import { useContext, useEffect, useState } from "react";
 
 export default function KDS() {
   const [comandas, setComandas] = useState<Comanda[]>([]);
   const { usuarioGlobal } = useContext(UsuarioContext);
+  const { setUsuarioGlobal } = useContext(UsuarioContext);
 
   function finalizarComanda(id: string) {
     const comandasAux = comandas.filter((comanda) => comanda.id !== id);
@@ -77,13 +80,22 @@ export default function KDS() {
 
   return (
     <div className="max-w-xl min-w-full">
-      <div className="bg-primaryGreen rounded-b-full py-3 grid grid-cols-[80%_20%] mb-4">
-        <h1 className="font-bold text-lg pl-10 text-white">
-          KDS (kitchen display system)
+      <div className="bg-primaryGreen rounded-b-full py-2 sm:py-3  flex mb-4">
+        <h1 className="font-bold text-lg pl-5 sm:pl-10 text-white flex-1">
+          KDS{" "}
+          <span className="invisible sm:visible">(kitchen display system)</span>
         </h1>
-        <button onClick={() => añadirComanda()}>AÑADIR COMANDA</button>
+        <button
+          className="text-white md:pr-8 pr-4"
+          onClick={() => {
+            setUsuarioGlobal({} as Empleado);
+            router.push("/login");
+          }}
+        >
+          Cerrar sesión
+        </button>
       </div>
-      <div className="grid grid-cols-5 gap-3 px-3">
+      <div className="grid grid-cols-2 sm:grod-cols-4 md:grid-cols-5 gap-3 px-3">
         {comandas.map((comanda) => (
           <ComandaComponente
             key={comanda.id}
