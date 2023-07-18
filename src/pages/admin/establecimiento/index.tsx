@@ -2,6 +2,7 @@ import {
   getAllEstablecimientos,
   getAllEstablecimientosByUsuario,
 } from "@/api/establecimiento";
+import CrearEstablecimientoCard from "@/components/admins/establecimiento/CrearEstablecimientoCard";
 import EstablecimientoCard from "@/components/admins/establecimiento/EstablecimientoCard";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
@@ -40,21 +41,14 @@ export default function EstablecimientoPage() {
   return (
     <UsuarioAutorizado>
       <AdministradorAutorizado>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 sm:gap-4">
           <CabeceraPagina>
-            <h1 className="text-2xl font-black ">Todos mis establecimiento</h1>
-            <div className="flex col-span-2 justify-end">
-              <button
-                className="self-end rounded-full border h-full px-11 font-black bg-primaryOrange text-white hover:scale-105 transition duration-100 "
-                onClick={() =>
-                  router.push("/admin/establecimiento/crearEstablecimiento")
-                }
-              >
-                Crear establecimiento
-              </button>
-            </div>
+            <h1 className=" text-xl sm:text-2xl font-black sm:grid-cols-1 grid-cols-3">
+              Todos mis establecimientos
+            </h1>
           </CabeceraPagina>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
+            <CrearEstablecimientoCard />
             {establecimientos.map((establecimiento) => (
               <EstablecimientoCard
                 establecimiento={establecimiento}

@@ -9,6 +9,7 @@ import { getAllCategoriasByEstablecimiento } from "@/api/categoria";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
+import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 
 export default function CategoriaHomePage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -34,11 +35,13 @@ export default function CategoriaHomePage() {
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <div className="flex flex-col gap-4 ">
-            <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
-              <h1 className="text-2xl font-black ">Todas mis categorias</h1>
+          <div className="flex flex-col gap-2 sm:gap-4">
+            <CabeceraPagina>
+              <h1 className=" text-xl sm:text-2xl font-black col-span-2">
+                Todas mis categorias
+              </h1>
               <Buscador />
-            </div>
+            </CabeceraPagina>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
               <CrearCategoriaCard />
               {categorias.map((categoria) => (

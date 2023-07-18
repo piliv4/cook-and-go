@@ -18,7 +18,7 @@ const Body = ({ children }: { children: React.ReactNode }) => {
         <>
           <AdminHeader />
           <div className="bg-background  min-h-[calc(100vh-60px)]">
-            <div className="mx-[36px] pt-6 ">{children}</div>
+            <div className="mx-[18px] sm:mx-[36px] pt-6 ">{children}</div>
           </div>
         </>
       ) : (

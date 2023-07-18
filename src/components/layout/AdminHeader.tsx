@@ -18,11 +18,11 @@ export default function AdminHeader() {
   return (
     <div className="flex flex-row justify-center bg-background">
       <div className="bg-primaryGreen py-2 px-8 flex flex-row mb-4 gap-x-3 rounded-b-full w-full  text-white ">
-        <h1 className="font-bold text-lg px-2 text-white">
-          <Link href={"/"}>Cook&Go</Link>
+        <h1 className=" flex-1 sm:flex-none font-bold text-lg px-2 text-white">
+          <p>Cook&Go</p>
         </h1>
         {establecimientoGlobal.id != undefined ? (
-          <div className="mt-[3px] gap-x-3 flex flex-row w-[70%] lg:w-[80%]">
+          <div className=" flex-1 mt-[3px] gap-x-3 hidden  sm:flex">
             <Link
               href={"/admin/categoria"}
               className={` px-2 pt-[1px] font-light text-sm transition duration-200 hover:underline underline-offset-[5px]  ${
@@ -78,7 +78,7 @@ export default function AdminHeader() {
           </p>
         )}
 
-        <div className="mt-[3px] flex flex-row w-fit  justify-end ">
+        <div className=" mt-[3px] flex flex-row w-fit  justify-end ">
           <Link
             className="pr-2 font-light w-full"
             href={"/admin/establecimiento/" + establecimientoGlobal.id}
