@@ -73,7 +73,7 @@ const IngredienteRow = ({
           </InputErrorEnvoltorio>
         )}
       </td>
-      <td className="border border-primaryGreen pl-2">
+      <td className="border border-primaryGreen pl-2 sm:block hidden">
         {indexGlobal != index ? (
           <p>{ingrediente.descripcion}</p>
         ) : (
@@ -93,7 +93,7 @@ const IngredienteRow = ({
         )}
       </td>
 
-      <td className="border border-primaryGreen pl-2">
+      <td className="border border-primaryGreen pl-2 sm:block hidden">
         {indexGlobal != index ? (
           <p>{ingrediente.precioSuplemento}</p>
         ) : (

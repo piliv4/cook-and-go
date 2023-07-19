@@ -23,7 +23,7 @@ export default function CrearEmpleado() {
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <EmpleadoFormulario empleadoProp={null} crearEditar={crear} />;
+          <EmpleadoFormulario empleadoProp={null} crearEditar={crear} />
         </VerificarEstablecimiento>
       </AdministradorAutorizado>
     </UsuarioAutorizado>

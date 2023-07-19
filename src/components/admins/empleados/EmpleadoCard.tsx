@@ -38,7 +38,7 @@ export default function EmpleadoCard({ empleado }: { empleado: Empleado }) {
           />
         </div>
         <Link
-          className="font-medium hover:underline h-full"
+          className="sm:font-medium hover:underline h-full"
           href={"/admin/empleado/" + empleado.id}
         >
           {empleado.nombre}

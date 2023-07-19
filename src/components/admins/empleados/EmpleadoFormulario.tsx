@@ -51,7 +51,7 @@ const EmpleadoFormulario = ({
   }
 
   return (
-    <div className="px-48 ">
+    <div className="sm:px-48 ">
       <CabeceraPagina>
         <h1 className="text-2xl col-span-full text-center font-black  uppercase ">
           {empleadoProp ? "Editar empleado" : "Crear un empleado"}

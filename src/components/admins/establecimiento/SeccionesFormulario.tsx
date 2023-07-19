@@ -38,7 +38,7 @@ const SeccionesFormulario = ({
       </div>
       <button
         onClick={() => anyadirSeccion()}
-        className="mt-2 mx-3 w-full text-center font-black bg-primaryOrange text-lg text-white uppercase rounded-full py-2"
+        className="mt-2 sm:mx-3 w-full text-center font-black bg-primaryOrange text-lg text-white uppercase rounded-full py-2"
       >
         Añadir sección
       </button>

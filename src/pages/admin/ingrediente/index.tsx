@@ -96,10 +96,12 @@ export default function IngredientesPagina() {
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-[80%_20%] w-full pb-3 border-primaryGreen border-double border-b-4">
-              <h1 className="text-2xl font-black ">Mis ingredientes</h1>
+            <div className=" flex flex-col sm:flex-row w-full pb-3 border-primaryGreen border-double border-b-4">
+              <h1 className="flex-1 text-xl sm:text-2xl font-black ">
+                Mis ingredientes
+              </h1>
               <Link
-                className="bg-secondaryGreen py-1 px-2 rounded-full justify-center align-middle items-center text-white uppercase hover:bg-secondaryOrange font-bold"
+                className="bg-secondaryGreen  py-1 px-2 rounded-full justify-center align-middle items-center text-white uppercase hover:bg-secondaryOrange font-bold"
                 href={"/listaDeLaCompra/" + establecimientoGlobal.id}
               >
                 Generar lista de la compra

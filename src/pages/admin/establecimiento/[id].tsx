@@ -31,12 +31,12 @@ export default function EditarEstablecimiento({
   return (
     <UsuarioAutorizado>
       <AdministradorAutorizado>
-        <div className="mx-48">
+        <div className="sm:mx-48">
           <CabeceraPagina>
-            <div className="col-span-3 flex -mb-3">
-              <h1 className="text-2xl font-black uppercase w-full text-center">
+            <div className="col-span-3 flex sm:-mb-3">
+              <h1 className="text-xl sm:text-2xl font-black uppercase w-full text-center">
                 {establecimiento.nombre}
-                <span className="text-xl font-extrabold normal-case col-span-2">
+                <span className="text-xl font-extrabold normal-case col-span-2 sm:flex hidden">
                   {" - "}
                   {establecimiento.descripcion}
                 </span>
@@ -61,7 +61,7 @@ export default function EditarEstablecimiento({
             </div>
           </CabeceraPagina>
           {/* Información general */}
-          <div className="grid grid-cols-2 pt-2 gap-x-8">
+          <div className="grid grid-cols-1 sm:gap-y-0 gap-y-2 sm:grid-cols-2 pt-2 gap-x-8">
             <div className="relative py-40">
               <Image
                 src={establecimiento.imagenURL}
@@ -110,7 +110,7 @@ export default function EditarEstablecimiento({
                       </Link>
                     </div>
                     <button
-                      className="w-full bg-primaryOrange rounded-full py-2 uppercase text-white font-black hover:bg-secondaryOrange"
+                      className="w-full bg-primaryOrange rounded-full sm:my-0 my-1 py-1 sm:py-2 uppercase text-white font-black hover:bg-secondaryOrange"
                       onClick={() => setEstablecimientoGlobal(establecimiento)}
                     >
                       {establecimientoGlobal.id == establecimiento.id
@@ -127,7 +127,7 @@ export default function EditarEstablecimiento({
             <div className="border-primaryGreen border-b-[2px] text-xl font-black uppercase">
               Secciones:
             </div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {establecimiento.secciones.map((seccion) => (
                 <div key={seccion.id}>
                   <div className="flex flex-row ">

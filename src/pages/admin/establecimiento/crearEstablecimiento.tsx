@@ -22,7 +22,7 @@ export default function CrearEstablecimiento() {
   return (
     <UsuarioAutorizado>
       <AdministradorAutorizado>
-        <LocalFormulario establecimientoProp={null} crearEditar={crear} />;
+        <LocalFormulario establecimientoProp={null} crearEditar={crear} />
       </AdministradorAutorizado>
     </UsuarioAutorizado>
   );

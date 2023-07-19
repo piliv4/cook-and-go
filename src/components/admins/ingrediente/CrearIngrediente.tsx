@@ -51,9 +51,9 @@ const CrearIngrediente = () => {
 
   return (
     <div>
-      <h1 className="text-lg pl-6 font-black">Nuevo ingrediente</h1>
-      <div className="flex flex-row gap-x-4 font-light pl-6 w-full bg-primaryGreen  border-[1px] border-pr rounded-full border-primaryGreen ">
-        <div className="w-full mt-1">
+      <h1 className="text-md sm:text-lg pl-6 font-black">Nuevo ingrediente</h1>
+      <div className="flex flex-col sm:flex-row gap-x-4 font-light sm:pl-6 w-full bg-primaryGreen  border-[1px] border-pr rounded-xl sm:rounded-full border-primaryGreen sm:px-0 px-4">
+        <div className="w-full mt-1 ">
           <p className="text-white">Nombre:</p>
           <InputErrorEnvoltorio error={errorNombre}>
             <input
@@ -75,7 +75,7 @@ const CrearIngrediente = () => {
           <textarea
             placeholder="Introduce una breve descripción"
             rows={1}
-            className="pl-2 pr-20 border-[1px] rounded-md overflow-hidden resize-none focus:outline-none"
+            className="w-full sm:w-auto sm:pl-2 sm:pr-20 border-[1px] rounded-md overflow-hidden resize-none focus:outline-none"
             value={ingrediente.descripcion}
             onChange={(e) =>
               setIngrediente({
@@ -121,7 +121,7 @@ const CrearIngrediente = () => {
         <div className="w-full mt-1">
           <p className="text-white">Unidad de medida:</p>
           <select
-            className="pl-10 pr-2  border-[1px] rounded-md text-right "
+            className="w-full sm:w-auto sm:pl-10 sm:pr-2  border-[1px] rounded-md text-right "
             onChange={(e) =>
               setIngrediente({
                 ...ingrediente,
@@ -137,7 +137,7 @@ const CrearIngrediente = () => {
           </select>
         </div>
         <button
-          className="w-full border-[1px] py-1 bg-primaryOrange border-primaryGreen text-white font-black rounded-full  m-4 mt-5 hover:bg-secondaryOrange "
+          className="w-full border-[1px] py-1 bg-primaryOrange border-primaryGreen text-white font-black rounded-full  sm:m-4 sm:mt-5 hover:bg-secondaryOrange my-2"
           onClick={() => crear()}
         >
           Crear Ingrediente

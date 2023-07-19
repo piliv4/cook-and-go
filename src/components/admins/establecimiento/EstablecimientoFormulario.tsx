@@ -76,14 +76,14 @@ const EstablecimientoFormulario = ({
   }
 
   return (
-    <div className="px-20 ">
+    <div className="sm:px-20 ">
       <CabeceraPagina>
-        <h1 className="text-2xl font-black  uppercase  ">
+        <h1 className="text-xl sm:text-2xl font-black  uppercase  ">
           {establecimientoProp
             ? "Editar establecimiento"
             : "Crear un establecimiento"}
         </h1>
-        <div className=" flex flex-row justify-end gap-x-2 font-black col-span-2">
+        <div className="hidden sm:flex flex-row justify-end gap-x-2 font-black col-span-2">
           <button
             className=" ml-3  rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
             onClick={() => router.push("/admin/establecimiento")}
@@ -296,6 +296,20 @@ const EstablecimientoFormulario = ({
           establecimiento={establecimiento}
           setEstablecimiento={setEstablecimiento}
         />
+      </div>
+      <div className="sm:hidden flex flex-row justify-end gap-x-4 px-4 my-4 font-black col-span-2">
+        <button
+          className="flex-1  rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          onClick={() => router.push("/admin/establecimiento")}
+        >
+          Cancelar
+        </button>
+        <button
+          className="flex-1  rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          onClick={() => guardar()}
+        >
+          Guardar
+        </button>
       </div>
     </div>
   );
