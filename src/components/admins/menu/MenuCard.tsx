@@ -18,7 +18,7 @@ export default function MenuCard({ menu }: { menu: Menu }) {
 
   return (
     <div
-      className="bg-white border grid grid-cols-[30%_70%] border-gray-200 rounded-lg  hover:scale-105 transition duration-150 overflow-hidden relative "
+      className="bg-white border grid grid-cols-[30%_70%] border-gray-200 rounded-lg  sm:hover:scale-105 transition duration-150 overflow-hidden relative "
       key={menu.id}
     >
       <div className="flex justify-center items-center bg-primaryOrange   border-r-4 border-double ">

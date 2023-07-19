@@ -61,7 +61,7 @@ const SeleccionarIngredientes = ({
           .slice(0, 3)
           .map((ingrediente) => (
             <div
-              className="grid grid-cols-[80%_20%] cursor-pointer pl-4  text-sm hover:bg-terciaryIntermediate"
+              className="flex flex-row cursor-pointer pl-4  text-sm hover:bg-terciaryIntermediate"
               key={ingrediente.id}
               onClick={() =>
                 setValue(
@@ -70,7 +70,7 @@ const SeleccionarIngredientes = ({
                 )
               }
             >
-              <p>
+              <p className="flex-1">
                 {ingrediente.nombre.charAt(0).toUpperCase() +
                   ingrediente.nombre.slice(1)}
               </p>

@@ -91,9 +91,9 @@ const MenuFormulario = ({
     return true;
   }
   return (
-    <div className="px-48 ">
+    <div className="sm:px-48 ">
       <CabeceraPagina>
-        <h1 className="text-2xl font-black col-span-3 text-center uppercase ">
+        <h1 className="text-xl sm:text-2xl font-black col-span-3 text-center uppercase ">
           Crear un nuevo menú
         </h1>
       </CabeceraPagina>
@@ -102,7 +102,7 @@ const MenuFormulario = ({
           INFORMACIÓN GENERAL
         </h1>
         <div>
-          <div className="flex flex-col gap-y-[1px] w-full pt-2">
+          <div className="flex flex-col gap-y-[1px] w-full sm:pt-2">
             <p className="">Nombre</p>
             <InputErrorEnvoltorio error={errorNombre}>
               <input
@@ -114,7 +114,7 @@ const MenuFormulario = ({
             </InputErrorEnvoltorio>
             <MensajeError texto={errorNombre} />
           </div>
-          <div className="flex pt-2 flex-row gap-x-4">
+          <div className="flex sm:pt-2 sm:flex-row flex-col gap-x-4">
             <div className="flex flex-col gap-y-[1px] w-full">
               <p className="">Precio</p>
               <InputErrorEnvoltorio error={errorPrecio}>
@@ -197,18 +197,18 @@ const MenuFormulario = ({
           </label>
         </div>
       </div>
-      <div className=" flex flex-row justify-end gap-x-2 font-black py-4">
+      <div className=" flex flex-row justify-end sm:gap-x-2 font-black py-4">
         <button
-          className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
-          onClick={() => guardar()}
-        >
-          Guardar
-        </button>
-        <button
-          className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          className=" ml-3 mt-3 rounded-full border border-primaryOrange bg-transparent px-2 hover:scale-105 transition duration-100 sm:mt-5  sm:px-3"
           onClick={() => router.push("/admin/menu")}
         >
           Cancelar
+        </button>
+        <button
+          className=" ml-3 mt-3 rounded-full border text-white border-primaryOrange bg-primaryOrange px-2 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          onClick={() => guardar()}
+        >
+          Guardar
         </button>
       </div>
     </div>
