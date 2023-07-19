@@ -79,11 +79,13 @@ export default function PlatoPage() {
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 sm:gap-4">
             <CabeceraPagina>
-              <h1 className="text-2xl font-black ">Todos mis platos</h1>
+              <h1 className=" text-xl sm:text-2xl font-black ">
+                Todos mis platos
+              </h1>
               <select
-                className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
+                className="rounded-full border-[1px] sm:my-0 my-2 border-primaryOrange mr-2 outline-none"
                 onChange={(e) => setCategoriaSeleccionada(e.target.value)}
               >
                 <option value={"-1"}>Todas mis categorias</option>

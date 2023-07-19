@@ -36,9 +36,9 @@ const DetallesPlato = ({
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <div className="mx-48">
+          <div className="sm:mx-48">
             <CabeceraPagina>
-              <h1 className="text-2xl font-black uppercase col-span-2">
+              <h1 className="text-xl sm:mb-0 -mb-5 sm:text-2xl font-black uppercase col-span-2">
                 {plato.nombre}
               </h1>
               <div className="w-full flex flex-row gap-2 justify-end">
@@ -56,7 +56,7 @@ const DetallesPlato = ({
               </div>
             </CabeceraPagina>
             {/* Información general */}
-            <div className="grid grid-cols-2 pt-2 gap-x-8">
+            <div className="grid grid-cols-1 gap-y-2 sm:gap-y-0 sm:grid-cols-2 pt-2 gap-x-8">
               <div className="relative py-40">
                 <Image
                   src={plato.imagenURL}
@@ -70,7 +70,7 @@ const DetallesPlato = ({
                 <div className="w-full bg-secondaryGreen py-2 text-center text-lg font-black uppercase">
                   Información general del plato
                 </div>
-                <div className="p-4 gap-8 flex flex-col h-full">
+                <div className="p-4 gap-4 sm:gap-8  flex flex-col h-full">
                   <div className="flex flex-row border-b-[2px] border-primaryOrange border-dotted">
                     <p className="font-black">Nombre:</p>
                     <p className="w-full text-right">{plato.nombre}</p>
@@ -91,7 +91,7 @@ const DetallesPlato = ({
               </div>
             </div>
             {/* Mis ingredientes */}
-            <div className="flex flex-col gap-y-4 mt-4">
+            <div className="flex flex-col gap-y-4 sm:mt-4 sm:mb-0 my-2">
               <div className="pb-1 border-primaryGreen border-b-[2px] text-xl font-black uppercase">
                 Ingredientes:
               </div>

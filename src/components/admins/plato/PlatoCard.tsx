@@ -9,7 +9,7 @@ import BorrarCofirmacion from "../ui/BorrarConfirmacion";
 export default function CategoriaCard({ plato }: { plato: Plato }) {
   return (
     <div
-      className="bg-white border flex flex-col border-gray-200 rounded-lg relative hover:scale-110 transition duration-150 overflow-hidden"
+      className="bg-white border flex flex-col border-gray-200 rounded-lg relative sm:hover:scale-110 transition duration-150 overflow-hidden"
       key={plato.id}
     >
       <div className="relative py-16 bg-transparent ">

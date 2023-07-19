@@ -85,11 +85,13 @@ export default function BebidaPage() {
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2 sm:gap-4">
             <CabeceraPagina>
-              <h1 className="text-2xl font-black ">Todos mis bebidas</h1>
+              <h1 className="text-xl sm:text-2xl font-black ">
+                Todos mis bebidas
+              </h1>
               <select
-                className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none"
+                className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none sm:my-0 my-2"
                 onChange={(e) => {
                   setCategoriaSeleccionada(e.target.value);
                 }}

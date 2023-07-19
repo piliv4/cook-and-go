@@ -4,7 +4,7 @@ import { BsPlusCircleFill } from "react-icons/bs";
 const CrearPlatoCard = () => {
   return (
     <div
-      className="min-h-[200px] bg-white border group border-gray-200 rounded-lg relative flex flex-col  hover:scale-110 transition duration-150 overflow-hidden"
+      className="min-h-[200px] bg-white border group border-gray-200 rounded-lg relative flex flex-col  sm:hover:scale-110 transition duration-150 overflow-hidden"
       onClick={() => router.push("/admin/plato/crearPlato")}
     >
       <div className="h-full flex justify-center items-center ">

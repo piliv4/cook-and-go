@@ -38,9 +38,9 @@ const DetallesMenu = ({ menu }: { menu: Menu }) => {
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <div className="px-48 ">
+          <div className="sm:px-48 ">
             <CabeceraPagina>
-              <div className="text-2xl font-black col-span-3 text-center uppercase relative">
+              <div className="text-xl sm:text-2xl font-black col-span-3 text-center uppercase relative">
                 {menu.nombre} para {menu.comensales} persona(s)
                 <div className="absolute top-1/2 right-0 flex flex-row gap-3">
                   <BsFillPencilFill

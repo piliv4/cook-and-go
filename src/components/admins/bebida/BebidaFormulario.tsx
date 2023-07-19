@@ -49,9 +49,9 @@ const BebidaFormulario = ({
   }
 
   return (
-    <div className="px-48 ">
+    <div className="sm:px-48 ">
       <CabeceraPagina>
-        <h1 className="text-2xl font-black col-span-3 text-center uppercase ">
+        <h1 className="text-xl sm:text-2xl font-black col-span-3 text-center uppercase ">
           Crear un nuevo bebida
         </h1>
       </CabeceraPagina>
@@ -64,7 +64,7 @@ const BebidaFormulario = ({
         }}
       />
       <div className="">
-        <div className="flex flex-col px-4 gap-y-2 items-center py-2 mt-4 border-r-[1px] ">
+        <div className="flex flex-col px-4 sm:gap-y-2 items-center py-2 mt-4 ">
           <h1 className="text-lg font-black w-full text-center border-b-[1px] border-primaryGreen">
             Datos genéricos del bebida
           </h1>
@@ -150,15 +150,15 @@ const BebidaFormulario = ({
         </div>
       </div>
 
-      <div className="mb-3 -mt-2 mr-3 flex justify-end gap-2 font-">
+      <div className="mb-3 sm:-mt-2 mr-3 flex justify-end gap-2 font-">
         <button
-          className=" ml-3 rounded-full border border-primaryOrange bg-transparent px-1 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
+          className=" ml-3 rounded-full border border-primaryOrange bg-transparent px-2 hover:scale-105 transition duration-100 sm:mt-5 sm:px-3"
           onClick={() => router.back()}
         >
           Cancelar
         </button>
         <button
-          className="btn-sm rounded-full bg-primaryOrange text-white  hover:scale-105 transition duration-100 sm:mt-5 sm:py-1 sm:px-4"
+          className="btn-sm rounded-full bg-primaryOrange px-2 text-white  hover:scale-105 transition duration-100 sm:mt-5 sm:py-1 sm:px-4"
           onClick={() => aceptar()}
         >
           Confirmar

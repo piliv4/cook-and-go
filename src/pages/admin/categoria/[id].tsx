@@ -38,9 +38,9 @@ const DetallesCategoria = ({
     <UsuarioAutorizado>
       <AdministradorAutorizado>
         <VerificarEstablecimiento>
-          <div className="flex flex-col gap-4 ">
+          <div className="flex flex-col gap-2 sm:gap-4">
             <CabeceraPagina>
-              <h1 className="text-2xl font-black ">
+              <h1 className=" text-xl sm:text-2xl font-black  col-span-2">
                 <Link
                   className="hover:text-primaryOrange"
                   href={"/admin/categoria"}
