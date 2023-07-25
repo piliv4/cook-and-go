@@ -6,6 +6,7 @@ import Buscador from "@/components/admins/ui/Buscador";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
+import Loading from "@/components/layout/loadingGif";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Menu } from "@/types/Menu";
 import router, { useRouter } from "next/router";
@@ -15,7 +16,7 @@ export default function MenuPagina() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
 
   //OBTERNER LOS MENUS EN FUNCION DEL ESTABLECIMIENTO
-  const [menus, setMenus] = useState<Menu[]>([]);
+  const [menus, setMenus] = useState<Menu[]>();
   const router = useRouter();
 
   useEffect(() => {
@@ -45,10 +46,20 @@ export default function MenuPagina() {
               </h1>
             </CabeceraPagina>
             <div className="pt-1 sm:pt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-1 sm:gap-3 ">
-              <CrearMenu />
-              {menus.map((menu) => (
-                <MenuCard key={menu.id} menu={menu} />
-              ))}
+              <>
+                {menus ? (
+                  <>
+                    <CrearMenu />
+                    {menus.map((menu) => (
+                      <MenuCard key={menu.id} menu={menu} />
+                    ))}
+                  </>
+                ) : (
+                  <div className="col-span-full flex justify-center pt-6">
+                    <Loading />
+                  </div>
+                )}
+              </>
             </div>
           </div>
         </VerificarEstablecimiento>

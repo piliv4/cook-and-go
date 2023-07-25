@@ -7,17 +7,18 @@ import {
   getPlatosByCategoria,
 } from "@/api/plato";
 import { Categoria } from "@/types/Categoria";
-import { getAllCategorias, getAllCategoriasPlatos } from "@/api/categoria";
+import { getAllCategoriasPlatos } from "@/api/categoria";
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
+import Loading from "@/components/layout/loadingGif";
 
 export default function PlatoPage() {
   const router = useRouter();
-  const [platosFiltrados, setPlatosFiltrados] = useState<Plato[]>([]);
+  const [platosFiltrados, setPlatosFiltrados] = useState<Plato[]>();
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -97,7 +98,13 @@ export default function PlatoPage() {
               </select>
               <Buscador />
             </CabeceraPagina>
-            <DisplayerPlato platos={platosFiltrados} />
+            <>
+              {platosFiltrados ? (
+                <DisplayerPlato platos={platosFiltrados} />
+              ) : (
+                <Loading />
+              )}
+            </>
           </div>
         </VerificarEstablecimiento>
       </AdministradorAutorizado>

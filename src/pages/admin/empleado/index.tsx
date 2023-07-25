@@ -1,19 +1,20 @@
 import { getAllEmpleadosByEstablecimiento } from "@/api/empleado";
 import { Empleado } from "@/types/Empleado";
 import EmpleadoCard from "@/components/admins/empleados/EmpleadoCard";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { useContext, useEffect, useState } from "react";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import CrearEmpleado from "@/components/admins/empleados/CrearEmpleado";
+import Loading from "@/components/layout/loadingGif";
 
 export default function EmpleadoIndex() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
 
   //OBTERNER LOS MENUS EN FUNCION DEL ESTABLECIMIENTO
-  const [empleados, setEmpleados] = useState<Empleado[]>([]);
+  const [empleados, setEmpleados] = useState<Empleado[]>();
   const router = useRouter();
 
   useEffect(() => {
@@ -44,10 +45,18 @@ export default function EmpleadoIndex() {
               </h1>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-1 sm:gap-3 ">
-              <CrearEmpleado />
-              {empleados.map((empleado) => (
-                <EmpleadoCard key={empleado.id} empleado={empleado} />
-              ))}
+              {empleados ? (
+                <>
+                  <CrearEmpleado />
+                  {empleados.map((empleado) => (
+                    <EmpleadoCard key={empleado.id} empleado={empleado} />
+                  ))}
+                </>
+              ) : (
+                <div className="col-span-full flex justify-center pt-6">
+                  <Loading />
+                </div>
+              )}
             </div>
           </div>
         </VerificarEstablecimiento>

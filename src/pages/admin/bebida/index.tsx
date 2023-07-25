@@ -16,13 +16,13 @@ import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
-import { ToastContainer } from "react-toastify";
+import Loading from "@/components/layout/loadingGif";
 
 export default function BebidaPage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
 
   const router = useRouter();
-  const [bebidasFiltradas, setBebidasFiltradas] = useState<Bebida[]>([]);
+  const [bebidasFiltradas, setBebidasFiltradas] = useState<Bebida[]>();
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("-1");
   const [categorias, setCategorias] = useState<Categoria[]>([]);
 
@@ -107,10 +107,18 @@ export default function BebidaPage() {
               <Buscador />
             </CabeceraPagina>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
-              <CrearBebidaCard />
-              {bebidasFiltradas.map((bebida) => (
-                <BebidaCard bebida={bebida} key={bebida.id} />
-              ))}
+              {bebidasFiltradas ? (
+                <>
+                  <CrearBebidaCard />
+                  {bebidasFiltradas.map((bebida) => (
+                    <BebidaCard bebida={bebida} key={bebida.id} />
+                  ))}
+                </>
+              ) : (
+                <div className="col-span-full flex justify-center pt-6">
+                  <Loading />
+                </div>
+              )}
             </div>
           </div>
         </VerificarEstablecimiento>

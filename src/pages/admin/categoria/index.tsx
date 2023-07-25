@@ -10,10 +10,11 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
+import Loading from "@/components/layout/loadingGif";
 
 export default function CategoriaHomePage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>();
   const router = useRouter();
 
   useEffect(() => {
@@ -43,10 +44,18 @@ export default function CategoriaHomePage() {
               <Buscador />
             </CabeceraPagina>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
-              <CrearCategoriaCard />
-              {categorias.map((categoria) => (
-                <CategoriaCard categoria={categoria} key={categoria.id} />
-              ))}
+              {categorias ? (
+                <>
+                  <CrearCategoriaCard />
+                  {categorias.map((categoria) => (
+                    <CategoriaCard categoria={categoria} key={categoria.id} />
+                  ))}
+                </>
+              ) : (
+                <div className="col-span-full flex justify-center pt-6">
+                  <Loading />
+                </div>
+              )}
             </div>
           </div>
         </VerificarEstablecimiento>
