@@ -3,6 +3,7 @@ import { Plato } from "@/types/Plato";
 import { getIngredientesByPlato } from "./ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
 import router from "next/router";
+import { toast } from "react-toastify";
 
 export const crearPlato = async (plato: Plato, establecimientoId: string) => {
   try {
@@ -71,6 +72,11 @@ export const eliminarPlato = async (id: string) => {
     throw error;
   }
   router.push("/admin/plato");
+  (router.asPath.startsWith("/admin/plato") ||
+    router.asPath.startsWith("/admin/categoria/")) &&
+    toast.success("¡Plato eliminado correctamente!", {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
 };
 
 export const getAllPlatos = async () => {

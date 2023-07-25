@@ -2,6 +2,7 @@ import supabase from "@/server/client";
 import { Categoria } from "@/types/Categoria";
 import router from "next/router";
 import { eliminarPlatosByCategoriaId } from "./plato";
+import { toast } from "react-toastify";
 
 export const crearCategoria = async (
   categoria: Categoria,
@@ -63,6 +64,9 @@ export const eliminarCategoria = async (id: string) => {
     if (error2) {
       throw new Error("Error al eliminar la categoria");
     }
+    toast.success("¡Categoría eliminada correctamente!", {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
   } catch (error) {
     console.error(error);
     throw error;

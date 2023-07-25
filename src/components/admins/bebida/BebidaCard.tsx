@@ -5,6 +5,7 @@ import Link from "next/link";
 import router from "next/router";
 import { BsFillPencilFill } from "react-icons/bs";
 import BorrarCofirmacion from "../ui/BorrarConfirmacion";
+import { ToastContainer } from "react-toastify";
 
 export default function BebidaCard({ bebida }: { bebida: Bebida }) {
   return (

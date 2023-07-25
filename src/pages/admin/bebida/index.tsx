@@ -16,6 +16,7 @@ import UsuarioAutorizado from "@/components/layout/UsuarioAutorizado";
 import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
+import { ToastContainer } from "react-toastify";
 
 export default function BebidaPage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);

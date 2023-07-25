@@ -5,6 +5,7 @@ import {
   getAllEstablecimientosByUsuario,
   getEstablecimientoIdByUsuarioId,
 } from "./establecimiento";
+import { toast } from "react-toastify";
 
 export const crearEmpleado = async (
   empleado: Empleado,
@@ -120,6 +121,9 @@ export const eliminarEmpleado = async (id: string) => {
       throw new Error("Error al eliminar el empleado");
     } else {
       router.replace(router.asPath);
+      toast.success("¡Empleado eliminado correctamente!", {
+        position: toast.POSITION.BOTTOM_LEFT,
+      });
     }
   } catch (error) {
     console.error(error);

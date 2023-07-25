@@ -6,6 +6,7 @@ import {
   getSeccionesByEstablecimientoId,
 } from "./seccion";
 import { getMesaBySeccionId } from "./mesa";
+import { toast } from "react-toastify";
 
 export const crearEstablecimiento = async (
   establecimiento: Establecimiento,
@@ -105,6 +106,9 @@ export const eliminarEstablecimiento = async (id: string) => {
     if (error) {
       throw new Error("Error al eliminar el establecimiento");
     }
+    toast.success("¡Establecimiento eliminado correctamente!", {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
   } catch (error) {
     console.error(error);
     throw error;

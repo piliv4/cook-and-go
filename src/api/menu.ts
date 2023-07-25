@@ -3,6 +3,7 @@ import { getPlatoById } from "./plato";
 import { Plato } from "@/types/Plato";
 import { Menu } from "@/types/Menu";
 import { tiposPlato } from "@/types/enum";
+import { toast } from "react-toastify";
 
 export const crearMenu = async (menu: Menu, establecimientoId: string) => {
   if (establecimientoId) {
@@ -47,6 +48,10 @@ export const eliminarMenu = async (id: string) => {
     if (error) {
       throw new Error("Error al eliminar el menu");
     }
+
+    toast.success("¡Menú eliminado correctamente!", {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
   } catch (error) {
     console.error(error);
     throw error;

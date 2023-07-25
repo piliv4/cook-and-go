@@ -1,6 +1,7 @@
 import supabase from "@/server/client";
 import { Bebida } from "@/types/Bebida";
 import router from "next/router";
+import { toast } from "react-toastify";
 
 export const crearBebida = async (
   bebida: Bebida,
@@ -65,6 +66,11 @@ export const eliminarBebida = async (id: string) => {
   }
   router.push("/admin/bebida");
   router.replace(router.asPath);
+  (router.asPath.startsWith("/admin/plato") ||
+    router.asPath.startsWith("/admin/categoria/")) &&
+    toast.success("¡Bebida eliminada correctamente!", {
+      position: toast.POSITION.BOTTOM_LEFT,
+    });
 };
 
 export const getAllBebidas = async () => {
