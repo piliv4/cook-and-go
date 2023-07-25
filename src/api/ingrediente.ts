@@ -1,6 +1,7 @@
 import supabase from "@/server/client";
 import { Ingrediente } from "@/types/Ingrediente";
 import router from "next/router";
+import { toast } from "react-toastify";
 
 export const crearIngrediente = async (
   ingrediente: Ingrediente,
@@ -100,6 +101,10 @@ export const eliminarIngrediente = async (id: string) => {
         throw new Error("Error al eliminar el ingrediente");
       } else {
         router.push(router.asPath);
+
+        toast.success("¡Ingrediente eliminado correctamente!", {
+          position: toast.POSITION.BOTTOM_LEFT,
+        });
       }
     }
   } catch (error) {
