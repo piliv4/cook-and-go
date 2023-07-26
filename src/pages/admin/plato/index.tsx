@@ -16,6 +16,7 @@ import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecim
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import Loading from "@/components/layout/loadingGif";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import Link from "next/link";
 
 export default function PlatoPage() {
   const router = useRouter();
@@ -104,7 +105,24 @@ export default function PlatoPage() {
             </CabeceraPagina>
             <>
               {platosFiltrados ? (
-                <DisplayerPlato platos={platosFiltrados} />
+                <>
+                  {categorias.length < 0 ? (
+                    <DisplayerPlato platos={platosFiltrados} />
+                  ) : (
+                    <div className="col-span-full flex flex-col font-black text-xl text-center">
+                      <p className="">
+                        Para empezar a crear platos primero{" "}
+                        <Link
+                          className="text-primaryOrange hover:underline"
+                          href={"/admin/categoria"}
+                        >
+                          {" "}
+                          crea una categoría de platos
+                        </Link>
+                      </p>
+                    </div>
+                  )}
+                </>
               ) : (
                 <Loading />
               )}
