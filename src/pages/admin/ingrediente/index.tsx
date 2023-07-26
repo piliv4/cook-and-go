@@ -14,6 +14,7 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import Link from "next/link";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function IngredientesPagina() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -97,9 +98,12 @@ export default function IngredientesPagina() {
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-4">
             <div className=" flex flex-col sm:flex-row w-full pb-3 border-primaryGreen border-double border-b-4">
-              <h1 className="flex-1 text-xl sm:text-2xl font-black ">
-                Mis ingredientes
-              </h1>
+              <div className=" text-xl sm:text-2xl font-black flex items-end flex-1">
+                <h1>Todos mis Ingredientes</h1>
+                <abbr title="Con los ingredientes podrás crear platos">
+                  <AiOutlineInfoCircle className="ml-1 " size={24} />
+                </abbr>
+              </div>
               <Link
                 className="bg-secondaryGreen  py-1 px-2 rounded-full justify-center align-middle items-center text-white uppercase hover:bg-secondaryOrange font-bold"
                 href={"/listaDeLaCompra/" + establecimientoGlobal.id}

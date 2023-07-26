@@ -17,6 +17,7 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import Loading from "@/components/layout/loadingGif";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function BebidaPage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -88,9 +89,12 @@ export default function BebidaPage() {
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-2 sm:gap-4">
             <CabeceraPagina>
-              <h1 className="text-xl sm:text-2xl font-black ">
-                Todos mis bebidas
-              </h1>
+              <div className=" text-xl sm:text-2xl font-black flex items-end">
+                <h1>Todas mis bebidas</h1>
+                <abbr title="Las bebidas son los productos líquidos de tu establecimiento">
+                  <AiOutlineInfoCircle className="ml-1 " size={24} />
+                </abbr>
+              </div>
               <select
                 className="rounded-full border-[1px] border-primaryOrange mr-2 outline-none sm:my-0 my-2"
                 onChange={(e) => {

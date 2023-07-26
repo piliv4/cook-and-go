@@ -15,6 +15,7 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecimiento";
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import Loading from "@/components/layout/loadingGif";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function PlatoPage() {
   const router = useRouter();
@@ -82,9 +83,12 @@ export default function PlatoPage() {
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-2 sm:gap-4">
             <CabeceraPagina>
-              <h1 className=" text-xl sm:text-2xl font-black ">
-                Todos mis platos
-              </h1>
+              <div className=" text-xl sm:text-2xl font-black flex items-end">
+                <h1>Todos mis platos</h1>
+                <abbr title="Los platos son los productos principales que venderás en tu establecimiento">
+                  <AiOutlineInfoCircle className="ml-1 " size={24} />
+                </abbr>
+              </div>
               <select
                 className="rounded-full border-[1px] sm:my-0 my-2 border-primaryOrange mr-2 outline-none"
                 onChange={(e) => setCategoriaSeleccionada(e.target.value)}

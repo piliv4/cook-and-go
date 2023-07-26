@@ -11,6 +11,7 @@ import { EstablecimientoContext } from "@/context/EstablecimientoContext";
 import { Menu } from "@/types/Menu";
 import router, { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function MenuPagina() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -41,9 +42,12 @@ export default function MenuPagina() {
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-2 sm:gap-4 ">
             <CabeceraPagina>
-              <h1 className=" text-xl sm:text-2xl font-black col-span-2 ">
-                Todos mis menús
-              </h1>
+              <div className=" text-xl sm:text-2xl font-black col-span-2 flex items-end">
+                <h1>Todos mis menús</h1>
+                <abbr title="Los menús son conjuntos de platos que ofrecer a tus clientes por un precio">
+                  <AiOutlineInfoCircle className="ml-1 " size={24} />
+                </abbr>
+              </div>
             </CabeceraPagina>
             <div className="pt-1 sm:pt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-1 sm:gap-3 ">
               <>

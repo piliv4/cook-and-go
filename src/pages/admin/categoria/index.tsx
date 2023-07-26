@@ -11,6 +11,7 @@ import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecim
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import CabeceraPagina from "@/components/admins/ui/CabeceraPagina";
 import Loading from "@/components/layout/loadingGif";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function CategoriaHomePage() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -38,9 +39,12 @@ export default function CategoriaHomePage() {
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-2 sm:gap-4">
             <CabeceraPagina>
-              <h1 className=" text-xl sm:text-2xl font-black col-span-2">
-                Todas mis categorias
-              </h1>
+              <div className=" text-xl sm:text-2xl font-black col-span-2 flex items-end">
+                <h1>Todas mis categorias</h1>
+                <abbr title="Una categoría es una forma de mantener tus platos y bebidas organizadas">
+                  <AiOutlineInfoCircle className="ml-1 " size={24} />
+                </abbr>
+              </div>
               <Buscador />
             </CabeceraPagina>
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">

@@ -11,6 +11,7 @@ import { UsuarioContext } from "@/context/UsuarioContext";
 import { Establecimiento } from "@/types/Establecimiento";
 import router, { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function EstablecimientoPage() {
   const { usuarioGlobal } = useContext(UsuarioContext);
@@ -43,9 +44,12 @@ export default function EstablecimientoPage() {
       <AdministradorAutorizado>
         <div className="flex flex-col gap-2 sm:gap-4">
           <CabeceraPagina>
-            <h1 className=" text-xl sm:text-2xl font-black sm:grid-cols-1 grid-cols-3">
-              Todos mis establecimientos
-            </h1>
+            <div className=" text-xl sm:text-2xl font-black flex items-end">
+              <h1>Todos mis establecimientos</h1>
+              <abbr title="Los establecimientos son los locales que tienes a tu cargo">
+                <AiOutlineInfoCircle className="ml-1 " size={24} />
+              </abbr>
+            </div>
           </CabeceraPagina>
           <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-1 sm:gap-3 ">
             <CrearEstablecimientoCard />

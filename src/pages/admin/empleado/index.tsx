@@ -9,6 +9,7 @@ import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecim
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import CrearEmpleado from "@/components/admins/empleados/CrearEmpleado";
 import Loading from "@/components/layout/loadingGif";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export default function EmpleadoIndex() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -40,9 +41,12 @@ export default function EmpleadoIndex() {
         <VerificarEstablecimiento>
           <div className="flex flex-col gap-4 ">
             <div className="grid grid-cols-[80%_20%] w-full sm:pb-3 border-primaryGreen border-double border-b-4">
-              <h1 className="text-xl sm:text-2xl font-black ">
-                Todos mis empleados
-              </h1>
+              <div className=" text-xl sm:text-2xl font-black flex items-end">
+                <h1>Todos mis empleados</h1>
+                <abbr title="Los empleados son las personas que trabajan en tu establecimiento">
+                  <AiOutlineInfoCircle className="ml-1 " size={24} />
+                </abbr>
+              </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-1 sm:gap-3 ">
               {empleados ? (
