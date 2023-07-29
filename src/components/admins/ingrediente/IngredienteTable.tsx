@@ -16,10 +16,10 @@ const IngredienteTable = ({ ingrediente }: { ingrediente: Ingrediente[] }) => {
         <thead>
           <tr className=" bg-primaryGreen text-white  rounded-t-full ">
             <th className=" py-1 rounded-tl-full ">Nombre</th>
-            <th className="border border-background sm:block hidden">
+            <th className="border border-background sm:table-cell hidden">
               Descripción
             </th>
-            <th className="border border-background sm:block hidden">
+            <th className="border border-background sm:table-cell   hidden">
               Precio suplemento
             </th>
             <th className="border border-background">Stock</th>
