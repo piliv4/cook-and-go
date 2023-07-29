@@ -15,6 +15,7 @@ import VerificarEstablecimiento from "@/components/admins/ui/VerificarEstablecim
 import AdministradorAutorizado from "@/components/admins/ui/AdministradorAutorizado";
 import Link from "next/link";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import supabase from "@/server/client";
 
 export default function IngredientesPagina() {
   const { establecimientoGlobal } = useContext(EstablecimientoContext);
@@ -62,6 +63,33 @@ export default function IngredientesPagina() {
 
     fetchIngredientes();
   }, [establecimientoGlobal, index]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("realtime_comandasArticulo")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "Ingrediente",
+          filter: "id=eq.6c2986e8-9131-4cbc-a7a7-cb1efbdcd96e",
+        },
+        async (payload) => {
+          setIngredientesMostrar((prevIngredientes) =>
+            prevIngredientes.map((ingrediente) =>
+              ingrediente.id === payload.new.id
+                ? (payload.new as Ingrediente)
+                : ingrediente
+            )
+          );
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
 
   useEffect(() => {
     // Realiza la llamada a getAllIngredientes para obtener los ingredientes actualizados
