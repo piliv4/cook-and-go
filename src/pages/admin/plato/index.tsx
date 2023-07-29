@@ -106,7 +106,7 @@ export default function PlatoPage() {
             <>
               {platosFiltrados ? (
                 <>
-                  {categorias.length < 0 ? (
+                  {categorias.length > 0 ? (
                     <DisplayerPlato platos={platosFiltrados} />
                   ) : (
                     <div className="col-span-full flex flex-col font-black text-xl text-center">
