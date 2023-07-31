@@ -36,6 +36,20 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
     ingredientesComprados.length,
   ]);
 
+  function cambiarEstado(porComprar: boolean, ingrediente: Ingrediente) {
+    if (porComprar) {
+      setIngredientesComprados(ingredientesComprados.concat(ingrediente));
+      setIngredientesFaltantes(
+        ingredientesFaltantes.filter((item) => item.id !== ingrediente.id)
+      );
+    } else {
+      setIngredientesFaltantes(ingredientesComprados.concat(ingrediente));
+      setIngredientesComprados(
+        ingredientesFaltantes.filter((item) => item.id !== ingrediente.id)
+      );
+    }
+  }
+
   return (
     <div className="bg-background min-h-screen">
       <div className="mx-4 md:mx-44 lg:mx-96 py-8 flex flex-col gap-y-3  ">
@@ -55,19 +69,37 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
               {ingredientesFaltantes.map((ingrediente, index) => (
                 <div
                   key={ingrediente.id}
-                  className="w-full border-b-primaryOrange border-b-2 border-dotted sm:font-medium"
+                  className="w-full flex gap-1 border-b-primaryOrange border-b-2 border-dotted sm:font-medium"
                   onDoubleClick={() => {
-                    setIngredientesComprados(
-                      ingredientesComprados.concat(ingrediente)
-                    );
-                    setIngredientesFaltantes(
-                      ingredientesFaltantes.filter(
-                        (item) => item.id !== ingrediente.id
-                      )
-                    );
+                    cambiarEstado(true, ingrediente);
                   }}
                 >
-                  {index + 1}. {ingrediente.nombre}
+                  <input
+                    type="checkbox"
+                    className="mb-1"
+                    onChange={(e) =>
+                      cambiarEstado(e.target.checked, ingrediente)
+                    }
+                  />
+                  <p className="flex-1">
+                    {index + 1}. {ingrediente.nombre}
+                  </p>
+                  <input
+                    className="border-[1px] w-1/5 rounded-md text-right px-2 border-primaryOrange mb-1"
+                    type="number"
+                    defaultValue={100}
+                    onChange={(e) =>
+                      setIngredientesFaltantes((estadoPrevio) =>
+                        estadoPrevio.map((item) => {
+                          if (item.id === ingrediente.id) {
+                            return { ...item, stock: parseInt(e.target.value) };
+                          }
+                          return item;
+                        })
+                      )
+                    }
+                  />
+                  <p className="">{ingrediente.unidad}</p>
                 </div>
               ))}
             </div>
@@ -82,10 +114,14 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
               {ingredientesComprados.map((ingrediente, index) => (
                 <div
                   key={ingrediente.id}
-                  className="w-full border-b-primaryOrange border-b-2 border-dotted sm:font-medium"
+                  className="w-full flex border-b-primaryOrange border-b-2 border-dotted sm:font-medium"
                 >
-                  <p className="w-full line-through">
+                  <p className=" line-through flex-1">
                     {index + 1}. {ingrediente.nombre}
+                  </p>
+                  <p className="flex flex-col gap-1">
+                    {ingrediente.stock}
+                    {ingrediente.unidad}
                   </p>
                 </div>
               ))}
