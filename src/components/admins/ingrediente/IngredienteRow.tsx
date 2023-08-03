@@ -95,12 +95,14 @@ const IngredienteRow = ({
 
       <td className="border border-primaryGreen pl-2 sm:table-cell   hidden">
         {indexGlobal != index ? (
-          <p>{ingrediente.precioSuplemento}</p>
+          // @ts-ignore
+          <p>{ingrediente.precio_suplemento}</p>
         ) : (
           <InputErrorEnvoltorio error={errorPrecioSuplemento}>
             <input
               type={"number"}
-              defaultValue={ingrediente.precioSuplemento}
+              // @ts-ignore
+              defaultValue={ingrediente.precio_suplemento}
               className="w-full focus:outline-none"
               onChange={(e) =>
                 setIngredienteEditar({

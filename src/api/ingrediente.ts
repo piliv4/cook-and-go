@@ -13,7 +13,7 @@ export const crearIngrediente = async (
       {
         nombre: ingrediente.nombre,
         descripcion: ingrediente.descripcion,
-        precioSuplemento: ingrediente.precioSuplemento,
+        precio_suplemento: ingrediente.precioSuplemento,
         stock: ingrediente.stock,
         unidad: ingrediente.unidad,
         establecimiento_id: establecimientoId,
@@ -39,7 +39,7 @@ export const editarIngrediente = async (ingrediente: Ingrediente) => {
         {
           nombre: ingrediente.nombre,
           descripcion: ingrediente.descripcion,
-          precioSuplemento: ingrediente.precioSuplemento,
+          precio_suplemento: ingrediente.precioSuplemento,
           stock: ingrediente.stock,
           unidad: ingrediente.unidad,
         },

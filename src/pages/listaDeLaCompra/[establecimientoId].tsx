@@ -1,4 +1,8 @@
-import { editarStock, getIngredientesFaltantes } from "@/api/ingrediente";
+import {
+  cambiarStockIngrediente,
+  editarStock,
+  getIngredientesFaltantes,
+} from "@/api/ingrediente";
 import { Ingrediente } from "@/types/Ingrediente";
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
@@ -24,29 +28,39 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
     Ingrediente[]
   >([]);
 
-  useEffect(() => {
-    if (ingredientesComprados.length == ingredientes.length) {
-      return () => {
-        editarStock(ingredientesComprados);
-      };
-    }
-  }, [
-    ingredientes.length,
-    ingredientesComprados,
-    ingredientesComprados.length,
-  ]);
-
   function cambiarEstado(porComprar: boolean, ingrediente: Ingrediente) {
     if (porComprar) {
+      ingrediente.stock =
+        ingrediente.stock <= 0
+          ? getCantidadMinima(ingrediente.unidad)
+          : ingrediente.stock;
       setIngredientesComprados(ingredientesComprados.concat(ingrediente));
       setIngredientesFaltantes(
         ingredientesFaltantes.filter((item) => item.id !== ingrediente.id)
       );
+      cambiarStockIngrediente(ingrediente.id, ingrediente.stock);
     } else {
-      setIngredientesFaltantes(ingredientesComprados.concat(ingrediente));
+      ingrediente.stock = 0;
+      setIngredientesFaltantes(ingredientesFaltantes.concat(ingrediente));
       setIngredientesComprados(
-        ingredientesFaltantes.filter((item) => item.id !== ingrediente.id)
+        ingredientesComprados.filter((item) => item.id !== ingrediente.id)
       );
+      cambiarStockIngrediente(ingrediente.id, 0);
+    }
+  }
+
+  function getCantidadMinima(unidadMedida: string) {
+    switch (unidadMedida) {
+      case "kg":
+        return 5;
+      case "g":
+        return 100;
+      case "unidad(es)":
+        return 10;
+      case "l":
+        return 2;
+      default:
+        return 0;
     }
   }
 
@@ -55,10 +69,6 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
       <div className="mx-4 md:mx-44 lg:mx-96 py-8 flex flex-col gap-y-3  ">
         <div className="font-bold sm:font-black text-center text-lg sm:text-xl bg-primaryGreen rounded-md py-1 text-white relative">
           MI LISTA DE LA COMPRA
-          <AiFillSave
-            className="absolute fill-white right-2 bottom-2"
-            onClick={() => editarStock(ingredientesComprados)}
-          />
         </div>
         {ingredientesFaltantes.length > 0 && (
           <div>
@@ -76,7 +86,7 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
                 >
                   <input
                     type="checkbox"
-                    className="mb-1"
+                    className="mb-1 accent-primaryOrange"
                     onChange={(e) =>
                       cambiarEstado(e.target.checked, ingrediente)
                     }
@@ -87,7 +97,7 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
                   <input
                     className="border-[1px] w-1/5 rounded-md text-right px-2 border-primaryOrange mb-1"
                     type="number"
-                    defaultValue={100}
+                    defaultValue={getCantidadMinima(ingrediente.unidad)}
                     onChange={(e) =>
                       setIngredientesFaltantes((estadoPrevio) =>
                         estadoPrevio.map((item) => {
@@ -116,12 +126,19 @@ const ListaCompra = ({ ingredientes }: { ingredientes: Ingrediente[] }) => {
                   key={ingrediente.id}
                   className="w-full flex border-b-primaryOrange border-b-2 border-dotted sm:font-medium"
                 >
+                  <input
+                    type="checkbox"
+                    defaultChecked={true}
+                    className="accent-primaryOrange"
+                    onChange={(e) =>
+                      cambiarEstado(e.target.checked, ingrediente)
+                    }
+                  />
                   <p className=" line-through flex-1">
                     {index + 1}. {ingrediente.nombre}
                   </p>
                   <p className="flex flex-col gap-1">
-                    {ingrediente.stock}
-                    {ingrediente.unidad}
+                    {ingrediente.stock} {ingrediente.unidad}
                   </p>
                 </div>
               ))}
