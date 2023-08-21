@@ -109,6 +109,7 @@ const CrearIngrediente = () => {
               type="number"
               className="focus:outline-none"
               placeholder="Introduce el stock actual"
+              value={ingrediente.stock}
               onChange={(e) =>
                 setIngrediente({
                   ...ingrediente,

@@ -10,11 +10,12 @@ const Body = ({ children }: { children: React.ReactNode }) => {
   let admin = router.pathname.split("/")[1];
   return (
     <>
-      {usuarioGlobal &&
-      usuarioGlobal.id &&
-      usuarioGlobal.id != "" &&
-      usuarioGlobal.rol === "Administrador" &&
-      admin == "admin" ? (
+      {(usuarioGlobal.rol == undefined && usuarioGlobal.id != undefined) ||
+      (usuarioGlobal &&
+        usuarioGlobal.id &&
+        usuarioGlobal.id != "" &&
+        usuarioGlobal.rol === "Administrador" &&
+        admin == "admin") ? (
         <>
           <AdminHeader />
           <div className="bg-background  min-h-[calc(100vh-60px)]">

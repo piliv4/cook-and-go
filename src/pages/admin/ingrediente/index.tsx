@@ -140,6 +140,7 @@ export default function IngredientesPagina() {
               </Link>
             </div>
             <CrearIngrediente />
+
             <IngredienteTable ingrediente={ingredientesMostrar} />
             <div className="text-white flex flex-row">
               {index > 0 && (
