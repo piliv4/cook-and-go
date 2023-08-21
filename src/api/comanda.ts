@@ -11,18 +11,18 @@ import { ArticuloDeComanda } from "@/types/ArticuloDeComanda";
 export const getComandasByEstablecimiento = async (
   establecimientoId: string
 ) => {
+  console.log(establecimientoId);
   let parsedComandas = [] as Comanda[];
   try {
     //Obtenemos todas las comandas activas de un establecimiento
     const { data: comandas, error } = await supabase
       .from("Comanda")
-      .select("* ,Usuario(*, UsuarioEstablecimiento(*))")
+      .select("* ,Usuario!inner(*, UsuarioEstablecimiento!inner(*))")
       .eq(
         "Usuario.UsuarioEstablecimiento.establecimiento_id",
         establecimientoId
       )
       .eq("esta_en_servicio", true);
-
     if (error) {
       throw new Error("Error al obtener las comandas");
     } else {
