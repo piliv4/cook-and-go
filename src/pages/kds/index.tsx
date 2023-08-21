@@ -25,7 +25,7 @@ export default function KDS() {
 
   //OBTENCIÓN DE TODAS LAS COMANDAS (PRIMERA CARGA Y REFRESCOS)
   useEffect(() => {
-    const fetchIngredientes = async () => {
+    const fetchComandas = async () => {
       let comandasAux = [] as Comanda[];
       if (
         usuarioGlobal.establecimientoId != "" &&
@@ -36,7 +36,7 @@ export default function KDS() {
         );
       setComandas(comandasAux);
     };
-    fetchIngredientes();
+    fetchComandas();
   }, [usuarioGlobal.establecimientoId]);
 
   //LISTENER RECUERDA QUE SOLO RECOGE UN VALOR
