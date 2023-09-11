@@ -34,7 +34,7 @@ export default function MenuCard({ menu }: { menu: Menu }) {
           </Link>
           <div className=" flex flex-row px-2 pb-2 text-sm">
             <p className="font-black  w-full">PRECIO</p>
-            {menu.precio}€
+            {(Math.round(menu.precio * 100) / 100).toFixed(2)}€
           </div>
         </div>
         <div className="flex flex-row gap-1 items-end absolute top-1 right-1">
